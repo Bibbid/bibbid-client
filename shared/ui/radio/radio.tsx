@@ -16,18 +16,16 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-type RadioButtonGroupContextType<T extends string> = {
+type RadioContextType<T extends string> = {
   selected?: T;
   onSelect?: (value: T) => void | Dispatch<SetStateAction<T>>;
 };
 
-const RadioButtonGroupContext = createContext<
-  RadioButtonGroupContextType<string>
->({});
+const RadioContext = createContext<RadioContextType<string>>({});
 
 interface RadioButtonGroupProps
   extends PropsWithChildren,
-    RadioButtonGroupContextType<string> {
+    RadioContextType<string> {
   style?: StyleProp<ViewStyle>;
 }
 
@@ -39,13 +37,13 @@ export function RadioButtonGroup({
   const [innerSelected, setInnerSelected] = useState<string>();
 
   return (
-    <RadioButtonGroupContext.Provider
+    <RadioContext.Provider
       value={{
         selected: selected ?? innerSelected,
         onSelect: onSelect ?? setInnerSelected,
       }}>
       <View>{children}</View>
-    </RadioButtonGroupContext.Provider>
+    </RadioContext.Provider>
   );
 }
 
@@ -61,7 +59,7 @@ export function RadioButton<T extends string>({
   disabled,
   ...props
 }: RadioButtonProps<T>) {
-  const { selected, onSelect } = use(RadioButtonGroupContext);
+  const { selected, onSelect } = use(RadioContext);
 
   const isActive = selected === value;
   const isDisabled = disabled ?? false;

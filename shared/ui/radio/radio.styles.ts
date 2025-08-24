@@ -2,9 +2,17 @@ import { StyleSheet } from 'react-native-unistyles';
 
 export const radioStyles = StyleSheet.create((theme) => ({
   wrapper: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: 8,
+    variants: {
+      active: {
+        true: {},
+        false: {},
+      },
+      disabled: {},
+    },
   },
   container: {
     position: 'relative',
@@ -28,7 +36,7 @@ export const radioStyles = StyleSheet.create((theme) => ({
       disabled: {
         true: {
           backgroundColor: theme.color['opacity-white-16'],
-          borderColor: theme.color['opacity-white-16'],
+          borderColor: theme.color['opacity-white-4'],
         },
       },
     },
