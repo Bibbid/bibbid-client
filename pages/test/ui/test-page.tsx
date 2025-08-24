@@ -1,12 +1,20 @@
 import ButtonTest from './button-test';
 import ChipTest from './chip-test';
-import { View } from 'react-native';
+import RadioTest from './radio-test';
+import { ScrollView } from 'react-native';
 
 export default function TestPage() {
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: 20,
+      }}>
       <ButtonTest />
       <ChipTest />
-    </View>
+      <RadioTest />
+    </ScrollView>
   );
 }

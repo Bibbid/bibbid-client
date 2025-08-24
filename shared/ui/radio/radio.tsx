@@ -1,0 +1,88 @@
+import { radioStyles } from './radio.styles';
+import {
+  createContext,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+  type PropsWithChildren,
+  use,
+} from 'react';
+import {
+  Pressable,
+  type PressableProps,
+  type StyleProp,
+  Text,
+  View,
+  type ViewStyle,
+} from 'react-native';
+
+type RadioButtonGroupContextType<T extends string> = {
+  selected?: T;
+  onSelect?: (value: T) => void | Dispatch<SetStateAction<T>>;
+};
+
+const RadioButtonGroupContext = createContext<
+  RadioButtonGroupContextType<string>
+>({});
+
+interface RadioButtonGroupProps
+  extends PropsWithChildren,
+    RadioButtonGroupContextType<string> {
+  style?: StyleProp<ViewStyle>;
+}
+
+export function RadioButtonGroup({
+  selected,
+  onSelect,
+  children,
+}: RadioButtonGroupProps) {
+  const [innerSelected, setInnerSelected] = useState<string>();
+
+  return (
+    <RadioButtonGroupContext.Provider
+      value={{
+        selected: selected ?? innerSelected,
+        onSelect: onSelect ?? setInnerSelected,
+      }}>
+      <View>{children}</View>
+    </RadioButtonGroupContext.Provider>
+  );
+}
+
+interface RadioButtonProps<T extends string> extends PressableProps {
+  value: T;
+  label?: string;
+}
+
+export function RadioButton<T extends string>({
+  value,
+  onPress,
+  label,
+  disabled,
+  ...props
+}: RadioButtonProps<T>) {
+  const { selected, onSelect } = use(RadioButtonGroupContext);
+
+  const isActive = selected === value;
+  const isDisabled = disabled ?? false;
+
+  radioStyles.useVariants({
+    active: isActive,
+    disabled: isDisabled,
+  });
+
+  return (
+    <Pressable
+      onPress={() => {
+        onSelect?.(value);
+      }}
+      style={radioStyles.wrapper}
+      disabled={disabled}
+      {...props}>
+      <View style={radioStyles.container}>
+        <View style={radioStyles.indicator} />
+      </View>
+      <Text style={radioStyles.label}>{label}</Text>
+    </Pressable>
+  );
+}
