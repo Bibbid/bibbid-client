@@ -1,6 +1,7 @@
 import ButtonTest from './button-test';
 import ChipTest from './chip-test';
 import RadioTest from './radio-test';
+import TabTest from './tab-test';
 import { ScrollView } from 'react-native';
 
 export default function TestPage() {
@@ -15,6 +16,7 @@ export default function TestPage() {
       <ButtonTest />
       <ChipTest />
       <RadioTest />
+      <TabTest />
     </ScrollView>
   );
 }
