@@ -176,6 +176,7 @@ const styles = StyleSheet.create(() => ({
     flex: 1,
     display: 'flex',
     rowGap: 16,
+    paddingVertical: 20,
   },
   row: {
     display: 'flex',

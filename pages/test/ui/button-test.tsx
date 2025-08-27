@@ -5,6 +5,7 @@ export default function ButtonTest() {
   return (
     <View
       style={{
+        paddingVertical: 20,
         flex: 1,
         rowGap: 16,
         justifyContent: 'center',
