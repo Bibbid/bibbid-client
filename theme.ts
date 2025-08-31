@@ -1,4 +1,4 @@
-const color = {
+export const COLOR_TOKEN = {
   // gray
   'gray-1': '#171719',
   'gray-2': '#222729',
@@ -104,16 +104,16 @@ const color = {
   'opacity-white-8': 'rgba(255, 255, 255, 0.08)',
   'opacity-white-4': 'rgba(255, 255, 255, 0.04)',
   'opacity-white-2': 'rgba(255, 255, 255, 0.02)',
-};
+} as const;
 
-const radius = {
+export const RADIUS_TOKEN = {
   sm: 4,
   md: 6,
   lg: 8,
   xl: 16,
-};
+} as const;
 
-const fontSize = {
+export const FONT_SIZE_TOKEN = {
   xs: 12,
   sm: 14,
   md: 16,
@@ -122,25 +122,25 @@ const fontSize = {
   '2xl': 24,
   '3xl': 26,
   '4xl': 32,
-};
+} as const;
 
-const fontWeight = {
+export const FONT_WEIGHT_TOKEN = {
   regular: 400,
   medium: 500,
   semibold: 600,
   bold: 700,
-};
+} as const;
 
 export const lightTheme = {
-  color,
-  radius,
-  fontSize,
-  fontWeight,
+  color: COLOR_TOKEN,
+  radius: RADIUS_TOKEN,
+  fontSize: FONT_SIZE_TOKEN,
+  fontWeight: FONT_WEIGHT_TOKEN,
 } as const;
 
 export const darkTheme = {
-  color,
-  radius,
-  fontSize,
-  fontWeight,
+  color: COLOR_TOKEN,
+  radius: RADIUS_TOKEN,
+  fontSize: FONT_SIZE_TOKEN,
+  fontWeight: FONT_WEIGHT_TOKEN,
 } as const;
