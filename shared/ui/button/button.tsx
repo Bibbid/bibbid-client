@@ -14,10 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
-type ButtonProps = ButtonVariantsProps &
-  PressableProps & {
-    onPress?: () => void;
-  };
+type ButtonProps = ButtonVariantsProps & PressableProps & {};
 
 type ButtonTextProps = ButtonVariantsProps & TextProps;
 
