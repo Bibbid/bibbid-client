@@ -1,6 +1,7 @@
 import { Button, ButtonText } from '../button';
 import { modalStyles } from './modal.styles';
 import { XIcon } from 'lucide-react-native';
+import { useEffect } from 'react';
 import {
   Pressable,
   PressableProps,
@@ -11,6 +12,12 @@ import {
   ViewProps,
   type ModalProps as RNModalProps,
 } from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import { create } from 'zustand';
 
@@ -40,18 +47,34 @@ export function Modal({
 }: ModalProps) {
   const theme = useAnimatedTheme();
 
+  const animationProgress = useSharedValue(0);
+
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        animationProgress.value,
+        [0, 1],
+        ['transparent', theme.value.color['opacity-black-80']]
+      ),
+    };
+  });
+
   useModalStore.setState({ onAction, onClose });
+
+  useEffect(() => {
+    animationProgress.value = withTiming(visible ? 1 : 0, { duration: 200 });
+  }, [visible, animationProgress]);
 
   return (
     <RNModal visible={visible} onRequestClose={onClose} transparent {...props}>
-      <View style={modalStyles.container}>
+      <Animated.View style={[modalStyles.container, animatedContainerStyle]}>
         <View style={modalStyles.content}>
           <Pressable style={modalStyles.closeButton} onPress={onClose}>
             <XIcon size={20} color={theme.value.color['gray-4']} />
           </Pressable>
           {children}
         </View>
-      </View>
+      </Animated.View>
     </RNModal>
   );
 }
