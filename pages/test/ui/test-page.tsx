@@ -4,6 +4,8 @@ import InputTest from './input-test';
 import RadioTest from './radio-test';
 import TabTest from './tab-test';
 import { ScrollView } from 'react-native';
+import { Button, ButtonText } from '~/shared/ui/button';
+import { showToast } from '~/shared/ui/toast';
 
 export default function TestPage() {
   return (
@@ -20,6 +22,9 @@ export default function TestPage() {
       <RadioTest />
       <TabTest />
       <InputTest />
+      <Button onPress={() => showToast({ text1: 'Hello', text2: 'World' })}>
+        <ButtonText>FIRE TOAST!</ButtonText>
+      </Button>
     </ScrollView>
   );
 }
