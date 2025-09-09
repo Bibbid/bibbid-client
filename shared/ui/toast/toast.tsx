@@ -1,4 +1,4 @@
-import { Info } from 'lucide-react-native';
+import { CircleCheck, Info } from 'lucide-react-native';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import _Toast, {
   BaseToast,
@@ -59,37 +59,78 @@ const toastConfig: ToastConfig = {
       />
     );
   },
+  success: ({ text1Style, text2Style, ...props }) => {
+    const mergedText1Style =
+      typeof text1Style === 'object'
+        ? { ...baseTextStyle, ...text1Style }
+        : baseTextStyle;
 
-  /*
-    Overwrite 'success' type,
-    by modifying the existing `BaseToast` component
-  */
-  // success: (props) => (
-  //   <BaseToast
-  //     {...props}
-  //     style={{ borderLeftColor: 'pink' }}
-  //     contentContainerStyle={{ paddingHorizontal: 15 }}
-  //     text1Style={{
-  //       fontSize: 15,
-  //       fontWeight: '400',
-  //     }}
-  //   />
-  // ),
-  /*
-    Overwrite 'error' type,
-    by modifying the existing `ErrorToast` component
-  */
-  // error: (props) => (
-  //   <ErrorToast
-  //     {...props}
-  //     text1Style={{
-  //       fontSize: 17
-  //     }}
-  //     text2Style={{
-  //       fontSize: 15
-  //     }}
-  //   />
-  // ),
+    const mergedText2Style =
+      typeof text2Style === 'object'
+        ? { ...baseTextStyle, ...text2Style }
+        : baseTextStyle;
+
+    return (
+      <BaseToast
+        style={baseToastStyle}
+        contentContainerStyle={baseContentContainerStyle}
+        text1Style={mergedText1Style}
+        text2Style={mergedText2Style}
+        renderLeadingIcon={() => (
+          <CircleCheck color={COLOR_TOKEN['green-3']} size={18} />
+        )}
+        {...props}
+      />
+    );
+  },
+  error: ({ text1Style, text2Style, ...props }) => {
+    const mergedText1Style =
+      typeof text1Style === 'object'
+        ? { ...baseTextStyle, ...text1Style }
+        : baseTextStyle;
+
+    const mergedText2Style =
+      typeof text2Style === 'object'
+        ? { ...baseTextStyle, ...text2Style }
+        : baseTextStyle;
+
+    return (
+      <BaseToast
+        style={baseToastStyle}
+        contentContainerStyle={baseContentContainerStyle}
+        text1Style={mergedText1Style}
+        text2Style={mergedText2Style}
+        renderLeadingIcon={() => (
+          <Info color={COLOR_TOKEN['red-3']} size={18} />
+        )}
+        {...props}
+      />
+    );
+  },
+  warn: ({ text1Style, text2Style, ...props }) => {
+    const mergedText1Style =
+      typeof text1Style === 'object'
+        ? { ...baseTextStyle, ...text1Style }
+        : baseTextStyle;
+
+    const mergedText2Style =
+      typeof text2Style === 'object'
+        ? { ...baseTextStyle, ...text2Style }
+        : baseTextStyle;
+
+    return (
+      <BaseToast
+        style={baseToastStyle}
+        contentContainerStyle={baseContentContainerStyle}
+        text1Style={mergedText1Style}
+        text2Style={mergedText2Style}
+        renderLeadingIcon={() => (
+          <Info color={COLOR_TOKEN['yellow-3']} size={18} />
+        )}
+        {...props}
+      />
+    );
+  },
 };
 
 function Toast() {
