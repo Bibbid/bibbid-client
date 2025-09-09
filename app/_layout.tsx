@@ -22,5 +22,6 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.color['gray-1'],
+    fontFamily: 'Montserrat',
   },
 }));

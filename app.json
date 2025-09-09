@@ -13,7 +13,13 @@
     "plugins": [
       "expo-router",
       "expo-localization",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/montserrat-variablefont_wght.ttf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -27,9 +33,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.babu.bibbid"

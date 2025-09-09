@@ -69,8 +69,9 @@ export function TabButton<T extends string>({
 
   return (
     <Pressable
-      onPress={() => {
+      onPress={(event) => {
         onSelect?.(value);
+        onPress?.(event);
       }}
       style={tabsStyles.button}
       {...props}>
