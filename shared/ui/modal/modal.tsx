@@ -19,18 +19,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
-import { create } from 'zustand';
-
-type ModalContextType = {
-  onAction?: () => void;
-  onClose?: () => void;
-};
-
-// store 생성
-const useModalStore = create<ModalContextType>(() => ({
-  onAction: undefined,
-  onClose: undefined,
-}));
 
 interface ModalProps extends RNModalProps {
   visible: boolean;
@@ -59,8 +47,6 @@ export function Modal({
     };
   });
 
-  useModalStore.setState({ onAction, onClose });
-
   useEffect(() => {
     animationProgress.value = withTiming(visible ? 1 : 0, { duration: 200 });
   }, [visible, animationProgress]);
@@ -69,7 +55,9 @@ export function Modal({
     <RNModal visible={visible} onRequestClose={onClose} transparent {...props}>
       <Animated.View style={[modalStyles.container, animatedContainerStyle]}>
         <View style={modalStyles.content}>
-          <Pressable style={modalStyles.closeButton} onPress={onClose}>
+          <Pressable
+            style={modalStyles.closeButton}
+            onPress={() => onClose?.()}>
             <XIcon size={20} color={theme.value.color['gray-4']} />
           </Pressable>
           {children}
@@ -147,10 +135,8 @@ export function ModalAction({
   text,
   ...props
 }: ModalActionProps) {
-  const { onAction } = useModalStore();
-
   return (
-    <Button variant="solid-white" onPress={onAction} {...props}>
+    <Button variant="solid-white" {...props}>
       <ButtonText variant="solid-white" size="md">
         {text}
       </ButtonText>
@@ -168,10 +154,8 @@ export function ModalCancel({
   text,
   ...props
 }: ModalCancelProps) {
-  const { onClose } = useModalStore();
-
   return (
-    <Button variant="outlined-white" onPress={onClose} {...props}>
+    <Button variant="outlined-white" {...props}>
       <ButtonText variant="outlined-white" size="md">
         {text}
       </ButtonText>
