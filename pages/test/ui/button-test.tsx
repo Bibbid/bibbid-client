@@ -1,5 +1,7 @@
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
+import { bottomSheetOverlay } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { Modal } from '~/shared/ui/modal';
 import {
@@ -13,6 +15,16 @@ import {
 
 export default function ButtonTest() {
   const [openModal, setOpenModal] = useState(false);
+
+  const openBottomSheet = () => {
+    bottomSheetOverlay.open(({ isOpen, close }) => (
+      <BottomSheetView style={{ paddingBottom: 48 }}>
+        <View>
+          <Text>BOTTOM SHEET</Text>
+        </View>
+      </BottomSheetView>
+    ));
+  };
 
   return (
     <View
@@ -33,25 +45,25 @@ export default function ButtonTest() {
         <Button
           variant="solid-gray"
           size="md"
-          onPress={() => setOpenModal(true)}>
+          onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-gray" size="md">
-            Open Modal
+            Open Sheet
           </ButtonText>
         </Button>
         <Button
           variant="solid-light"
           size="md"
-          onPress={() => setOpenModal(true)}>
+          onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-light" size="md">
-            Open Modal
+            Open Sheet
           </ButtonText>
         </Button>
         <Button
           variant="solid-white"
           size="md"
-          onPress={() => setOpenModal(true)}>
+          onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-white" size="md">
-            Open Modal
+            Open Sheet
           </ButtonText>
         </Button>
       </View>
@@ -90,8 +102,8 @@ export default function ButtonTest() {
           <ModalDescription>Modal Description</ModalDescription>
         </ModalHeader>
         <ModalFooter>
-          <ModalCancel text="Cancel" />
-          <ModalAction text="Action" />
+          <ModalCancel text="Cancel" onPress={() => setOpenModal(false)} />
+          <ModalAction text="Action" onPress={() => setOpenModal(false)} />
         </ModalFooter>
       </Modal>
     </View>
