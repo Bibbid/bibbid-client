@@ -44,7 +44,6 @@ export const buttonStyles = StyleSheet.create((theme) => ({
     },
   },
   text: {
-    fontWeight: '600',
     variants: {
       variant: {
         'solid-gray': {

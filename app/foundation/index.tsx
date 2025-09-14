@@ -1,7 +1,8 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TestPage } from '~/pages/test';
 import { TopNavigation } from '~/shared/ui/navigation';
+import { CustomText } from '~/shared/ui/text';
 
 export default function Foundation() {
   const { bottom } = useSafeAreaInsets();
@@ -9,11 +10,19 @@ export default function Foundation() {
   return (
     <View style={{ flex: 1, paddingBottom: bottom }}>
       <TopNavigation
-        left={<Text style={{ color: 'white', fontSize: 16 }}>Left</Text>}
-        center={
-          <Text style={{ color: 'white', fontSize: 16 }}>Foundation</Text>
+        left={
+          <CustomText style={{ color: 'white', fontSize: 16 }}>Left</CustomText>
         }
-        right={<Text style={{ color: 'white', fontSize: 16 }}>Right</Text>}
+        center={
+          <CustomText style={{ color: 'white', fontSize: 16 }}>
+            Foundation
+          </CustomText>
+        }
+        right={
+          <CustomText style={{ color: 'white', fontSize: 16 }}>
+            Right
+          </CustomText>
+        }
       />
       <TestPage />
     </View>

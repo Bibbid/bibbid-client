@@ -1,5 +1,6 @@
 import '../translation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as Font from 'expo-font';
 import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DevToolsBubble } from 'react-native-react-query-devtools';
@@ -10,7 +11,17 @@ import { Toast } from '~/shared/ui/toast';
 
 const queryClient = new QueryClient();
 
+/**
+ * Font loading issues on Android
+ * - https://github.com/expo/expo/issues/33108
+ * - https://github.com/expo/expo/issues/33673
+ */
+
 export default function Layout() {
+  // 폰트 로딩 상태 확인
+  const loadedFonts = Font.getLoadedFonts();
+  console.log('Loaded fonts:', loadedFonts);
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <QueryClientProvider client={queryClient}>
@@ -36,6 +47,5 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.color['gray-1'],
-    fontFamily: 'Montserrat',
   },
 }));

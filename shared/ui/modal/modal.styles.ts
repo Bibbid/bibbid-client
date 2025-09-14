@@ -31,7 +31,6 @@ export const modalStyles = StyleSheet.create((theme) => ({
   },
   title: {
     fontSize: theme.fontSize['xl'],
-    fontWeight: theme.fontWeight['bold'],
     color: theme.color['gray-11'],
   },
   subTitle: {

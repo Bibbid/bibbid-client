@@ -1,6 +1,6 @@
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { bottomSheetOverlay } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { Modal } from '~/shared/ui/modal';
@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalTitle,
 } from '~/shared/ui/modal/modal';
+import { CustomText } from '~/shared/ui/text';
 
 export default function ButtonTest() {
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +21,7 @@ export default function ButtonTest() {
     bottomSheetOverlay.open(({ isOpen, close }) => (
       <BottomSheetView style={{ paddingBottom: 48 }}>
         <View>
-          <Text>BOTTOM SHEET</Text>
+          <CustomText>BOTTOM SHEET</CustomText>
         </View>
       </BottomSheetView>
     ));
@@ -47,7 +48,7 @@ export default function ButtonTest() {
           size="md"
           onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-gray" size="md">
-            Open Sheet
+            Sheet
           </ButtonText>
         </Button>
         <Button
@@ -55,7 +56,7 @@ export default function ButtonTest() {
           size="md"
           onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-light" size="md">
-            Open Sheet
+            Sheet
           </ButtonText>
         </Button>
         <Button
@@ -63,7 +64,7 @@ export default function ButtonTest() {
           size="md"
           onPress={() => openBottomSheet()}>
           <ButtonText variant="solid-white" size="md">
-            Open Sheet
+            Sheet
           </ButtonText>
         </Button>
       </View>
@@ -79,7 +80,7 @@ export default function ButtonTest() {
           size="md"
           onPress={() => setOpenModal(true)}>
           <ButtonText variant="outlined-gray" size="md">
-            Open Modal
+            Modal
           </ButtonText>
         </Button>
         <Button
@@ -87,12 +88,12 @@ export default function ButtonTest() {
           size="md"
           onPress={() => setOpenModal(true)}>
           <ButtonText variant="outlined-white" size="md">
-            Open Modal
+            Modal
           </ButtonText>
         </Button>
         <Button variant="ghost" size="md" onPress={() => setOpenModal(true)}>
           <ButtonText variant="ghost" size="md">
-            Open Modal
+            Modal
           </ButtonText>
         </Button>
       </View>

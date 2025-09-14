@@ -1,7 +1,8 @@
+import { CustomText } from '../text';
 import { bottomNavigationStyles } from './bottom-navigation.styles';
 import { LucideIcon } from 'lucide-react-native';
 import type { PropsWithChildren } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
@@ -42,7 +43,7 @@ export function BottomNavItem({
           active ? theme.value.color['gray-11'] : theme.value.color['gray-5']
         }
       />
-      <Text style={bottomNavigationStyles.label}>{label}</Text>
+      <CustomText style={bottomNavigationStyles.label}>{label}</CustomText>
     </Pressable>
   );
 }

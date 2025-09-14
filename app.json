@@ -17,7 +17,17 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/montserrat-variablefont_wght.ttf"]
+          "fonts": [
+            "./assets/fonts/Montserrat-Thin.ttf",
+            "./assets/fonts/Montserrat-ExtraLight.ttf",
+            "./assets/fonts/Montserrat-Light.ttf",
+            "./assets/fonts/Montserrat-Regular.ttf",
+            "./assets/fonts/Montserrat-Medium.ttf",
+            "./assets/fonts/Montserrat-SemiBold.ttf",
+            "./assets/fonts/Montserrat-Bold.ttf",
+            "./assets/fonts/Montserrat-ExtraBold.ttf",
+            "./assets/fonts/Montserrat-Black.ttf"
+          ]
         }
       ]
     ],

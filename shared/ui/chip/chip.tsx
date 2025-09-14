@@ -1,10 +1,11 @@
+import { CustomText } from '../text';
 import {
   chipIconColorMap,
   chipStyles,
   type ChipVariantsProps,
 } from './chip.styles';
 import { LucideIcon } from 'lucide-react-native';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { UnistylesThemes, useUnistyles } from 'react-native-unistyles';
 
 type ChipProps = ChipVariantsProps & {
@@ -27,7 +28,7 @@ export function Chip({
       {leftIcon && (
         <ChipIcon Icon={leftIcon} color={chipIconColorMap[type][color]} />
       )}
-      <Text style={chipStyles.text}>{label}</Text>
+      <CustomText style={chipStyles.text}>{label}</CustomText>
       {rightIcon && (
         <ChipIcon Icon={rightIcon} color={chipIconColorMap[type][color]} />
       )}

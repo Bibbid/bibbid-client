@@ -1,4 +1,5 @@
 import { Button, ButtonText } from '../button';
+import { CustomText, CustomTextProps } from '../text';
 import { modalStyles } from './modal.styles';
 import { XIcon } from 'lucide-react-native';
 import { useEffect } from 'react';
@@ -6,8 +7,6 @@ import {
   Pressable,
   PressableProps,
   Modal as RNModal,
-  Text,
-  TextProps,
   View,
   ViewProps,
   type ModalProps as RNModalProps,
@@ -77,17 +76,17 @@ export function ModalHeader({ children, style, ...props }: ModalHeaderProps) {
   );
 }
 
-interface ModalTitleProps extends TextProps {}
+interface ModalTitleProps extends CustomTextProps {}
 
 export function ModalTitle({ children, style, ...props }: ModalTitleProps) {
   return (
-    <Text style={[modalStyles.title, style]} {...props}>
+    <CustomText style={[modalStyles.title, style]} weight="600" {...props}>
       {children}
-    </Text>
+    </CustomText>
   );
 }
 
-interface ModalDescriptionProps extends TextProps {}
+interface ModalDescriptionProps extends CustomTextProps {}
 
 export function ModalDescription({
   children,
@@ -95,13 +94,13 @@ export function ModalDescription({
   ...props
 }: ModalDescriptionProps) {
   return (
-    <Text style={[modalStyles.description, style]} {...props}>
+    <CustomText style={[modalStyles.description, style]} {...props}>
       {children}
-    </Text>
+    </CustomText>
   );
 }
 
-interface ModalSubTitleProps extends TextProps {}
+interface ModalSubTitleProps extends CustomTextProps {}
 
 export function ModalSubTitle({
   children,
@@ -109,9 +108,9 @@ export function ModalSubTitle({
   ...props
 }: ModalSubTitleProps) {
   return (
-    <Text style={[modalStyles.subTitle, style]} {...props}>
+    <CustomText style={[modalStyles.subTitle, style]} {...props}>
       {children}
-    </Text>
+    </CustomText>
   );
 }
 
