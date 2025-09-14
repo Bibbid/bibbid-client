@@ -33,16 +33,18 @@ export default function BottomSheetOverlayProvider({
 
       setContent(newContent);
       setOptions(newOptions);
-
-      if (newContent) {
-        bottomSheetRef.current?.expand();
-      } else {
-        bottomSheetRef.current?.close();
-      }
     });
 
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (content) {
+      bottomSheetRef.current?.snapToIndex(0);
+    } else {
+      bottomSheetRef.current?.close();
+    }
+  }, [content]);
 
   return (
     <>

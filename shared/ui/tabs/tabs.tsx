@@ -1,3 +1,4 @@
+import { CustomText } from '../text';
 import { tabsStyles } from './tabs.styles';
 import {
   createContext,
@@ -9,10 +10,9 @@ import {
 } from 'react';
 import {
   Pressable,
+  View,
   type PressableProps,
   type StyleProp,
-  Text,
-  View,
   type ViewStyle,
 } from 'react-native';
 
@@ -75,7 +75,9 @@ export function TabButton<T extends string>({
       }}
       style={tabsStyles.button}
       {...props}>
-      <Text style={tabsStyles.text}>{label}</Text>
+      <CustomText weight={isActive ? '600' : '400'} style={tabsStyles.text}>
+        {label}
+      </CustomText>
     </Pressable>
   );
 }

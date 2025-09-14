@@ -1,3 +1,4 @@
+import { CustomText } from '../text';
 import { inputStyles } from './input.styles';
 import { useState, useEffect } from 'react';
 import { TextInput, View, type TextInputProps } from 'react-native';
@@ -23,6 +24,8 @@ const INPUT_STATE = {
 } as const;
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+const AnimatedText = Animated.createAnimatedComponent(CustomText);
 
 export default function Input({
   placeholder = 'Enter text',
@@ -130,7 +133,11 @@ export default function Input({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           style={[
-            { flex: 1, backgroundColor: 'transparent' },
+            {
+              flex: 1,
+              backgroundColor: 'transparent',
+              fontFamily: 'Montserrat-Regular',
+            },
             animatedTextInputStyle,
           ]}
           placeholder={placeholder}
@@ -140,15 +147,15 @@ export default function Input({
         />
       </Animated.View>
       {description && (
-        <Animated.Text
+        <AnimatedText
           style={[inputStyles.description, animatedDescriptionStyle]}>
           {description}
-        </Animated.Text>
+        </AnimatedText>
       )}
       {showMaxLength && (
-        <Animated.Text style={[inputStyles.count, animatedCountStyle]}>
+        <AnimatedText style={[inputStyles.count, animatedCountStyle]}>
           {props.value ? props.value.length : 0}/{props.maxLength}
-        </Animated.Text>
+        </AnimatedText>
       )}
     </View>
   );

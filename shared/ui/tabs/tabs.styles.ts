@@ -33,7 +33,6 @@ export const tabsStyles = StyleSheet.create((theme) => ({
       active: {
         true: {
           color: theme.color['gray-11'],
-          fontWeight: 600,
         },
         false: {
           color: theme.color['opacity-white-16'],

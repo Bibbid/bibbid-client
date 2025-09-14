@@ -1,3 +1,4 @@
+import { CustomText } from '../text';
 import { radioStyles } from './radio.styles';
 import {
   createContext,
@@ -11,7 +12,6 @@ import {
   Pressable,
   type PressableProps,
   type StyleProp,
-  Text,
   View,
   type ViewStyle,
 } from 'react-native';
@@ -80,7 +80,7 @@ export function RadioButton<T extends string>({
       <View style={radioStyles.container}>
         <View style={radioStyles.indicator} />
       </View>
-      <Text style={radioStyles.label}>{label}</Text>
+      <CustomText style={radioStyles.label}>{label}</CustomText>
     </Pressable>
   );
 }

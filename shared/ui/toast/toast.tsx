@@ -34,6 +34,7 @@ const baseTextStyle: StyleProp<TextStyle> = {
   fontWeight: 400,
   color: 'white',
   marginBottom: 0,
+  fontFamily: 'Montserrat-Regular',
 } as const;
 
 const toastConfig: ToastConfig = {
