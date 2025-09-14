@@ -17,7 +17,7 @@ export default function CustomBottomSheet({
   return (
     <BottomSheet
       ref={ref}
-      index={-1}
+      index={0}
       {...props}
       style={[bottomSheetStyles.container, style]}
       backgroundStyle={[bottomSheetStyles.background, backgroundStyle]}
