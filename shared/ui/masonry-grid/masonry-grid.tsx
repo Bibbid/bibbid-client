@@ -32,9 +32,11 @@ export function MasonryGrid<TItem extends BaseMasonryGridItemProps>({
       numColumns={2}
       optimizeItemArrangement={false}
       contentContainerStyle={masonryGridStyles.container}
+      keyExtractor={(item, index) => `${item.src}-${index}`}
       ItemSeparatorComponent={() => (
         <View style={masonryGridStyles.separator} />
       )}
+      ListFooterComponent={() => <View style={masonryGridStyles.spacing} />}
       {...props}
     />
   );

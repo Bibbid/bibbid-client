@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { MasonryGrid } from '~/shared/ui/masonry-grid';
 import { MasonryGridItem } from '~/shared/ui/masonry-grid/masonry-grid';
 import { TopNavigation } from '~/shared/ui/navigation';
@@ -65,12 +65,18 @@ export default function TestMasonryGridPage() {
           </CustomText>
         }
       />
-      <MasonryGrid
-        data={TEST_DATA}
-        renderItem={({ item, index }) => (
-          <MasonryGridItem item={item} index={index} total={TEST_DATA.length} />
-        )}
-      />
+      <ScrollView style={{ flex: 1 }}>
+        <MasonryGrid
+          data={TEST_DATA}
+          renderItem={({ item, index }) => (
+            <MasonryGridItem
+              item={item}
+              index={index}
+              total={TEST_DATA.length}
+            />
+          )}
+        />
+      </ScrollView>
     </View>
   );
 }

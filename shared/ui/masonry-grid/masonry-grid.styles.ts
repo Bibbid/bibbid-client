@@ -14,6 +14,10 @@ export const masonryGridStyles = StyleSheet.create((theme) => ({
     width: '100%',
     borderRadius: theme.radius['xs'],
   },
+  spacing: {
+    width: '100%',
+    height: 12,
+  },
   separator: {
     width: '100%',
     height: 14,
@@ -28,7 +32,6 @@ export const masonryGridStyles = StyleSheet.create((theme) => ({
   },
   bottomGradient: {
     position: 'absolute',
-    zIndex: 10,
     bottom: 0,
     left: 0,
     right: 0,
