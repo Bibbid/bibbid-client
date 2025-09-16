@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router';
-import { Home } from 'lucide-react-native';
+import { FlaskConical, Grid, Home } from 'lucide-react-native';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { BottomNavigation, BottomNavItem } from '~/shared/ui/navigation';
@@ -19,6 +19,16 @@ export default function Layout() {
           label="Home"
           onPress={() => router.push('/')}
         />
+        <BottomNavItem
+          Icon={FlaskConical}
+          label="Foundation"
+          onPress={() => router.push('/foundation')}
+        />
+        <BottomNavItem
+          Icon={Grid}
+          label="Masonry Grid"
+          onPress={() => router.push('/foundation/masonry-grid')}
+        />
       </BottomNavigation>
     </View>
   );
@@ -31,6 +41,6 @@ const styles = StyleSheet.create((theme) => ({
   },
   content: {
     backgroundColor: 'transparent',
-    marginBottom: 56,
+    paddingBottom: 70,
   },
 }));

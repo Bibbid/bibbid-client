@@ -107,6 +107,7 @@ export const COLOR_TOKEN = {
 } as const;
 
 export const RADIUS_TOKEN = {
+  xs: 2,
   sm: 4,
   md: 6,
   lg: 8,
