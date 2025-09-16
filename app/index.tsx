@@ -1,21 +1,12 @@
-import { router, Stack } from 'expo-router';
-import { View } from 'react-native';
-import { Button, ButtonText } from '~/shared/ui/button/button';
+import { Redirect } from 'expo-router';
+import { useAuth } from '~/shared/auth';
 
-export default function Home() {
-  return (
-    <>
-      <Stack.Screen options={{ title: 'Home' }} />
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button
-          variant="solid-gray"
-          size="md"
-          onPress={() => router.push('/foundation')}>
-          <ButtonText variant="solid-gray" size="md">
-            Go to Foundation
-          </ButtonText>
-        </Button>
-      </View>
-    </>
+export default function Root() {
+  const { isSignedIn } = useAuth();
+
+  return isSignedIn ? (
+    <Redirect href="/(authorized)/foundation" />
+  ) : (
+    <Redirect href="/(unauthorized)/sign-in" />
   );
 }
