@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "bibbid-client",
-    "slug": "bibbid-client",
+    "name": "bibbid",
+    "slug": "bibbid",
     "version": "1.0.0",
     "newArchEnabled": true,
-    "scheme": "bibbid-client",
+    "scheme": "bibbid",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -17,19 +17,63 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/Montserrat-Thin.ttf",
-            "./assets/fonts/Montserrat-ExtraLight.ttf",
-            "./assets/fonts/Montserrat-Light.ttf",
-            "./assets/fonts/Montserrat-Regular.ttf",
-            "./assets/fonts/Montserrat-Medium.ttf",
-            "./assets/fonts/Montserrat-SemiBold.ttf",
-            "./assets/fonts/Montserrat-Bold.ttf",
-            "./assets/fonts/Montserrat-ExtraBold.ttf",
-            "./assets/fonts/Montserrat-Black.ttf"
-          ]
+          "android": {
+            "fonts": [
+              "./assets/fonts/Montserrat-Black.ttf",
+              "./assets/fonts/Montserrat-Bold.ttf",
+              "./assets/fonts/Montserrat-ExtraBold.ttf",
+              "./assets/fonts/Montserrat-ExtraLight.ttf",
+              "./assets/fonts/Montserrat-Light.ttf",
+              "./assets/fonts/Montserrat-Medium.ttf",
+              "./assets/fonts/Montserrat-Regular.ttf",
+              "./assets/fonts/Montserrat-SemiBold.ttf",
+              "./assets/fonts/Montserrat-Thin.ttf",
+              {
+                "fontFamily": "Montserrat",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Montserrat-Thin.ttf",
+                    "weight": 100
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-ExtraLight.ttf",
+                    "weight": 200
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-Light.ttf",
+                    "weight": 300
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-Regular.ttf",
+                    "weight": 400
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-Medium.ttf",
+                    "weight": 500
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-SemiBold.ttf",
+                    "weight": 600
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-Bold.ttf",
+                    "weight": 700
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-ExtraBold.ttf",
+                    "weight": 800
+                  },
+                  {
+                    "path": "./assets/fonts/Montserrat-Black.ttf",
+                    "weight": 900
+                  }
+                ]
+              }
+            ]
+          }
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
@@ -43,7 +87,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.babu.bibbid"
