@@ -1,10 +1,15 @@
+import { X } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TestPage } from '~/pages/test';
+import { useAuth } from '~/shared/auth';
+import { Button } from '~/shared/ui/button';
 import { TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
 
 export default function Foundation() {
+  const { signOut } = useAuth();
+
   const { bottom } = useSafeAreaInsets();
 
   return (
@@ -19,9 +24,9 @@ export default function Foundation() {
           </CustomText>
         }
         right={
-          <CustomText style={{ color: 'white', fontSize: 16 }}>
-            Right
-          </CustomText>
+          <Button onPress={() => signOut()}>
+            <X />
+          </Button>
         }
       />
       <TestPage />
