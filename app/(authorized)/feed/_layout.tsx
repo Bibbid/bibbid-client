@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-export default function Layout() {
+export default function FeedLayout() {
   return (
     <View style={styles.container}>
       <Stack
