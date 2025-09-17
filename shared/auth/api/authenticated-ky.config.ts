@@ -1,7 +1,7 @@
 import { useAuthStore } from '../model';
 import { publicApi } from '~/shared/api/ky.config';
 
-export const authenticatedApi = publicApi.extend({
+export const api = publicApi.extend({
   hooks: {
     beforeRequest: [
       (request) => {

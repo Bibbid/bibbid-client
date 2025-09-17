@@ -1,0 +1,17 @@
+import * as v from 'valibot';
+
+export const GeneralResponseSchema = <T extends v.GenericSchema>(schema: T) =>
+  v.object({
+    data: schema,
+  });
+
+export const VoidResponseSchema = GeneralResponseSchema(v.object({}));
+
+export type VoidResponse = v.InferOutput<typeof VoidResponseSchema>;
+
+export const ErrorResponseSchema = v.object({
+  code: v.string(),
+  message: v.string(),
+});
+
+export type ErrorResponse = v.InferOutput<typeof ErrorResponseSchema>;
