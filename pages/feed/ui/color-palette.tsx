@@ -62,8 +62,8 @@ function ChipButton({ displayName, rgb }: ChipButtonProps) {
 
 const styles = StyleSheet.create((theme) => ({
   container: {
-    flex: 1,
     paddingHorizontal: 20,
+    paddingVertical: 8,
   },
   separator: {
     width: 10,

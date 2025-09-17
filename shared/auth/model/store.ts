@@ -37,6 +37,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       if (accessToken && refreshToken) {
         console.log('[INFO] device auth info is found');
+        console.log('[INFO] accessToken', accessToken);
+        console.log('[INFO] refreshToken', refreshToken);
 
         set({
           ...get(),
