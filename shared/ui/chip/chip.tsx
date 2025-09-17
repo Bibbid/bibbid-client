@@ -12,11 +12,15 @@ type ChipProps = ChipVariantsProps & {
   label: string;
   leftIcon?: LucideIcon;
   rightIcon?: LucideIcon;
+  iconSize?: number;
+  customColor?: string;
 };
 
 export function Chip({
   type = 'solid',
   color = 'gray',
+  iconSize = 18,
+  customColor,
   label,
   leftIcon,
   rightIcon,
@@ -26,11 +30,19 @@ export function Chip({
   return (
     <View style={chipStyles.container}>
       {leftIcon && (
-        <ChipIcon Icon={leftIcon} color={chipIconColorMap[type][color]} />
+        <ChipIcon
+          Icon={leftIcon}
+          color={customColor ?? chipIconColorMap[type][color]}
+          size={iconSize}
+        />
       )}
       <CustomText style={chipStyles.text}>{label}</CustomText>
       {rightIcon && (
-        <ChipIcon Icon={rightIcon} color={chipIconColorMap[type][color]} />
+        <ChipIcon
+          Icon={rightIcon}
+          color={customColor ?? chipIconColorMap[type][color]}
+          size={iconSize}
+        />
       )}
     </View>
   );
@@ -39,13 +51,22 @@ export function Chip({
 export function ChipIcon({
   Icon,
   color,
+  size,
 }: {
   Icon: LucideIcon;
-  color: keyof UnistylesThemes['light']['color'] | 'white';
+  color: keyof UnistylesThemes['light']['color'] | string;
+  size: number;
 }) {
   const { theme } = useUnistyles();
 
   return (
-    <Icon size={18} color={color === 'white' ? 'white' : theme.color[color]} />
+    <Icon
+      size={size}
+      color={
+        color in theme.color
+          ? theme.color[color as keyof typeof theme.color]
+          : color
+      }
+    />
   );
 }
