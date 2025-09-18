@@ -5,7 +5,7 @@ export default function Root() {
   const { isSignedIn } = useAuth();
 
   return isSignedIn ? (
-    <Redirect href="/(authorized)/foundation" />
+    <Redirect href="/(authorized)/home" />
   ) : (
     <Redirect href="/(unauthorized)/sign-in" />
   );
