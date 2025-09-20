@@ -1,4 +1,4 @@
-import { StatusBar, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';

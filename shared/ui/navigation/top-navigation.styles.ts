@@ -18,6 +18,18 @@ export const topNavigationStyles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  back: {
+    width: 32,
+    height: 32,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: 'white',
+    fontSize: theme.fontSize['md'],
+    fontWeight: theme.fontWeight['medium'],
+  },
   blank: {
     width: 40,
     height: '100%',

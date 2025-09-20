@@ -1,6 +1,6 @@
-import { CustomText, type CustomTextProps } from '../text';
+import { CustomText } from '../text';
 import { buttonStyles, type ButtonVariantsProps } from './button.styles';
-import { Pressable, type PressableProps } from 'react-native';
+import { Pressable, type TextProps, type PressableProps } from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -12,7 +12,7 @@ import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
 type ButtonProps = ButtonVariantsProps & PressableProps & {};
 
-type ButtonTextProps = ButtonVariantsProps & CustomTextProps;
+type ButtonTextProps = ButtonVariantsProps & TextProps;
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -94,14 +94,14 @@ export function Button({
 
 export function ButtonText({
   children,
-  variant,
-  size,
+  variant = 'solid-gray',
+  size = 'md',
   ...props
 }: ButtonTextProps) {
   buttonStyles.useVariants({ variant, size });
 
   return (
-    <CustomText style={buttonStyles.text} weight="600" {...props}>
+    <CustomText style={buttonStyles.text} {...props}>
       {children}
     </CustomText>
   );
