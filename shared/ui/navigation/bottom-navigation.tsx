@@ -1,10 +1,27 @@
 import { CustomText } from '../text';
 import { bottomNavigationStyles } from './bottom-navigation.styles';
-import { LucideIcon } from 'lucide-react-native';
+import { Href, usePathname, useRouter } from 'expo-router';
 import type { PropsWithChildren } from 'react';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SvgProps } from 'react-native-svg';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+
+export function useActiveRoute(href: Href): boolean {
+  const pathname = usePathname();
+  const hrefPath = typeof href === 'string' ? href : href.pathname || '';
+  const actualPath = hrefPath.replace(/^\/\([^)]+\)/, '');
+
+  if (pathname === actualPath) {
+    return true;
+  }
+
+  if (actualPath !== '/' && pathname.startsWith(actualPath + '/')) {
+    return true;
+  }
+
+  return false;
+}
 
 export function BottomNavigation({ children }: PropsWithChildren) {
   const { bottom } = useSafeAreaInsets();
@@ -17,30 +34,31 @@ export function BottomNavigation({ children }: PropsWithChildren) {
 }
 
 interface BottomNavItemProps {
-  Icon: LucideIcon;
+  Icon: React.FC<SvgProps>;
   label: string;
-  onPress: () => void;
-  active?: boolean;
+  href: Href;
 }
 
-export function BottomNavItem({
-  Icon,
-  label,
-  onPress,
-  active,
-}: BottomNavItemProps) {
+export function BottomNavItem({ Icon, label, href }: BottomNavItemProps) {
   const theme = useAnimatedTheme();
 
+  const router = useRouter();
+
+  const isActive = useActiveRoute(href);
+
   bottomNavigationStyles.useVariants({
-    active,
+    active: isActive,
   });
 
   return (
-    <Pressable style={bottomNavigationStyles.item} onPress={onPress}>
+    <Pressable
+      style={bottomNavigationStyles.item}
+      onPress={() => router.push(href)}>
       <Icon
-        size={24}
+        width={24}
+        height={24}
         color={
-          active ? theme.value.color['gray-11'] : theme.value.color['gray-5']
+          isActive ? theme.value.color['gray-11'] : theme.value.color['gray-5']
         }
       />
       <CustomText style={bottomNavigationStyles.label}>{label}</CustomText>

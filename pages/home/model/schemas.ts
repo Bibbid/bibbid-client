@@ -4,6 +4,6 @@ import { GeneralResponseSchema } from '~/shared/api/response-schemas';
 
 export const GetTodayColorResponseSchema = GeneralResponseSchema(
   v.object({
-    color: colorSchema,
+    todayColor: colorSchema,
   })
 );

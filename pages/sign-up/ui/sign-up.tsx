@@ -3,8 +3,10 @@ import * as WebBrowser from 'expo-web-browser';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import Logo from '~/assets/icons/logo-big.svg';
 import { useAuthStore } from '~/shared/auth';
 import { Button, ButtonText } from '~/shared/ui/button';
+import { CustomText } from '~/shared/ui/text';
 
 interface LoginResult {
   //   error: ErrorApiResponse | null;
@@ -75,7 +77,21 @@ export default function SignIn() {
 
   return (
     <View style={signUpstyles.container}>
-      <LoginButton type="google" onPress={() => handleGoogleLogin()} />
+      <View style={signUpstyles.content}>
+        <Logo height={28} width={53} />
+        <View>
+          <CustomText style={signUpstyles.text}>One color a day</CustomText>
+          <CustomText style={signUpstyles.text}>
+            BBD is how you meet yourself
+          </CustomText>
+        </View>
+      </View>
+      <View style={signUpstyles.footer}>
+        <CustomText style={signUpstyles.loginDescription}>
+          Let&apos;s get started
+        </CustomText>
+        <LoginButton type="google" onPress={() => handleGoogleLogin()} />
+      </View>
     </View>
   );
 }
@@ -88,8 +104,8 @@ function LoginButton({
   onPress: () => void;
 }) {
   return (
-    <Button onPress={onPress} style={signUpstyles.loginButton}>
-      <ButtonText weight="600" style={signUpstyles.loginButtonText}>
+    <Button size="xl" onPress={onPress} style={signUpstyles.loginButton}>
+      <ButtonText size="lg" style={signUpstyles.loginButtonText}>
         Google Login
       </ButtonText>
     </Button>
@@ -99,12 +115,39 @@ function LoginButton({
 const signUpstyles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     rowGap: 10,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    transform: [{ translateY: -60 }],
+  },
+  text: {
+    fontSize: theme.fontSize['lg'],
+    textAlign: 'center',
+    color: 'white',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 32,
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginDescription: {
+    fontSize: theme.fontSize['sm'],
+    color: theme.color['gray-5'],
   },
   loginButton: {
     width: '100%',
@@ -115,7 +158,9 @@ const signUpstyles = StyleSheet.create((theme) => ({
   },
   loginButtonText: {
     width: '100%',
+    fontWeight: theme.fontWeight['semibold'],
     color: 'white',
     textAlign: 'center',
+    fontSize: theme.fontSize['md'],
   },
 }));

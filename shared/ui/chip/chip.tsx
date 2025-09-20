@@ -5,35 +5,41 @@ import {
   type ChipVariantsProps,
 } from './chip.styles';
 import { LucideIcon } from 'lucide-react-native';
-import { View } from 'react-native';
+import { type StyleProp, View, type ViewStyle } from 'react-native';
+import { SvgProps } from 'react-native-svg';
 import { UnistylesThemes, useUnistyles } from 'react-native-unistyles';
 
 type ChipProps = ChipVariantsProps & {
   label: string;
-  leftIcon?: LucideIcon;
-  rightIcon?: LucideIcon;
-  iconSize?: number;
+  leftIcon?: LucideIcon | React.FC<SvgProps>;
+  rightIcon?: LucideIcon | React.FC<SvgProps>;
+  iconWidth?: number;
+  iconHeight?: number;
   customColor?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function Chip({
   type = 'solid',
   color = 'gray',
-  iconSize = 18,
+  iconWidth = 18,
+  iconHeight = 18,
   customColor,
   label,
   leftIcon,
   rightIcon,
+  style,
 }: ChipProps) {
   chipStyles.useVariants({ type, color });
 
   return (
-    <View style={chipStyles.container}>
+    <View style={[chipStyles.container, style]}>
       {leftIcon && (
         <ChipIcon
           Icon={leftIcon}
           color={customColor ?? chipIconColorMap[type][color]}
-          size={iconSize}
+          width={iconWidth}
+          height={iconHeight}
         />
       )}
       <CustomText style={chipStyles.text}>{label}</CustomText>
@@ -41,7 +47,8 @@ export function Chip({
         <ChipIcon
           Icon={rightIcon}
           color={customColor ?? chipIconColorMap[type][color]}
-          size={iconSize}
+          width={iconWidth}
+          height={iconHeight}
         />
       )}
     </View>
@@ -51,17 +58,20 @@ export function Chip({
 export function ChipIcon({
   Icon,
   color,
-  size,
+  width,
+  height,
 }: {
-  Icon: LucideIcon;
+  Icon: LucideIcon | React.FC<SvgProps>;
   color: keyof UnistylesThemes['light']['color'] | string;
-  size: number;
+  width: number;
+  height: number;
 }) {
   const { theme } = useUnistyles();
 
   return (
     <Icon
-      size={size}
+      width={width}
+      height={height}
       color={
         color in theme.color
           ? theme.color[color as keyof typeof theme.color]

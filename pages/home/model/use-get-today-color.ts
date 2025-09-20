@@ -19,7 +19,7 @@ export default function useGetTodayColor({
       return result.data.data;
     },
     onSuccess: (data) => {
-      onSuccess?.(data.color);
+      onSuccess?.(data.todayColor);
     },
   });
 }

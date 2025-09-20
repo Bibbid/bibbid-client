@@ -2,13 +2,13 @@ import { StatusBar, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+import Logo from '~/assets/icons/logo.svg';
 import {
   GetTodayColorSection,
   ResetColorBoundary,
   WhatsNewSection,
 } from '~/pages/home';
 import { TopNavigation } from '~/shared/ui/navigation';
-import { CustomText } from '~/shared/ui/text';
 
 export default function HomeScreen() {
   const theme = useAnimatedTheme();
@@ -21,9 +21,7 @@ export default function HomeScreen() {
             backgroundColor={theme.value.color['gray-2']}
             barStyle="light-content"
           />
-          <TopNavigation
-            left={<CustomText style={styles.title}>BBD</CustomText>}
-          />
+          <TopNavigation left={<Logo />} />
         </View>
         <View style={styles.content}>
           <GetTodayColorSection />

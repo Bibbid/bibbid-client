@@ -42,11 +42,13 @@ export const chipStyles = StyleSheet.create((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
     paddingVertical: 5.5,
     rowGap: 2,
+    height: 32,
     variants: {
       type: {
         solid: {},
@@ -111,7 +113,7 @@ export const chipStyles = StyleSheet.create((theme) => ({
     ],
   },
   text: {
-    fontSize: 14,
+    fontSize: theme.fontSize['sm'],
     variants: {
       type: {
         solid: {

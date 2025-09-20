@@ -1,9 +1,9 @@
 import useGetTodayColor from '../model/use-get-today-color';
 import { format } from 'date-fns';
-import { Dot } from 'lucide-react-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import Dot from '~/assets/icons/dot-solid.svg';
 import { Color } from '~/entities/color';
 import { mmkv } from '~/shared/model';
 import { Button, ButtonText } from '~/shared/ui/button';
@@ -34,6 +34,7 @@ export default function GetTodayColorSection() {
           label={todayColor.displayName}
           leftIcon={Dot}
           customColor={todayColor.rgbHexCode}
+          style={styles.chip}
         />
       </View>
       <View style={styles.right}>
@@ -74,5 +75,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   buttonText: {
     fontWeight: theme.fontWeight['semibold'],
+  },
+  chip: {
+    width: 62,
   },
 }));
