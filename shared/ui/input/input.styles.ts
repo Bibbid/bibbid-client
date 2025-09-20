@@ -5,6 +5,7 @@ export const inputStyles = StyleSheet.create((theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     rowGap: 6,
   },
   root: {
@@ -28,7 +29,7 @@ export const inputStyles = StyleSheet.create((theme) => ({
     position: 'absolute',
     right: 14,
     top: '50%',
-    transform: [{ translateY: -20 }],
+    transform: [{ translateY: '-50%' }],
     fontSize: theme.fontSize['xs'],
     color: theme.color['gray-6'],
   },

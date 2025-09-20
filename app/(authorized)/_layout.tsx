@@ -7,7 +7,10 @@ import { Authorized } from '~/shared/auth';
 import { useActiveRoutes } from '~/shared/lib';
 import { BottomNavigation, BottomNavItem } from '~/shared/ui/navigation';
 
-const GNB_HIDE_PATHS: Href[] = ['/(authorized)/home/today-color'];
+const GNB_HIDE_PATHS: Href[] = [
+  '/(authorized)/home/today-color',
+  '/(authorized)/settings/change-name',
+];
 
 export default function AuthorizedLayout() {
   const isGnbHideRoute = useActiveRoutes(GNB_HIDE_PATHS);

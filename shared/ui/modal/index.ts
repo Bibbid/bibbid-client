@@ -1,1 +1,2 @@
-export { Modal } from './modal';
+export * from './modal';
+export { default as ConfirmModal } from './confirm-modal';

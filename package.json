@@ -43,6 +43,7 @@
     "i18next": "^23.7.20",
     "ky": "^1.8.2",
     "lucide-react-native": "^0.540.0",
+    "overlay-kit": "^1.8.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.63.0",

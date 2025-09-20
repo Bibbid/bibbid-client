@@ -1,6 +1,20 @@
 import { useAuthStore } from '../model';
-import reissueToken from './reissue-token';
+import { TokenResponseSchema } from '../model/schemas';
 import { publicApi } from '~/shared/api/ky.config';
+import { parseResponse } from '~/shared/api/response-parser';
+import { GeneralResponseSchema } from '~/shared/api/response-schemas';
+
+async function reissueToken({ refreshToken }: { refreshToken: string }) {
+  const json = await api
+    .post('api/v1/auth/reissue', {
+      json: {
+        refreshToken,
+      },
+    })
+    .json();
+
+  return parseResponse(json, GeneralResponseSchema(TokenResponseSchema));
+}
 
 export const api = publicApi.extend({
   hooks: {

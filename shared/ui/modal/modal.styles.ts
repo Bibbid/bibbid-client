@@ -26,16 +26,19 @@ export const modalStyles = StyleSheet.create((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     rowGap: 8,
   },
   title: {
+    fontWeight: theme.fontWeight['semibold'],
     fontSize: theme.fontSize['xl'],
     color: theme.color['gray-11'],
+    textAlign: 'center',
   },
   subTitle: {
     fontSize: theme.fontSize['lg'],
     color: theme.color['gray-11'],
+    textAlign: 'center',
   },
   description: {
     fontSize: theme.fontSize['md'],
@@ -53,5 +56,18 @@ export const modalStyles = StyleSheet.create((theme) => ({
     right: 14,
     top: 14,
     color: theme.color['gray-4'],
+  },
+}));
+
+export const confirmModalStyles = StyleSheet.create((theme) => ({
+  cancelButtonText: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['md'],
+    color: 'white',
+  },
+  actionButtonText: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['md'],
+    color: theme.color['gray-3'],
   },
 }));

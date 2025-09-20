@@ -1,14 +1,17 @@
+import { SuspenseQuery } from '@suspensive/react-query';
+import { Suspense } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
+import { getMyProfileOptions } from '~/pages/profile';
+import { ChangeName } from '~/pages/settings';
 import {
   BlankNavItem,
   NavBackButton,
   NavCenterTitle,
   TopNavigation,
 } from '~/shared/ui/navigation';
-import { CustomText } from '~/shared/ui/text';
 
-export default function ChangeName() {
+export default function ChangeNameScreen() {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <TopNavigation
@@ -16,8 +19,11 @@ export default function ChangeName() {
         center={<NavCenterTitle title="Change Name" />}
         right={<BlankNavItem />}
       />
-
-      <CustomText>Change Name</CustomText>
+      <Suspense>
+        <SuspenseQuery {...getMyProfileOptions()}>
+          {({ data }) => <ChangeName name={data.name} />}
+        </SuspenseQuery>
+      </Suspense>
     </SafeAreaView>
   );
 }
