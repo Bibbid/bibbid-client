@@ -1,5 +1,5 @@
 import { Button, ButtonText } from '../button';
-import { CustomText, CustomTextProps } from '../text';
+import { CustomText } from '../text';
 import { modalStyles } from './modal.styles';
 import { XIcon } from 'lucide-react-native';
 import { useEffect } from 'react';
@@ -7,9 +7,11 @@ import {
   Pressable,
   PressableProps,
   Modal as RNModal,
+  type TextProps,
   View,
-  ViewProps,
+  type ViewProps,
   type ModalProps as RNModalProps,
+  TextStyle,
 } from 'react-native';
 import Animated, {
   interpolateColor,
@@ -21,6 +23,7 @@ import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
 interface ModalProps extends RNModalProps {
   visible: boolean;
+  showCloseButton?: boolean;
   onAction?: () => void;
   onClose?: () => void;
 }
@@ -30,6 +33,7 @@ export function Modal({
   onAction,
   onClose,
   children,
+  showCloseButton = true,
   ...props
 }: ModalProps) {
   const theme = useAnimatedTheme();
@@ -54,11 +58,13 @@ export function Modal({
     <RNModal visible={visible} onRequestClose={onClose} transparent {...props}>
       <Animated.View style={[modalStyles.container, animatedContainerStyle]}>
         <View style={modalStyles.content}>
-          <Pressable
-            style={modalStyles.closeButton}
-            onPress={() => onClose?.()}>
-            <XIcon size={20} color={theme.value.color['gray-4']} />
-          </Pressable>
+          {showCloseButton && (
+            <Pressable
+              style={modalStyles.closeButton}
+              onPress={() => onClose?.()}>
+              <XIcon size={20} color={theme.value.color['gray-4']} />
+            </Pressable>
+          )}
           {children}
         </View>
       </Animated.View>
@@ -76,17 +82,17 @@ export function ModalHeader({ children, style, ...props }: ModalHeaderProps) {
   );
 }
 
-interface ModalTitleProps extends CustomTextProps {}
+interface ModalTitleProps extends TextProps {}
 
 export function ModalTitle({ children, style, ...props }: ModalTitleProps) {
   return (
-    <CustomText style={[modalStyles.title, style]} weight="600" {...props}>
+    <CustomText style={[modalStyles.title, style]} {...props}>
       {children}
     </CustomText>
   );
 }
 
-interface ModalDescriptionProps extends CustomTextProps {}
+interface ModalDescriptionProps extends TextProps {}
 
 export function ModalDescription({
   children,
@@ -100,7 +106,7 @@ export function ModalDescription({
   );
 }
 
-interface ModalSubTitleProps extends CustomTextProps {}
+interface ModalSubTitleProps extends TextProps {}
 
 export function ModalSubTitle({
   children,
@@ -126,17 +132,19 @@ export function ModalFooter({ children, style, ...props }: ModalFooterProps) {
 
 interface ModalActionProps extends PressableProps {
   text?: string;
+  textStyle?: TextStyle;
 }
 
 export function ModalAction({
   children,
   style,
   text,
+  textStyle,
   ...props
 }: ModalActionProps) {
   return (
     <Button variant="solid-white" {...props}>
-      <ButtonText variant="solid-white" size="md">
+      <ButtonText variant="solid-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
     </Button>
@@ -145,17 +153,19 @@ export function ModalAction({
 
 interface ModalCancelProps extends PressableProps {
   text?: string;
+  textStyle?: TextStyle;
 }
 
 export function ModalCancel({
   children,
   style,
   text,
+  textStyle,
   ...props
 }: ModalCancelProps) {
   return (
     <Button variant="outlined-white" {...props}>
-      <ButtonText variant="outlined-white" size="md">
+      <ButtonText variant="outlined-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
     </Button>

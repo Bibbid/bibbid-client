@@ -1,5 +1,5 @@
 import { CircleCheck, Info } from 'lucide-react-native';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import _Toast, {
   BaseToast,
   ToastConfig,
@@ -55,7 +55,16 @@ const toastConfig: ToastConfig = {
         contentContainerStyle={baseContentContainerStyle}
         text1Style={mergedText1Style}
         text2Style={mergedText2Style}
-        renderLeadingIcon={() => <Info color="white" size={18} />}
+        renderLeadingIcon={() => (
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}>
+            <Info color="white" size={18} />
+          </View>
+        )}
         {...props}
       />
     );
@@ -77,8 +86,17 @@ const toastConfig: ToastConfig = {
         contentContainerStyle={baseContentContainerStyle}
         text1Style={mergedText1Style}
         text2Style={mergedText2Style}
+        text1NumberOfLines={3}
+        text2NumberOfLines={3}
         renderLeadingIcon={() => (
-          <CircleCheck color={COLOR_TOKEN['green-3']} size={18} />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}>
+            <CircleCheck color={COLOR_TOKEN['green-3']} size={18} />
+          </View>
         )}
         {...props}
       />
@@ -101,8 +119,17 @@ const toastConfig: ToastConfig = {
         contentContainerStyle={baseContentContainerStyle}
         text1Style={mergedText1Style}
         text2Style={mergedText2Style}
+        text1NumberOfLines={3}
+        text2NumberOfLines={3}
         renderLeadingIcon={() => (
-          <Info color={COLOR_TOKEN['red-3']} size={18} />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}>
+            <Info color={COLOR_TOKEN['red-3']} size={18} />
+          </View>
         )}
         {...props}
       />
@@ -125,8 +152,17 @@ const toastConfig: ToastConfig = {
         contentContainerStyle={baseContentContainerStyle}
         text1Style={mergedText1Style}
         text2Style={mergedText2Style}
+        text1NumberOfLines={3}
+        text2NumberOfLines={3}
         renderLeadingIcon={() => (
-          <Info color={COLOR_TOKEN['yellow-3']} size={18} />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}>
+            <Info color={COLOR_TOKEN['yellow-3']} size={18} />
+          </View>
         )}
         {...props}
       />
@@ -135,7 +171,15 @@ const toastConfig: ToastConfig = {
 };
 
 function Toast() {
-  return <_Toast config={toastConfig} type="default" topOffset={70} />;
+  return (
+    <_Toast
+      config={toastConfig}
+      type="default"
+      topOffset={70}
+      bottomOffset={72}
+      position="bottom"
+    />
+  );
 }
 
 type OmittedToastProps = 'text1' | 'text2' | 'text1Style' | 'text2Style';
@@ -147,10 +191,6 @@ type ToastMessageType = {
   text2Style?: StyleProp<TextStyle>;
 };
 
-/**
- * 상단 토스트
- * - 클릭 이벤트 시 토스트 닫기를 기본으로 합니다
- */
 function showToast({
   text1,
   text2,
@@ -166,7 +206,7 @@ function showToast({
     text2Style,
     onPress: () => {
       onPress?.();
-      _Toast.hide(); // 클릭 시 토스트 닫기를 기본으로 합니다
+      _Toast.hide();
     },
     ...props,
   });
