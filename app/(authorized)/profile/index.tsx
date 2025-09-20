@@ -1,9 +1,13 @@
+import { SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Settings } from 'lucide-react-native';
-import { Pressable, View } from 'react-native';
+import { Suspense } from 'react';
+import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+import { getMyTokensOptions } from '~/entities/token';
+import { Profile } from '~/pages/profile';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
@@ -19,7 +23,15 @@ export default function ProfileScreen() {
         left={
           <Button>
             <ButtonText size="sm">Token</ButtonText>
-            <CustomText style={styles.token}>1100p</CustomText>
+            <Suspense>
+              <SuspenseQuery {...getMyTokensOptions()}>
+                {({ data }) => (
+                  <CustomText style={styles.token}>
+                    {data.tokenCount}p
+                  </CustomText>
+                )}
+              </SuspenseQuery>
+            </Suspense>
           </Button>
         }
         right={
@@ -28,7 +40,7 @@ export default function ProfileScreen() {
           </Pressable>
         }
       />
-      <View style={styles.content}></View>
+      <Profile />
     </SafeAreaView>
   );
 }
@@ -41,11 +53,5 @@ const styles = StyleSheet.create((theme) => ({
     color: 'white',
     fontWeight: theme.fontWeight['semibold'],
     paddingLeft: 4,
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: 40,
-    paddingHorizontal: 20,
   },
 }));
