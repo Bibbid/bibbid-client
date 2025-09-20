@@ -44,7 +44,9 @@ export default function HomeScreen() {
             <TopNavigation
               left={<Logo />}
               style={{
-                backgroundColor: 'transparent',
+                backgroundColor: !!backgroundColor
+                  ? 'transparent'
+                  : theme.value.color['gray-1'],
               }}
             />
           </View>
