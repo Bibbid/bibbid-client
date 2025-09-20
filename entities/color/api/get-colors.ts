@@ -1,4 +1,4 @@
-import { GetColorsResponseSchema } from './schemas';
+import { GetColorsResponseSchema } from '../model/schemas';
 import { parseResponse } from '~/shared/api/response-parser';
 import { api } from '~/shared/auth';
 

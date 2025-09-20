@@ -1,10 +1,10 @@
 import getColors from '../api/get-colors';
-import { feedQueryKeys } from './query-keys';
 import { queryOptions } from '@tanstack/react-query';
+import { queryKeys } from '~/shared/api/query-keys';
 
 export default function getColorsOptions() {
   return queryOptions({
-    queryKey: feedQueryKeys['get-colors'],
+    queryKey: queryKeys.color['get-colors'],
     queryFn: async () => {
       const result = await getColors();
 
