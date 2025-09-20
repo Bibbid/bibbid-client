@@ -2,11 +2,12 @@ import getMyProfileOptions from '../model/get-my-profile-options';
 import ProfileFeeds from './profile-feeds';
 import { SuspenseQueries } from '@suspensive/react-query';
 import { Image } from 'expo-image';
-import { Sparkles } from 'lucide-react-native';
 import { Suspense } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import Sparkles from '~/assets/icons/sparkles.svg';
 import { getColorsOptions } from '~/entities/color';
+import type { MyProfile } from '~/entities/profile';
 import { Button } from '~/shared/ui/button';
 import { CustomText } from '~/shared/ui/text';
 
@@ -21,37 +22,13 @@ export default function Profile() {
           const { data: colors } = colorsData;
 
           return (
-            <View style={styles.container}>
-              <View style={styles.buddyContainer}>
-                <View style={styles.buddyWrapper}>
-                  <Image
-                    source={{
-                      uri:
-                        myProfile.buddyImage?.presignedUrl ??
-                        FALLBACK_IMAGE_URL,
-                    }}
-                    style={styles.buddyImage}
-                  />
-                  <Button
-                    variant="solid-light"
-                    style={styles.buddyCustomButton}>
-                    <Sparkles color="white" size={24} />
-                  </Button>
-                </View>
-                <View style={styles.nameContainer}>
-                  <CustomText style={styles.username}>
-                    {myProfile.name}
-                  </CustomText>
-                  <CustomText style={styles.buddyName}>
-                    {myProfile.buddyName}
-                  </CustomText>
-                </View>
-              </View>
+            <ScrollView style={styles.container}>
+              <BuddySection myProfile={myProfile} />
               <ProfileFeeds
                 colors={colors}
                 count={myProfile.collectedColorCount}
               />
-            </View>
+            </ScrollView>
           );
         }}
       </SuspenseQueries>
@@ -59,13 +36,32 @@ export default function Profile() {
   );
 }
 
+function BuddySection({ myProfile }: { myProfile: MyProfile }) {
+  return (
+    <View style={styles.buddyContainer}>
+      <View style={styles.buddyWrapper}>
+        <Image
+          source={{
+            uri: myProfile.buddyImage?.presignedUrl ?? FALLBACK_IMAGE_URL,
+          }}
+          style={styles.buddyImage}
+        />
+        <Button variant="solid-light" style={styles.buddyCustomButton}>
+          <Sparkles />
+        </Button>
+      </View>
+      <View style={styles.nameContainer}>
+        <CustomText style={styles.username}>{myProfile.name}</CustomText>
+        <CustomText style={styles.buddyName}>{myProfile.buddyName}</CustomText>
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
     paddingHorizontal: 20,
-    rowGap: 20,
   },
   buddyContainer: {
     display: 'flex',
@@ -73,7 +69,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: 16,
-    paddingTop: 20,
+    paddingVertical: 20,
   },
   buddyWrapper: {
     position: 'relative',

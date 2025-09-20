@@ -1,7 +1,11 @@
-import { View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+import { useRouter } from 'expo-router';
+import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { Color } from '~/entities/color';
+import type { ColorFeed } from '~/entities/profile';
 import { hexToRgba } from '~/shared/lib';
+import { Folder } from '~/shared/ui/folder';
 import { CustomText } from '~/shared/ui/text';
 
 interface ProfileFeedsProps {
@@ -9,11 +13,73 @@ interface ProfileFeedsProps {
   count: number;
 }
 
+const MOCK_DATA: ColorFeed[] = [
+  {
+    color: 'Red',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+      { objectKey: '2', presignedUrl: 'https://picsum.photos/200/300' },
+      { objectKey: '3', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Orange',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Yellow',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Green',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Blue',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Purple',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+  {
+    color: 'Pink',
+    feedCount: 10,
+    latestFeedImages: [
+      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
+    ],
+    latestComment: 'Comment',
+  },
+];
+
 export default function ProfileFeeds({ colors, count }: ProfileFeedsProps) {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>My Posts</CustomText>
       <MyColorPalette colors={colors} count={count} />
+      <ColorFeeds colorFeeds={MOCK_DATA} />
     </View>
   );
 }
@@ -36,6 +102,7 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
 
           return (
             <View
+              key={displayName}
               style={[
                 styles.color,
                 {
@@ -43,7 +110,6 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
                   boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${shadow}`,
                 },
               ]}
-              key={displayName}
             />
           );
         })}
@@ -52,12 +118,48 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
   );
 }
 
+interface ColorFeedsProps {
+  colorFeeds: ColorFeed[];
+}
+
+function ColorFeeds({ colorFeeds }: ColorFeedsProps) {
+  const router = useRouter();
+
+  return (
+    <FlashList
+      data={colorFeeds}
+      renderItem={({ item, index }) => {
+        const isEvenColumn = index % 2 === 0;
+
+        return (
+          <Pressable
+            onPress={() =>
+              router.push(`/profile/color-feed?color=${item.color}`)
+            }
+            style={{
+              paddingRight: isEvenColumn ? 4 : 0,
+              paddingLeft: isEvenColumn ? 0 : 4,
+            }}>
+            <Folder
+              title={item.color}
+              images={item.latestFeedImages.map((image) => image.presignedUrl)}
+              amount={item.feedCount}
+              comment={item.latestComment}
+            />
+          </Pressable>
+        );
+      }}
+      numColumns={2}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+    />
+  );
+}
+
 const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    height: 90,
     rowGap: 16,
   },
   title: {
@@ -97,5 +199,9 @@ const styles = StyleSheet.create((theme) => ({
     position: 'relative',
     flex: 1,
     height: 32,
+  },
+  separator: {
+    width: '100%',
+    height: 14,
   },
 }));
