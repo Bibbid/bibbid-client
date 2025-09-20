@@ -7,3 +7,10 @@ export const authorizationSchema = v.object({
 });
 
 export type Authorization = v.InferOutput<typeof authorizationSchema>;
+
+export const TokenResponseSchema = v.object({
+  accessToken: v.string(),
+  refreshToken: v.string(),
+});
+
+export type TokenResponse = v.InferOutput<typeof TokenResponseSchema>;
