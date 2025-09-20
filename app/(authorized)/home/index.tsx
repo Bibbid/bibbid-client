@@ -1,10 +1,10 @@
-import { StatusBar, View } from 'react-native';
+import { ScrollView, StatusBar, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import Logo from '~/assets/icons/logo.svg';
 import {
-  GetTodayColorSection,
+  TodayColorSection,
   ResetColorBoundary,
   WhatsNewSection,
 } from '~/pages/home';
@@ -23,10 +23,11 @@ export default function HomeScreen() {
           />
           <TopNavigation left={<Logo />} />
         </View>
-        <View style={styles.content}>
-          <GetTodayColorSection />
+        <ScrollView style={styles.content}>
+          <TodayColorSection />
+          <View style={styles.gap} />
           <WhatsNewSection />
-        </View>
+        </ScrollView>
       </ResetColorBoundary>
     </SafeAreaView>
   );
@@ -47,7 +48,10 @@ const styles = StyleSheet.create((theme) => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    rowGap: 40,
     paddingHorizontal: 20,
+  },
+  gap: {
+    width: '100%',
+    height: 40,
   },
 }));

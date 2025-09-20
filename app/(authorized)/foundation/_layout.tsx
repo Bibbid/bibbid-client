@@ -20,6 +20,5 @@ const styles = StyleSheet.create((theme) => ({
   },
   content: {
     backgroundColor: 'transparent',
-    paddingBottom: 70,
   },
 }));

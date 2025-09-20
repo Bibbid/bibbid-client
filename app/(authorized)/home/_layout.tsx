@@ -1,15 +1,16 @@
 import { Stack } from 'expo-router';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 
 export default function Layout() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <Stack
         screenOptions={{ contentStyle: styles.content, headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="today-color" />
       </Stack>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -20,6 +21,5 @@ const styles = StyleSheet.create((theme) => ({
   },
   content: {
     backgroundColor: 'transparent',
-    paddingBottom: 70,
   },
 }));
