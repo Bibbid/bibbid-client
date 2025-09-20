@@ -1,15 +1,15 @@
 import { Stack } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 export default function Layout() {
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <View style={styles.container}>
       <Stack
         screenOptions={{ contentStyle: styles.content, headerShown: false }}>
         <Stack.Screen name="index" />
       </Stack>
-    </SafeAreaView>
+    </View>
   );
 }
 

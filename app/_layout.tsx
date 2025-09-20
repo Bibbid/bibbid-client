@@ -22,9 +22,7 @@ export default function Layout() {
       <QueryClientProvider client={queryClient}>
         <BottomSheetOverlayProvider>
           <AuthLoaded>
-            <SafeAreaView
-              edges={['top', 'left', 'right']}
-              style={styles.container}>
+            <SafeAreaView edges={['left', 'right']} style={styles.container}>
               <Stack
                 screenOptions={{
                   headerShown: false,

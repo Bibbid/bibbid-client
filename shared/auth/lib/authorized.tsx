@@ -6,7 +6,7 @@ interface AuthorizedProps extends PropsWithChildren {
   fallback?: Href;
 }
 
-export default function Unauthorized({
+export default function Authorized({
   children,
   fallback = '/',
 }: AuthorizedProps) {
