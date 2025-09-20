@@ -13,13 +13,13 @@ import { CustomText } from '~/shared/ui/text';
 export default function GetTodayColorSection() {
   const [todayColor, setTodayColor] = useState<Color>({
     displayName: mmkv.getString('todayColorDisplayName') || '???',
-    rgb: mmkv.getString('todayColorRgb') || 'white',
+    rgbHexCode: mmkv.getString('todayColorRgb') || 'white',
   });
 
   const { mutateAsync } = useGetTodayColor({
     onSuccess: (data) => {
       mmkv.set('todayColorDisplayName', data.displayName);
-      mmkv.set('todayColorRgb', data.rgb);
+      mmkv.set('todayColorRgb', data.rgbHexCode);
       mmkv.set('todayColorDate', format(new Date(), 'yyyy-MM-dd'));
       setTodayColor(data);
     },
@@ -33,7 +33,7 @@ export default function GetTodayColorSection() {
           type="tinted"
           label={todayColor.displayName}
           leftIcon={Dot}
-          customColor={todayColor.rgb}
+          customColor={todayColor.rgbHexCode}
         />
       </View>
       <View style={styles.right}>

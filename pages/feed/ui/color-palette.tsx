@@ -1,16 +1,15 @@
-import getColorsOptions from '../model/get-colors-options';
 import { FlashList } from '@shopify/flash-list';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { Dot } from 'lucide-react-native';
-import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { create } from 'zustand';
+import { getColorsOptions } from '~/entities/color';
 import { Chip } from '~/shared/ui/chip';
 
 const ALL_COLOR = {
   displayName: 'ALL',
-  rgb: '#ffffff',
+  rgbHexCode: '#ffffff',
 };
 
 const useSelectedColor = create<{
@@ -29,8 +28,8 @@ export default function ColorPalette() {
           <FlashList
             data={[ALL_COLOR, ...data]}
             keyExtractor={({ displayName }) => displayName}
-            renderItem={({ item: { displayName, rgb } }) => (
-              <ChipButton displayName={displayName} rgb={rgb} />
+            renderItem={({ item: { displayName, rgbHexCode } }) => (
+              <ChipButton displayName={displayName} rgb={rgbHexCode} />
             )}
             horizontal
             ItemSeparatorComponent={() => <View style={styles.separator} />}
