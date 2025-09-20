@@ -4,8 +4,11 @@ import { PresignedUrlSchema } from '~/shared/model';
 export const ColorFeedSchema = v.object({
   color: v.string(),
   feedCount: v.number(),
+  latestFeedImages: v.array(PresignedUrlSchema),
   latestComment: v.string(),
 });
+
+export type ColorFeed = v.InferOutput<typeof ColorFeedSchema>;
 
 export const MyProfileSchema = v.object({
   userId: v.number(),
