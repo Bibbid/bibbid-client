@@ -9,6 +9,7 @@ export default function ResetColorBoundary({ children }: PropsWithChildren) {
     if (today !== mmkv.getString('todayColorDate')) {
       mmkv.delete('todayColorDisplayName');
       mmkv.delete('todayColorRgb');
+      mmkv.delete('todayColorShadow');
       mmkv.delete('todayColorDate');
     }
 

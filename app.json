@@ -74,7 +74,13 @@
         }
       ],
       "expo-secure-store",
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Bibbid to access your camera"
+        }
+      ]
     ],
     "experiments": {
       "turboModule": true,

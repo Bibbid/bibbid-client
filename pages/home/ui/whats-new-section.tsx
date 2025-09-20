@@ -109,6 +109,7 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    paddingHorizontal: 20,
     rowGap: 20,
   },
   header: {
