@@ -1,6 +1,7 @@
 import '../translation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
+import { OverlayProvider } from 'overlay-kit';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DevToolsBubble } from 'react-native-react-query-devtools';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,17 +23,19 @@ export default function Layout() {
       <QueryClientProvider client={queryClient}>
         <BottomSheetOverlayProvider>
           <AuthLoaded>
-            <SafeAreaView edges={['left', 'right']} style={styles.container}>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                  contentStyle: styles.container,
-                }}>
-                <Stack.Screen name="index" options={{ title: 'Home' }} />
-              </Stack>
-              <Toast />
-              {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-            </SafeAreaView>
+            <OverlayProvider>
+              <SafeAreaView edges={['left', 'right']} style={styles.container}>
+                <Stack
+                  screenOptions={{
+                    headerShown: false,
+                    contentStyle: styles.container,
+                  }}>
+                  <Stack.Screen name="index" options={{ title: 'Home' }} />
+                </Stack>
+                <Toast />
+                {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
+              </SafeAreaView>
+            </OverlayProvider>
           </AuthLoaded>
         </BottomSheetOverlayProvider>
       </QueryClientProvider>
