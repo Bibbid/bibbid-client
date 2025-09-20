@@ -21,5 +21,6 @@ export default function useGetTodayColor({
     onSuccess: (data) => {
       onSuccess?.(data.todayColor);
     },
+    onError: (error) => {},
   });
 }
