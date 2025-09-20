@@ -32,7 +32,14 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
       <View style={styles.colorPalette}>
         {colors.map((color) => (
           <View
-            style={[styles.color, { backgroundColor: color.rgbHexCode }]}
+            style={[
+              styles.color,
+              {
+                backgroundColor: color.rgbHexCode,
+                boxShadow:
+                  'inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2)',
+              },
+            ]}
             key={color.displayName}
           />
         ))}
@@ -83,6 +90,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
   },
   color: {
+    position: 'relative',
     flex: 1,
     height: 32,
   },

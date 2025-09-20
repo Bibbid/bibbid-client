@@ -1,6 +1,6 @@
 import getMyProfileOptions from '../model/get-my-profile-options';
 import ProfileFeeds from './profile-feeds';
-import { SuspenseQueries, SuspenseQuery } from '@suspensive/react-query';
+import { SuspenseQueries } from '@suspensive/react-query';
 import { Image } from 'expo-image';
 import { Sparkles } from 'lucide-react-native';
 import { Suspense } from 'react';
