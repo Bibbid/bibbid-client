@@ -4,9 +4,9 @@ import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import {
   GetTodayColorSection,
-  HeroImageSlide,
   ResetColorBoundary,
-} from '~/pages/home/ui';
+  WhatsNewSection,
+} from '~/pages/home';
 import { TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
 
@@ -21,11 +21,13 @@ export default function HomeScreen() {
             backgroundColor={theme.value.color['gray-2']}
             barStyle="light-content"
           />
-          <TopNavigation left={<CustomText>BBD</CustomText>} />
+          <TopNavigation
+            left={<CustomText style={styles.title}>BBD</CustomText>}
+          />
         </View>
         <View style={styles.content}>
           <GetTodayColorSection />
-          <HeroImageSlide />
+          <WhatsNewSection />
         </View>
       </ResetColorBoundary>
     </SafeAreaView>
@@ -38,6 +40,11 @@ const styles = StyleSheet.create((theme) => ({
   },
   header: {
     paddingHorizontal: 8,
+  },
+  title: {
+    fontSize: theme.fontSize['2xl'],
+    fontWeight: theme.fontWeight['semibold'],
+    color: 'white',
   },
   content: {
     display: 'flex',
