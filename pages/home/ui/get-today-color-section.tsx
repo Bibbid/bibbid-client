@@ -34,6 +34,7 @@ export default function GetTodayColorSection() {
           label={todayColor.displayName}
           leftIcon={Dot}
           customColor={todayColor.rgbHexCode}
+          style={styles.chip}
         />
       </View>
       <View style={styles.right}>
@@ -74,5 +75,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   buttonText: {
     fontWeight: theme.fontWeight['semibold'],
+  },
+  chip: {
+    width: 62,
   },
 }));

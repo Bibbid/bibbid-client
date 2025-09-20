@@ -5,7 +5,7 @@ import {
   type ChipVariantsProps,
 } from './chip.styles';
 import { LucideIcon } from 'lucide-react-native';
-import { View } from 'react-native';
+import { type StyleProp, View, type ViewStyle } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 import { UnistylesThemes, useUnistyles } from 'react-native-unistyles';
 
@@ -16,6 +16,7 @@ type ChipProps = ChipVariantsProps & {
   iconWidth?: number;
   iconHeight?: number;
   customColor?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function Chip({
@@ -27,11 +28,12 @@ export function Chip({
   label,
   leftIcon,
   rightIcon,
+  style,
 }: ChipProps) {
   chipStyles.useVariants({ type, color });
 
   return (
-    <View style={chipStyles.container}>
+    <View style={[chipStyles.container, style]}>
       {leftIcon && (
         <ChipIcon
           Icon={leftIcon}

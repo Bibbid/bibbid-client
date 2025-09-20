@@ -1,9 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
 import { SuspenseQuery } from '@suspensive/react-query';
-import { Dot } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { create } from 'zustand';
+import Dot from '~/assets/icons/dot-solid.svg';
 import { getColorsOptions } from '~/entities/color';
 import { Chip } from '~/shared/ui/chip';
 

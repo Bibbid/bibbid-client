@@ -42,9 +42,10 @@ export const chipStyles = StyleSheet.create((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     paddingVertical: 5.5,
     rowGap: 2,
     height: 32,
