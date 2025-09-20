@@ -14,7 +14,7 @@ export default function CameraCaptureButton() {
   const [permission, requestPermission] = useCameraPermissions();
 
   const handlePress = async () => {
-    if (!permission?.granted) {
+    if (!permission || !permission.granted) {
       requestPermission();
     }
 
