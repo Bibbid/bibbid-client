@@ -1,8 +1,13 @@
 import { Image as ExpoImage } from 'expo-image';
-import { Modal, View } from 'react-native';
+import { Pen } from 'lucide-react-native';
+import { Modal, Pressable, View } from 'react-native';
 import type { Image } from 'react-native-image-crop-picker';
 import { StyleSheet } from 'react-native-unistyles';
+import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+import Dot from '~/assets/icons/dot-solid.svg';
+import { mmkv } from '~/shared/model';
 import { Button, ButtonText } from '~/shared/ui/button';
+import { Chip } from '~/shared/ui/chip';
 import {
   BlankNavItem,
   NavBackButton,
@@ -18,6 +23,12 @@ interface UploadModalProps {
 
 export default function UploadModal({ image, onDismiss }: UploadModalProps) {
   const visible = !!image;
+
+  const theme = useAnimatedTheme();
+
+  const todayColorDisplayName =
+    mmkv.getString('todayColorDisplayName') || 'gray';
+  const todayColor = mmkv.getString('todayColorRgb') || 'gray';
 
   return (
     <Modal visible={visible} onDismiss={onDismiss} animationType="slide">
@@ -35,7 +46,27 @@ export default function UploadModal({ image, onDismiss }: UploadModalProps) {
             </CustomText>
           </View>
           <View style={styles.imageWrapper}>
-            <View style={styles.imageHeader}></View>
+            <View style={styles.imageOverlay}>
+              <View style={styles.imageOverlayHeader}>
+                <Chip
+                  type="tinted"
+                  label={todayColorDisplayName}
+                  customColor={todayColor}
+                  leftIcon={Dot}
+                />
+              </View>
+              <View style={styles.imageOverlayFooter}>
+                <Pressable style={styles.imageOverlayFooterButton}>
+                  <CustomText style={styles.imageOverlayFooterButtonText}>
+                    Click here to add a comment
+                  </CustomText>
+                  <Pen
+                    size={20}
+                    color={theme.value.color['opacity-white-80']}
+                  />
+                </Pressable>
+              </View>
+            </View>
             <ExpoImage source={{ uri: image?.path }} style={styles.image} />
           </View>
         </View>
@@ -74,12 +105,41 @@ const styles = StyleSheet.create((theme) => ({
     width: '100%',
     height: 320,
   },
-  imageHeader: {
+  imageOverlay: {
     position: 'absolute',
+    zIndex: 10,
     top: 0,
-    height: 64,
-    padding: 16,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  imageOverlayHeader: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    padding: 16,
+  },
+  imageOverlayFooter: {
+    width: '100%',
+    padding: 16,
+  },
+  imageOverlayFooterButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    columnGap: 4,
+  },
+  imageOverlayFooterButtonText: {
+    color: theme.color['opacity-white-80'],
+    fontSize: theme.fontSize['sm'],
   },
   image: {
     width: '100%',
