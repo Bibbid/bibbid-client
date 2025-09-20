@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { Color } from '~/entities/color';
+import { hexToRgba } from '~/shared/lib';
 import { CustomText } from '~/shared/ui/text';
 
 interface ProfileFeedsProps {
@@ -30,19 +31,22 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
         <CustomText style={styles.colorPaletteSubtitle}>{count}</CustomText>
       </View>
       <View style={styles.colorPalette}>
-        {colors.map((color) => (
-          <View
-            style={[
-              styles.color,
-              {
-                backgroundColor: color.rgbHexCode,
-                boxShadow:
-                  'inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2)',
-              },
-            ]}
-            key={color.displayName}
-          />
-        ))}
+        {colors.map(({ displayName, rgbHexCode, shadowHexCode }) => {
+          const shadow = hexToRgba({ hex: shadowHexCode, alpha: 0.2 });
+
+          return (
+            <View
+              style={[
+                styles.color,
+                {
+                  backgroundColor: rgbHexCode,
+                  boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${shadow}`,
+                },
+              ]}
+              key={displayName}
+            />
+          );
+        })}
       </View>
     </View>
   );
