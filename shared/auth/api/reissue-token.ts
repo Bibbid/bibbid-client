@@ -9,7 +9,7 @@ export default async function reissueToken({
   refreshToken: string;
 }) {
   const json = await api
-    .post('/auth/reissue-token', {
+    .post('api/v1/auth/reissue-token', {
       json: {
         refreshToken,
       },
