@@ -2,6 +2,7 @@ import { CustomText } from '../text';
 import { topNavigationStyles } from './top-navigation.styles';
 import { useRouter } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
+import { useCallback } from 'react';
 import { Pressable, type StyleProp, View, type ViewStyle } from 'react-native';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
@@ -27,13 +28,25 @@ export function TopNavigation({
   );
 }
 
-export function NavBackButton() {
+interface NavBackButtonProps {
+  onPress?: () => void;
+}
+
+export function NavBackButton({ onPress }: NavBackButtonProps) {
   const router = useRouter();
 
   const theme = useAnimatedTheme();
 
+  const handlePress = useCallback(() => {
+    if (onPress) {
+      onPress();
+    } else {
+      router.back();
+    }
+  }, [onPress, router]);
+
   return (
-    <Pressable style={topNavigationStyles.back} onPress={() => router.back()}>
+    <Pressable style={topNavigationStyles.back} onPress={handlePress}>
       <ChevronLeft size={24} color={theme.value.color['gray-5']} />
     </Pressable>
   );
