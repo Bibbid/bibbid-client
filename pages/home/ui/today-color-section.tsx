@@ -1,14 +1,17 @@
+import getTodayMyFeedOptions from '../model/get-today-my-feed-options';
 import useGetTodayColor from '../model/use-get-today-color';
-import CameraCaptureButton from './camera-capture-button';
+import CameraCaptureArea from './camera-capture-area';
+import { SuspenseQuery } from '@suspensive/react-query';
 import { format } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { RefreshCcw } from 'lucide-react-native';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { Color } from '~/entities/color';
+import { TodayUploadedFeed } from '~/entities/feed';
 import { hexToRgba } from '~/shared/lib';
 import { mmkv } from '~/shared/model';
 import { Button, ButtonText } from '~/shared/ui/button';
@@ -16,6 +19,16 @@ import { Chip } from '~/shared/ui/chip';
 import { CustomText } from '~/shared/ui/text';
 
 export default function TodayColorSection() {
+  return (
+    <Suspense>
+      <SuspenseQuery {...getTodayMyFeedOptions()}>
+        {({ data }) => <TodayColor data={data} />}
+      </SuspenseQuery>
+    </Suspense>
+  );
+}
+
+function TodayColor({ data }: { data: TodayUploadedFeed[] }) {
   const [todayColor, setTodayColor] = useState<Color>({
     displayName: mmkv.getString('todayColorDisplayName') || '???',
     rgbHexCode: mmkv.getString('todayColorRgb') || 'white',
@@ -71,7 +84,7 @@ export default function TodayColorSection() {
             )}
           </View>
         </View>
-        {hasTodayColor && <CameraCaptureButton />}
+        {hasTodayColor && <CameraCaptureArea data={data} />}
       </View>
     </View>
   );

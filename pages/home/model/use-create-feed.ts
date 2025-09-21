@@ -1,15 +1,18 @@
 import createFeed from '../api/create-feed';
 import type { CreateFeedRequest } from './parameters';
-import { useMutation } from '@tanstack/react-query';
-import type { FeedDetail } from '~/entities/feed';
+import type { CreateFeedResponse } from './schemas';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '~/shared/api/query-keys';
 
 export default function useCreateFeed({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: FeedDetail) => void;
+  onSuccess?: (data: CreateFeedResponse) => void;
   onError?: (error: Error) => void;
 }) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ['user:create-feed'],
     mutationFn: async (data: CreateFeedRequest) => {
@@ -23,6 +26,9 @@ export default function useCreateFeed({
     },
     onSuccess: (data) => {
       onSuccess?.(data);
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.feed['get-today-my-feed'],
+      });
     },
     onError: (error) => {
       onError?.(error);
