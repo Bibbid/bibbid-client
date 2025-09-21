@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
@@ -20,7 +21,14 @@ export default function UploadSuccessful() {
 
   return (
     <View style={styles.container}>
-      <CustomText>Upload Successful</CustomText>
+      <View style={styles.content}>
+        <CustomText style={styles.title}>Upload Successful</CustomText>
+        <Image
+          source={require('~/assets/images/purchase.png')}
+          style={styles.image}
+        />
+        <CustomText style={styles.description}>+100</CustomText>
+      </View>
       <View style={styles.footer}>
         <Button
           variant="solid-gray"
@@ -44,10 +52,26 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  description: {
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: 24,
+  },
+  title: {
     color: theme.color['gray-11'],
     fontSize: theme.fontSize['3xl'],
     fontWeight: theme.fontWeight['semibold'],
+    textAlign: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  description: {
+    color: 'white',
+    fontSize: theme.fontSize['2xl'],
     textAlign: 'center',
   },
   footer: {
