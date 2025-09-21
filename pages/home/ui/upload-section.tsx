@@ -20,7 +20,7 @@ import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import Dot from '~/assets/icons/dot-solid.svg';
-import { mmkv } from '~/shared/model';
+import { useTodayColor } from '~/entities/color';
 import { CustomBottomSheet } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { Chip } from '~/shared/ui/chip';
@@ -85,9 +85,7 @@ export default function UploadSection() {
     },
   });
 
-  const todayColorDisplayName =
-    mmkv.getString('todayColorDisplayName') || 'gray';
-  const todayColor = mmkv.getString('todayColorRgb') || 'gray';
+  const { displayName, rgbHexCode } = useTodayColor();
 
   const onSubmit = handleSubmit(
     async (data) => {
@@ -134,8 +132,8 @@ export default function UploadSection() {
               <View style={styles.imageOverlayHeader}>
                 <Chip
                   type="tinted"
-                  label={todayColorDisplayName}
-                  customColor={todayColor}
+                  label={displayName}
+                  customColor={rgbHexCode}
                   leftIcon={Dot}
                 />
               </View>

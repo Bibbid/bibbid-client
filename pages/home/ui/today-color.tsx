@@ -2,16 +2,15 @@ import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import { ContinuousConfetti } from 'react-native-fast-confetti';
 import { StyleSheet } from 'react-native-unistyles';
-import { mmkv } from '~/shared/model';
+import { useTodayColor } from '~/entities/color';
+import { hexToRgba } from '~/shared/lib';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { CustomText } from '~/shared/ui/text';
 
 export default function TodayColor() {
   const router = useRouter();
 
-  const todayColor = mmkv.getString('todayColorRgb');
-  const todayColorName = mmkv.getString('todayColorDisplayName');
-  const todayColorShadow = mmkv.getString('todayColorShadow');
+  const { displayName, rgbHexCode, shadowHexCode } = useTodayColor();
 
   return (
     <View style={styles.container}>
@@ -21,8 +20,8 @@ export default function TodayColor() {
           style={[
             styles.color,
             {
-              backgroundColor: todayColor,
-              boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${todayColorShadow}`,
+              backgroundColor: rgbHexCode,
+              boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${hexToRgba({ hex: shadowHexCode, alpha: 0.2 })}`,
             },
           ]}
         />
@@ -30,9 +29,7 @@ export default function TodayColor() {
           <CustomText style={styles.descriptionHeader}>
             Today&apos;s Color
           </CustomText>
-          <CustomText style={styles.descriptionBody}>
-            {todayColorName}
-          </CustomText>
+          <CustomText style={styles.descriptionBody}>{displayName}</CustomText>
         </View>
       </View>
       <View style={styles.footer}>

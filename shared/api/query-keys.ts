@@ -4,6 +4,11 @@ export const queryKeys = {
   },
   color: {
     'get-colors': ['color', 'get-colors'],
+    'get-my-today-color': (today: string) => [
+      'color',
+      'get-my-today-color',
+      today,
+    ],
   },
   profile: {
     'get-my-profile': ['profile', 'get-my-profile'],
