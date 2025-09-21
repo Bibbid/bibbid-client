@@ -12,8 +12,8 @@ export default async function getColorFeeds({
   const json = await api
     .get('feeds', {
       searchParams: {
-        color,
-        cursor,
+        ...(color !== 'All' && { color }),
+        ...(cursor !== 0 && { cursor }),
         size,
         sort,
       },

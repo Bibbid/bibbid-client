@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
-import { Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedDetail } from '~/pages/feed';
 import { NavBackButton, TopNavigation } from '~/shared/ui/navigation';
@@ -16,7 +15,7 @@ export default function FeedDetailScreen() {
   }
 
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <View style={styles.container}>
       <TopNavigation
         left={<NavBackButton />}
         right={
@@ -26,7 +25,7 @@ export default function FeedDetailScreen() {
         }
       />
       <FeedDetail feedId={Number(feedId)} />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -34,6 +33,7 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.color['gray-1'],
+    justifyContent: 'flex-start',
   },
   optionButton: {
     padding: 4,

@@ -8,7 +8,7 @@ import { getColorsOptions } from '~/entities/color';
 import { Chip } from '~/shared/ui/chip';
 
 const ALL_COLOR = {
-  displayName: 'ALL',
+  displayName: 'All',
   rgbHexCode: '#ffffff',
 };
 
@@ -16,7 +16,7 @@ export const useSelectedColor = create<{
   selectedColor: string;
   setSelectedColor: (color: string) => void;
 }>((set) => ({
-  selectedColor: 'ALL',
+  selectedColor: 'All',
   setSelectedColor: (color) => set({ selectedColor: color }),
 }));
 

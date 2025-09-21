@@ -1,11 +1,13 @@
 import getFeedDetailOptions from '../model/get-feed-detail-options';
 import { SuspenseQuery } from '@suspensive/react-query';
+import { format } from 'date-fns';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MoreHorizontal } from 'lucide-react-native';
 import { Suspense } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+import Dot from '~/assets/icons/dot-solid.svg';
 import { Chip } from '~/shared/ui/chip';
 import { CustomText } from '~/shared/ui/text';
 
@@ -21,27 +23,28 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
                 style={styles.image}
               />
               <LinearGradient
-                colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
+                colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 0.5 }}
                 style={styles.bottomGradient}
               />
-            </View>
-            <View style={styles.imageFooter}>
-              <View style={styles.imageFooterLeft}>
-                <CustomText style={styles.imageFooterLeftText}>
-                  Color of the Day
-                </CustomText>
-                <Chip
-                  type="tinted"
-                  label={data.color.displayName}
-                  customColor={data.color.rgbHexCode}
-                />
-              </View>
-              <View style={styles.imageFooterRight}>
-                <CustomText style={styles.imageFooterRightText}>
-                  {data.createdAt}
-                </CustomText>
+              <View style={styles.imageFooter}>
+                <View style={styles.imageFooterLeft}>
+                  <CustomText style={styles.imageFooterLeftText}>
+                    Color of the Day
+                  </CustomText>
+                  <Chip
+                    type="tinted"
+                    leftIcon={Dot}
+                    label={data.color.displayName}
+                    customColor={data.color.rgbHexCode}
+                  />
+                </View>
+                <View style={styles.imageFooterRight}>
+                  <CustomText style={styles.imageFooterRightText}>
+                    {format(data.createdAt, 'yyyy-MM-dd')}
+                  </CustomText>
+                </View>
               </View>
             </View>
             <View style={styles.uploader}>
@@ -50,10 +53,12 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
                 style={styles.uploaderImage}
               />
               <View style={styles.uploaderInfo}>
-                <CustomText style={styles.uploaderName}>
+                <CustomText style={styles.uploaderName} numberOfLines={1}>
                   {data.uploader.buddyName}
                 </CustomText>
-                <CustomText style={styles.uploaderIntroduction}>
+                <CustomText
+                  style={styles.uploaderIntroduction}
+                  numberOfLines={1}>
                   {data.uploader.introduction}
                 </CustomText>
               </View>
@@ -95,11 +100,12 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     height: 76,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     zIndex: 2,
   },
   imageFooterLeft: {
@@ -141,7 +147,7 @@ const styles = StyleSheet.create((theme) => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     textAlign: 'left',
   },
