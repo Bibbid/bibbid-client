@@ -7,7 +7,7 @@ export default async function getTodayColorFeeds() {
   const json = await api
     .get('feeds/discovery/today-color', {
       searchParams: {
-        count: FEED_CAROUSEL_SIZE,
+        size: FEED_CAROUSEL_SIZE,
       },
     })
     .json();

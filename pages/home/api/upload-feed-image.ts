@@ -13,10 +13,10 @@ export default async function uploadFeedImage(file: File) {
   const accessToken = useAuthStore.getState().accessToken;
   const refreshToken = useAuthStore.getState().refreshToken;
 
-  formData.append('file', file.blob());
+  formData.append('image', file.blob());
 
   const json = await fetch(
-    `${process.env.EXPO_PUBLIC_API_URL}api/v1/files/feeds`,
+    `${process.env.EXPO_PUBLIC_API_URL}api/v1/files/feeds/images`,
     {
       method: 'POST',
       headers: {

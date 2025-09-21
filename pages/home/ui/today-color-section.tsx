@@ -1,59 +1,77 @@
 import getTodayMyFeedOptions from '../model/get-today-my-feed-options';
 import useGetTodayColor from '../model/use-get-today-color';
 import CameraCaptureArea from './camera-capture-area';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { SuspenseQuery } from '@suspensive/react-query';
-import { format } from 'date-fns';
+import { useQueryClient } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { RefreshCcw } from 'lucide-react-native';
-import { Suspense, useState } from 'react';
+import { MoreHorizontal, RefreshCcw, Trash2 } from 'lucide-react-native';
+import { overlay } from 'overlay-kit';
+import { Suspense, useRef } from 'react';
 import { Pressable, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
-import { Color } from '~/entities/color';
-import { TodayUploadedFeed } from '~/entities/feed';
+import { type Color, useTodayColor } from '~/entities/color';
+import { type TodayUploadedFeed } from '~/entities/feed';
+import { useDeleteFeed } from '~/features/feed';
+import { queryKeys } from '~/shared/api/query-keys';
 import { hexToRgba } from '~/shared/lib';
-import { mmkv } from '~/shared/model';
+import { CustomBottomSheet } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { Chip } from '~/shared/ui/chip';
+import { GeneralModal } from '~/shared/ui/modal';
 import { CustomText } from '~/shared/ui/text';
+import { showToast } from '~/shared/ui/toast';
 
 export default function TodayColorSection() {
   return (
     <Suspense>
       <SuspenseQuery {...getTodayMyFeedOptions()}>
-        {({ data }) => <TodayColor data={data} />}
+        {({ data }) => (
+          <TodayColor data={data.feed} postedToday={data.postedToday} />
+        )}
       </SuspenseQuery>
     </Suspense>
   );
 }
 
-function TodayColor({ data }: { data: TodayUploadedFeed[] }) {
-  const [todayColor, setTodayColor] = useState<Color>({
-    displayName: mmkv.getString('todayColorDisplayName') || '???',
-    rgbHexCode: mmkv.getString('todayColorRgb') || 'white',
-    shadowHexCode: mmkv.getString('todayColorShadow') || 'white',
+function TodayColor({
+  data,
+  postedToday,
+}: {
+  data: TodayUploadedFeed[];
+  postedToday: boolean;
+}) {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: deleteFeed } = useDeleteFeed({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.feed['get-today-my-feed'],
+      });
+      bottomSheetRef.current?.close();
+    },
+    onError: (error: Error) => {
+      showToast({ text1: error.message, type: 'error' });
+    },
   });
 
-  const hasTodayColor =
-    todayColor.displayName !== '???' && todayColor.rgbHexCode !== 'white';
+  const { displayName, rgbHexCode, hasTodayColor } = useTodayColor();
 
-  const handleSuccess = (data: Color) => {
-    mmkv.set('todayColorDisplayName', data.displayName);
-    mmkv.set('todayColorRgb', data.rgbHexCode);
-    mmkv.set('todayColorShadow', data.shadowHexCode);
-    mmkv.set('todayColorDate', format(new Date(), 'yyyy-MM-dd'));
-    setTodayColor(data);
-  };
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const { bottom } = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
       <LinearGradient
         style={styles.gradient}
         colors={[
-          todayColor.rgbHexCode,
+          rgbHexCode,
           hexToRgba({
-            hex: todayColor.rgbHexCode,
+            hex: rgbHexCode,
             alpha: 0,
           }),
         ]}
@@ -70,22 +88,67 @@ function TodayColor({ data }: { data: TodayUploadedFeed[] }) {
             <CustomText style={styles.title}>Today&apos;s Color</CustomText>
             <Chip
               type="tinted"
-              label={todayColor.displayName}
+              label={displayName}
               leftIcon={Dot}
-              customColor={todayColor.rgbHexCode}
+              customColor={hasTodayColor ? rgbHexCode : 'white'}
               style={{ width: hasTodayColor ? 'auto' : 62 }}
             />
           </View>
           <View style={styles.right}>
             {hasTodayColor ? (
-              <ChangeTodayColorButton onSuccess={handleSuccess} />
+              <>
+                {postedToday ? (
+                  <RemoveTodayFeedButton
+                    onPress={() => bottomSheetRef.current?.present()}
+                  />
+                ) : (
+                  <ChangeTodayColorButton onSuccess={() => {}} />
+                )}
+              </>
             ) : (
-              <GetTodayColorButton onSuccess={handleSuccess} />
+              <GetTodayColorButton onSuccess={() => {}} />
             )}
           </View>
         </View>
-        {hasTodayColor && <CameraCaptureArea data={data} />}
+        {hasTodayColor && (
+          <CameraCaptureArea data={data} postedToday={postedToday} />
+        )}
       </View>
+      <CustomBottomSheet ref={bottomSheetRef} snapPoints={['50%']} index={0}>
+        <BottomSheetView style={styles.bottomSheetContainer}>
+          <View style={[{ paddingBottom: bottom }, styles.bottomSheetContent]}>
+            <Pressable
+              style={styles.bottomSheetMenu}
+              onPress={() => {
+                overlay.open(({ isOpen, close }) => (
+                  <GeneralModal
+                    visible={isOpen}
+                    image={require('~/assets/images/delete.png')}
+                    title="Confirm"
+                    subTitle="Delete this post?"
+                    description="You cannot upload a post with the same color today."
+                    actionText="Delete"
+                    onClose={close}
+                    onAction={() => {
+                      deleteFeed(data[0].feedId);
+                      close();
+                    }}
+                  />
+                ));
+              }}>
+              <Trash2 size={20} color="white" />
+              <CustomText style={styles.bottomSheetText}>
+                Delete Post
+              </CustomText>
+            </Pressable>
+            <Button size="xl" onPress={() => bottomSheetRef.current?.close()}>
+              <ButtonText style={styles.bottomSheetButtonText}>
+                close
+              </ButtonText>
+            </Button>
+          </View>
+        </BottomSheetView>
+      </CustomBottomSheet>
     </View>
   );
 }
@@ -122,6 +185,14 @@ function GetTodayColorButton({ onSuccess }: GetTodayColorButtonProps) {
         Get Color
       </ButtonText>
     </Button>
+  );
+}
+
+function RemoveTodayFeedButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable onPress={onPress}>
+      <MoreHorizontal size={24} color="white" />
+    </Pressable>
   );
 }
 
@@ -170,5 +241,29 @@ const styles = StyleSheet.create((theme) => ({
   },
   buttonText: {
     fontWeight: theme.fontWeight['semibold'],
+  },
+  bottomSheetContainer: {
+    paddingBottom: 20,
+  },
+  bottomSheetContent: {
+    rowGap: 24,
+  },
+  bottomSheetMenu: {
+    display: 'flex',
+    flexDirection: 'row',
+    columnGap: 8,
+    paddingVertical: 14.5,
+  },
+  bottomSheetText: {
+    color: 'white',
+    fontSize: theme.fontSize['lg'],
+  },
+  bottomSheetButton: {
+    width: '100%',
+  },
+  bottomSheetButtonText: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['md'],
+    color: 'white',
   },
 }));

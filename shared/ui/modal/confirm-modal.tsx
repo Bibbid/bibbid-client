@@ -32,15 +32,17 @@ export default function ConfirmModal({
         {title && <ModalTitle>{title}</ModalTitle>}
         {description && <ModalDescription>{description}</ModalDescription>}
       </ModalHeader>
-      <ModalFooter>
+      <ModalFooter style={confirmModalStyles.footer}>
         <ModalCancel
           text="Cancel"
           onPress={onClose}
+          style={confirmModalStyles.button}
           textStyle={confirmModalStyles.cancelButtonText}
         />
         <ModalAction
           text={actionText}
           onPress={onAction}
+          style={confirmModalStyles.button}
           textStyle={confirmModalStyles.actionButtonText}
         />
       </ModalFooter>

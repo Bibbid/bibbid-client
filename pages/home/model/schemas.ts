@@ -45,5 +45,5 @@ export const GetHomeFeedsResponseSchema = GeneralResponseSchema(
 );
 
 export const GetTodayMyFeedResponseSchema = GeneralResponseSchema(
-  v.array(TodayUploadedFeedSchema)
+  v.object({ feed: v.array(TodayUploadedFeedSchema), postedToday: v.boolean() })
 );

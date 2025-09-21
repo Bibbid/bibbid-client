@@ -36,6 +36,7 @@ export const modalStyles = StyleSheet.create((theme) => ({
     textAlign: 'center',
   },
   subTitle: {
+    fontWeight: theme.fontWeight['medium'],
     fontSize: theme.fontSize['lg'],
     color: theme.color['gray-11'],
     textAlign: 'center',
@@ -43,8 +44,10 @@ export const modalStyles = StyleSheet.create((theme) => ({
   description: {
     fontSize: theme.fontSize['md'],
     color: theme.color['gray-7'],
+    textAlign: 'center',
   },
   footer: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -53,13 +56,75 @@ export const modalStyles = StyleSheet.create((theme) => ({
   },
   closeButton: {
     position: 'absolute',
-    right: 14,
-    top: 14,
+    right: 20,
+    top: 24,
     color: theme.color['gray-4'],
   },
 }));
 
 export const confirmModalStyles = StyleSheet.create((theme) => ({
+  footer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    columnGap: 8,
+  },
+  button: {
+    flex: 1,
+  },
+  cancelButtonText: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['md'],
+    color: 'white',
+  },
+  actionButtonText: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['md'],
+    color: theme.color['gray-3'],
+  },
+}));
+
+export const generalModalStyles = StyleSheet.create((theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: 20,
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: 12,
+  },
+  title: {
+    fontWeight: theme.fontWeight['semibold'],
+    fontSize: theme.fontSize['xl'],
+    color: theme.color['gray-11'],
+    textAlign: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  descriptionWrapper: {
+    rowGap: 4,
+  },
+  footer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    columnGap: 8,
+  },
+  button: {
+    flex: 1,
+  },
   cancelButtonText: {
     fontWeight: theme.fontWeight['semibold'],
     fontSize: theme.fontSize['md'],

@@ -12,11 +12,15 @@ import { CustomText } from '~/shared/ui/text';
 
 interface CameraCaptureAreaProps {
   data: TodayUploadedFeed[];
+  postedToday: boolean;
 }
 
 const HEIGHT = 288;
 
-export default function CameraCaptureArea({ data }: CameraCaptureAreaProps) {
+export default function CameraCaptureArea({
+  data,
+  postedToday,
+}: CameraCaptureAreaProps) {
   const router = useRouter();
 
   const setImage = useCaptureImage((state) => state.setImage);
@@ -55,9 +59,13 @@ export default function CameraCaptureArea({ data }: CameraCaptureAreaProps) {
       </View>
     </View>
   ) : (
-    <Pressable style={styles.container} onPress={handlePress}>
-      <NoPhoto />
-    </Pressable>
+    <>
+      {!postedToday && (
+        <Pressable style={styles.container} onPress={handlePress}>
+          <NoPhoto />
+        </Pressable>
+      )}
+    </>
   );
 }
 

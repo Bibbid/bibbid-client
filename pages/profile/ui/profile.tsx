@@ -51,8 +51,12 @@ function BuddySection({ myProfile }: { myProfile: MyProfile }) {
         </Button>
       </View>
       <View style={styles.nameContainer}>
-        <CustomText style={styles.username}>{myProfile.name}</CustomText>
-        <CustomText style={styles.buddyName}>{myProfile.buddyName}</CustomText>
+        <CustomText style={styles.username} numberOfLines={1}>
+          {myProfile.name}
+        </CustomText>
+        <CustomText style={styles.buddyName} numberOfLines={1}>
+          {myProfile.buddyName}
+        </CustomText>
       </View>
     </View>
   );

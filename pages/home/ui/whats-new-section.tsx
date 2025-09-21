@@ -1,33 +1,37 @@
 import getRandomFeedsOptions from '../model/get-random-feeds-options';
 import getTodayColorFeedsOptions from '../model/get-today-color-feeds-options';
 import { SuspenseQuery } from '@suspensive/react-query';
+import { formatDistanceToNow } from 'date-fns';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MoreHorizontal } from 'lucide-react-native';
 import { Suspense, useRef } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Pressable, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
 import { StyleSheet } from 'react-native-unistyles';
+import Dot from '~/assets/icons/dot-solid.svg';
+import { useTodayColor } from '~/entities/color';
 import { FeedListItem } from '~/entities/feed';
+import { Chip } from '~/shared/ui/chip';
 import { CustomText } from '~/shared/ui/text';
 
 export default function WhatsNewSection() {
-  // TEMP
-  const hasColor = false;
+  const { hasTodayColor } = useTodayColor();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <CustomText style={styles.title}>What&apos;s New</CustomText>
         <CustomText style={styles.description}>
-          Go ahead and try image surfing
+          Go ahead and try image surfing!
         </CustomText>
       </View>
       <Suspense>
-        {hasColor ? (
+        {hasTodayColor ? (
           <SuspenseQuery {...getTodayColorFeedsOptions()}>
             {({ data }) => <TodayImageCarousel data={data} />}
           </SuspenseQuery>
@@ -69,9 +73,7 @@ function TodayImageCarousel({ data }: { data: FeedListItem[] }) {
           parallaxScrollingOffset: 50,
           parallaxAdjacentItemScale: 0.8,
         }}
-        renderItem={({ item: { image, feedId } }) => (
-          <ImageSlide id={feedId} src={image.presignedUrl} />
-        )}
+        renderItem={({ item }) => <ImageSlide data={item} />}
       />
       <Pagination.Custom
         progress={progress}
@@ -86,26 +88,54 @@ function TodayImageCarousel({ data }: { data: FeedListItem[] }) {
 }
 
 interface ImageSlideProps {
-  id: number;
-  src: string;
+  data: FeedListItem;
 }
 
-function ImageSlide({ id, src }: ImageSlideProps) {
+function ImageSlide({ data }: ImageSlideProps) {
   return (
-    <View key={id} style={styles.slide}>
+    <View key={data.feedId} style={styles.slide}>
       <LinearGradient
         colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 0.5 }}
         style={styles.topGradient}
       />
-      <Image source={{ uri: src }} style={styles.image} />
       <LinearGradient
         colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 0, y: 0 }}
         style={styles.bottomGradient}
       />
+      <Image source={{ uri: data.image.presignedUrl }} style={styles.image} />
+      <View style={styles.imageOverlay}>
+        <View style={styles.imageOverlayHeader}>
+          <View style={styles.imageOverlayHeaderTop}>
+            <Image
+              source={{ uri: data.image.presignedUrl }}
+              style={styles.imageOverlayHeaderImage}
+            />
+            <CustomText style={styles.imageOverlayHeaderText} numberOfLines={1}>
+              {data.uploader.buddyName}
+            </CustomText>
+            <Pressable>
+              <MoreHorizontal size={16} color="white" />
+            </Pressable>
+          </View>
+          <View style={styles.imageOverlayHeaderBottom}>
+            <Chip
+              label={data.color.displayName}
+              type="tinted"
+              leftIcon={Dot}
+              customColor={data.color.rgbHexCode}
+            />
+          </View>
+        </View>
+        <View style={styles.imageOverlayFooter}>
+          <CustomText style={styles.imageOverlayText}>
+            {formatDistanceToNow(new Date(data.createdAt))}
+          </CustomText>
+        </View>
+      </View>
     </View>
   );
 }
@@ -180,5 +210,62 @@ const styles = StyleSheet.create((theme) => ({
     left: 0,
     right: 0,
     height: 100,
+  },
+  imageOverlay: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    zIndex: 1,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  imageOverlayHeader: {
+    width: '100%',
+    padding: 12,
+    rowGap: 12,
+  },
+  imageOverlayHeaderTop: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    columnGap: 8,
+  },
+  imageOverlayHeaderImage: {
+    width: 24,
+    height: 24,
+  },
+  imageOverlayHeaderText: {
+    flex: 1,
+    color: 'white',
+    fontSize: theme.fontSize['sm'],
+    fontWeight: theme.fontWeight['medium'],
+    textAlign: 'left',
+  },
+  imageOverlayHeaderBottom: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  imageOverlayFooter: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    rowGap: 4,
+  },
+  imageOverlayText: {
+    flex: 1,
+    color: theme.color['opacity-white-50'],
+    fontSize: theme.fontSize['xs'],
+    textAlign: 'center',
   },
 }));

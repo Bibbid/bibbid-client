@@ -3,60 +3,51 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import Logo from '~/assets/icons/logo.svg';
-import {
-  TodayColorSection,
-  ResetColorBoundary,
-  WhatsNewSection,
-} from '~/pages/home';
-import { mmkv } from '~/shared/model';
+import { useTodayColor } from '~/entities/color';
+import { TodayColorSection, WhatsNewSection } from '~/pages/home';
 import { TopNavigation } from '~/shared/ui/navigation';
 
 export default function HomeScreen() {
   const { top } = useSafeAreaInsets();
 
-  const theme = useAnimatedTheme();
+  const { rgbHexCode, shadowHexCode } = useTodayColor();
 
-  const backgroundColor = mmkv.getString('todayColorRgb');
-  const shadowColor = mmkv.getString('todayColorShadow');
+  const theme = useAnimatedTheme();
 
   return (
     <View style={styles.container}>
-      <ResetColorBoundary>
-        <View
-          style={[
-            {
-              paddingTop: top,
-              backgroundColor,
-              filter: [
-                {
-                  dropShadow: {
-                    color: shadowColor || theme.value.color['gray-1'],
-                    offsetX: 10,
-                    offsetY: -3,
-                    standardDeviation: '15px',
-                  },
+      <View
+        style={[
+          {
+            backgroundColor: rgbHexCode,
+            filter: [
+              {
+                dropShadow: {
+                  color: shadowHexCode || theme.value.color['gray-1'],
+                  offsetX: 10,
+                  offsetY: -3,
+                  standardDeviation: '15px',
                 },
-              ],
-            },
-          ]}>
-          <StatusBar barStyle="light-content" />
-          <View style={{ paddingHorizontal: 8 }}>
-            <TopNavigation
-              left={<Logo />}
-              style={{
-                backgroundColor: !!backgroundColor
-                  ? 'transparent'
-                  : theme.value.color['gray-1'],
-              }}
-            />
-          </View>
+              },
+            ],
+          },
+        ]}>
+        <StatusBar barStyle="light-content" />
+        <View style={[styles.header, { paddingTop: top }]}>
+          <TopNavigation
+            left={<Logo />}
+            style={{
+              backgroundColor: 'transparent',
+            }}
+          />
         </View>
-        <ScrollView style={styles.content}>
-          <TodayColorSection />
-          <View style={styles.gap} />
-          <WhatsNewSection />
-        </ScrollView>
-      </ResetColorBoundary>
+      </View>
+      <ScrollView style={styles.content}>
+        <TodayColorSection />
+        <View style={styles.gap} />
+        <WhatsNewSection />
+        <View style={styles.gap} />
+      </ScrollView>
     </View>
   );
 }
@@ -65,6 +56,10 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     position: 'relative',
     flex: 1,
+  },
+  header: {
+    paddingHorizontal: 8,
+    backgroundColor: theme.color['opacity-white-8'],
   },
   title: {
     fontSize: theme.fontSize['2xl'],

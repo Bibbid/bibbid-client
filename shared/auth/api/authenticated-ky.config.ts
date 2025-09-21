@@ -33,8 +33,6 @@ export const api = publicApi.extend({
         } else if (refreshToken) {
           request.headers.set('Authorization', `Bearer ${refreshToken}`);
         }
-
-        console.log('request.headers', request.headers);
       },
     ],
     afterResponse: [
@@ -53,7 +51,7 @@ export const api = publicApi.extend({
                   },
                 } = result;
 
-                useAuthStore.getState().signIn({
+                await useAuthStore.getState().signIn({
                   accessToken,
                   refreshToken,
                 });

@@ -29,8 +29,7 @@ export const TodayUploadedFeedSchema = v.object({
   feedId: v.number(),
   color: ColorSchema,
   image: PresignedUrlSchema,
-  // TEMP!
-  comment: v.optional(v.string()),
+  comment: v.string(),
   createdAt: v.string(),
 });
 
@@ -40,8 +39,12 @@ export const FeedListItemSchema = v.object({
   feedId: v.number(),
   image: PresignedUrlSchema,
   color: ColorSchema,
-  uploader: UploaderInfoSchema,
+  uploader: v.object({
+    userUuid: v.string(),
+    buddyName: v.string(),
+  }),
   createdAt: v.string(),
+  isMine: v.boolean(),
 });
 
 export type FeedListItem = v.InferOutput<typeof FeedListItemSchema>;

@@ -8,6 +8,7 @@ export default function FeedLayout() {
       <Stack
         screenOptions={{ contentStyle: styles.content, headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="feed-detail" />
       </Stack>
     </SafeAreaView>
   );
