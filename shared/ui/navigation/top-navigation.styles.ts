@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native-unistyles';
 
 export const topNavigationStyles = StyleSheet.create((theme) => ({
   container: {
-    zIndex: 50,
     backgroundColor: theme.color['gray-1'],
     padding: 12,
     width: '100%',
