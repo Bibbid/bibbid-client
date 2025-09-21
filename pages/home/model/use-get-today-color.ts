@@ -1,8 +1,8 @@
 import getTodayColor from '../api/get-today-color';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { Color } from '~/entities/color';
 import { queryKeys } from '~/shared/api/query-keys';
+import { formatZonedTime } from '~/shared/lib';
 
 export default function useGetTodayColor({
   onSuccess,
@@ -28,7 +28,7 @@ export default function useGetTodayColor({
       onSuccess?.(data.todayColor);
       queryClient.invalidateQueries({
         queryKey: queryKeys.color['get-my-today-color'](
-          format(new Date(), 'yyyy-MM-dd')
+          formatZonedTime({ date: new Date() })
         ),
       });
     },

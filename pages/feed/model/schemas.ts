@@ -1,16 +1,6 @@
 import * as v from 'valibot';
-import { FeedDetailSchema, FeedListItemSchema } from '~/entities/feed';
-import {
-  CursorResponseSchema,
-  GeneralResponseSchema,
-} from '~/shared/api/response-schemas';
-
-export const GetColorFeedsResponseSchema =
-  CursorResponseSchema(FeedListItemSchema);
-
-export type GetColorFeedsResponse = v.InferOutput<
-  typeof GetColorFeedsResponseSchema
->;
+import { FeedDetailSchema } from '~/entities/feed';
+import { GeneralResponseSchema } from '~/shared/api/response-schemas';
 
 export const GetFeedDetailResponseSchema =
   GeneralResponseSchema(FeedDetailSchema);

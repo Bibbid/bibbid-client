@@ -2,81 +2,77 @@ import getFeedDetailOptions from '../model/get-feed-detail-options';
 import ColorFeeds from './color-feeds';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { format } from 'date-fns';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MoreHorizontal } from 'lucide-react-native';
-import { Suspense } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { Chip } from '~/shared/ui/chip';
+import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
 
 export default function FeedDetail({ feedId }: { feedId: number }) {
   return (
-    <Suspense>
-      <SuspenseQuery {...getFeedDetailOptions(feedId)}>
-        {({ data }) => (
-          <ScrollView style={styles.container}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={{ uri: data.image.presignedUrl }}
-                style={styles.image}
-              />
-              <LinearGradient
-                colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 0.5 }}
-                style={styles.bottomGradient}
-              />
-              <View style={styles.imageFooter}>
-                <View style={styles.imageFooterLeft}>
-                  <CustomText style={styles.imageFooterLeftText}>
-                    Color of the Day
-                  </CustomText>
-                  <Chip
-                    type="tinted"
-                    leftIcon={Dot}
-                    label={data.color.displayName}
-                    customColor={data.color.rgbHexCode}
-                  />
-                </View>
-                <View style={styles.imageFooterRight}>
-                  <CustomText style={styles.imageFooterRightText}>
-                    {format(data.createdAt, 'yyyy-MM-dd')}
-                  </CustomText>
-                </View>
-              </View>
-            </View>
-            <View style={styles.uploader}>
-              <Image
-                source={{ uri: data.uploader.profileImageUrl ?? '' }}
-                style={styles.uploaderImage}
-              />
-              <View style={styles.uploaderInfo}>
-                <CustomText style={styles.uploaderName} numberOfLines={1}>
-                  {data.uploader.buddyName}
+    <SuspenseQuery {...getFeedDetailOptions(feedId)}>
+      {({ data }) => (
+        <ScrollView style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: data.image.presignedUrl }}
+              style={styles.image}
+            />
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 0.5 }}
+              style={styles.bottomGradient}
+            />
+            <View style={styles.imageFooter}>
+              <View style={styles.imageFooterLeft}>
+                <CustomText style={styles.imageFooterLeftText}>
+                  Color of the Day
                 </CustomText>
-                <CustomText
-                  style={styles.uploaderIntroduction}
-                  numberOfLines={1}>
-                  {data.uploader.introduction}
+                <Chip
+                  type="tinted"
+                  leftIcon={Dot}
+                  label={data.color.displayName}
+                  customColor={data.color.rgbHexCode}
+                />
+              </View>
+              <View style={styles.imageFooterRight}>
+                <CustomText style={styles.imageFooterRightText}>
+                  {format(data.createdAt, 'yyyy-MM-dd')}
                 </CustomText>
               </View>
-              <Pressable style={styles.uploaderButton}>
-                <MoreHorizontal size={24} color="white" />
-              </Pressable>
             </View>
-            <View style={styles.otherFeedsContainer}>
-              <CustomText style={styles.otherFeedsTitle}>
-                More {data.color.displayName}
+          </View>
+          <View style={styles.uploader}>
+            <Image
+              source={{ uri: data.uploader.buddyImage.presignedUrl }}
+              style={styles.uploaderImage}
+              contentFit="contain"
+            />
+            <View style={styles.uploaderInfo}>
+              <CustomText style={styles.uploaderName} numberOfLines={1}>
+                {data.uploader.buddyName}
               </CustomText>
-              <ColorFeeds color={data.color.displayName} />
+              <CustomText style={styles.uploaderIntroduction} numberOfLines={1}>
+                {data.uploader.introduction}
+              </CustomText>
             </View>
-          </ScrollView>
-        )}
-      </SuspenseQuery>
-    </Suspense>
+            <Pressable style={styles.uploaderButton}>
+              <MoreHorizontal size={24} color="white" />
+            </Pressable>
+          </View>
+          <View style={styles.otherFeedsContainer}>
+            <CustomText style={styles.otherFeedsTitle}>
+              More {data.color.displayName}
+            </CustomText>
+            <ColorFeeds color={data.color.displayName} />
+          </View>
+        </ScrollView>
+      )}
+    </SuspenseQuery>
   );
 }
 

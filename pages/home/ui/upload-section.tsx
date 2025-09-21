@@ -5,7 +5,6 @@ import useUploadFeedImage from '../model/use-upload-feed-image';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { File } from 'expo-file-system/next';
-import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Pen, X } from 'lucide-react-native';
 import { useRef, useState } from 'react';
@@ -24,6 +23,7 @@ import { useTodayColor } from '~/entities/color';
 import { CustomBottomSheet } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { Chip } from '~/shared/ui/chip';
+import { Image as CustomImage } from '~/shared/ui/image';
 import { Input } from '~/shared/ui/input';
 import {
   BlankNavItem,
@@ -144,7 +144,7 @@ export default function UploadSection() {
                 }}
               />
             </View>
-            <ExpoImage source={{ uri: image?.path }} style={styles.image} />
+            <CustomImage source={{ uri: image?.path }} style={styles.image} />
           </View>
         </View>
         <View style={styles.buttonWrapper}>

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { ScrollView, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
@@ -5,6 +6,7 @@ import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import Logo from '~/assets/icons/logo.svg';
 import { useTodayColor } from '~/entities/color';
 import { TodayColorSection, WhatsNewSection } from '~/pages/home';
+import { Loading } from '~/shared/ui/loading';
 import { TopNavigation } from '~/shared/ui/navigation';
 
 export default function HomeScreen() {
@@ -42,12 +44,14 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-      <ScrollView style={styles.content}>
-        <TodayColorSection />
-        <View style={styles.gap} />
-        <WhatsNewSection />
-        <View style={styles.gap} />
-      </ScrollView>
+      <Suspense fallback={<Loading />}>
+        <ScrollView style={styles.content}>
+          <TodayColorSection />
+          <View style={styles.gap} />
+          <WhatsNewSection />
+          <View style={styles.gap} />
+        </ScrollView>
+      </Suspense>
     </View>
   );
 }

@@ -1,13 +1,13 @@
 import { useCaptureImage } from '../model';
 import { formatDistanceToNow } from 'date-fns';
 import { useCameraPermissions } from 'expo-camera';
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { StyleSheet } from 'react-native-unistyles';
 import NoPhoto from '~/assets/icons/no-photo.svg';
 import { TodayUploadedFeed } from '~/entities/feed';
+import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
 
 interface CameraCaptureAreaProps {

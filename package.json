@@ -15,6 +15,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.4.1",
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^5.2.6",
     "@hookform/resolvers": "^5.2.2",
@@ -43,6 +44,7 @@
     "expo-web-browser": "~14.2.0",
     "i18next": "^23.7.20",
     "ky": "^1.8.2",
+    "lottie-react-native": "7.2.2",
     "lucide-react-native": "^0.540.0",
     "overlay-kit": "^1.8.5",
     "react": "19.0.0",

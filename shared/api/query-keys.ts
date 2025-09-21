@@ -23,5 +23,10 @@ export const queryKeys = {
       'get-infinite-color-feeds',
       color,
     ],
+    'get-infinite-my-color-feeds': (color: string) => [
+      'feed',
+      'get-infinite-my-color-feeds',
+      color,
+    ],
   },
 };

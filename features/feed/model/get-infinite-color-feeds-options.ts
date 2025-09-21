@@ -1,9 +1,9 @@
 import getColorFeeds from '../api/get-color-feeds';
-import { GetFeedsRequest } from './parameters';
+import type { GetFeedsRequest } from './parameters';
 import { infiniteQueryOptions } from '@tanstack/react-query';
 import { queryKeys } from '~/shared/api/query-keys';
 
-export default function getInfiniteColorFeeds({
+export default function getInfiniteColorFeedsOptions({
   color,
   cursor = 0,
   size,

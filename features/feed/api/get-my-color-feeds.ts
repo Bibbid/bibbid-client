@@ -1,4 +1,4 @@
-import { GetFeedsRequest } from '../model/parameters';
+import type { GetFeedsRequest } from '../model/parameters';
 import { GetColorFeedsResponseSchema } from '../model/schemas';
 import { parseResponse } from '~/shared/api/response-parser';
 import { api } from '~/shared/auth';
@@ -10,7 +10,7 @@ export default async function getColorFeeds({
   sort = 'createdAt',
 }: GetFeedsRequest) {
   const json = await api
-    .get('feeds', {
+    .get('users/me/feeds', {
       searchParams: {
         ...(color !== 'All' && { color }),
         ...(cursor !== 0 && { cursor }),

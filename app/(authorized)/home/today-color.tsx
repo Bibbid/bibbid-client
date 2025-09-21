@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { TodayColor } from '~/pages/home';
+import { Image } from '~/shared/ui/image';
 
 export default function TodayColorScreen() {
   return (

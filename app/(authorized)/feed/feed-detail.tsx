@@ -1,8 +1,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
+import { Suspense } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedDetail } from '~/pages/feed';
+import { Loading } from '~/shared/ui/loading';
 import { NavBackButton, TopNavigation } from '~/shared/ui/navigation';
 
 export default function FeedDetailScreen() {
@@ -24,7 +26,9 @@ export default function FeedDetailScreen() {
           </Pressable>
         }
       />
-      <FeedDetail feedId={Number(feedId)} />
+      <Suspense fallback={<Loading />}>
+        <FeedDetail feedId={Number(feedId)} />
+      </Suspense>
     </View>
   );
 }

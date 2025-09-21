@@ -1,42 +1,42 @@
 import getMyProfileOptions from '../model/get-my-profile-options';
 import ProfileFeeds from './profile-feeds';
 import { SuspenseQueries } from '@suspensive/react-query';
-import { Image } from 'expo-image';
-import { Suspense } from 'react';
+import { useRouter } from 'expo-router';
 import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Sparkles from '~/assets/icons/sparkles.svg';
 import { getColorsOptions } from '~/entities/color';
 import type { MyProfile } from '~/entities/profile';
 import { Button } from '~/shared/ui/button';
+import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
 
 const FALLBACK_IMAGE_URL = 'https://placehold.co/100x100';
 
 export default function Profile() {
   return (
-    <Suspense>
-      <SuspenseQueries queries={[getMyProfileOptions(), getColorsOptions()]}>
-        {([myProfileData, colorsData]) => {
-          const { data: myProfile } = myProfileData;
-          const { data: colors } = colorsData;
+    <SuspenseQueries queries={[getMyProfileOptions(), getColorsOptions()]}>
+      {([myProfileData, colorsData]) => {
+        const { data: myProfile } = myProfileData;
+        const { data: colors } = colorsData;
 
-          return (
-            <ScrollView style={styles.container}>
-              <BuddySection myProfile={myProfile} />
-              <ProfileFeeds
-                colors={colors}
-                count={myProfile.collectedColorCount}
-              />
-            </ScrollView>
-          );
-        }}
-      </SuspenseQueries>
-    </Suspense>
+        return (
+          <ScrollView style={styles.container}>
+            <BuddySection myProfile={myProfile} />
+            <ProfileFeeds
+              colors={colors}
+              count={myProfile.collectedColorCount}
+            />
+          </ScrollView>
+        );
+      }}
+    </SuspenseQueries>
   );
 }
 
 function BuddySection({ myProfile }: { myProfile: MyProfile }) {
+  const router = useRouter();
+
   return (
     <View style={styles.buddyContainer}>
       <View style={styles.buddyWrapper}>
@@ -45,8 +45,12 @@ function BuddySection({ myProfile }: { myProfile: MyProfile }) {
             uri: myProfile.buddyImage?.presignedUrl ?? FALLBACK_IMAGE_URL,
           }}
           style={styles.buddyImage}
+          contentFit="contain"
         />
-        <Button variant="solid-light" style={styles.buddyCustomButton}>
+        <Button
+          variant="solid-light"
+          style={styles.buddyCustomButton}
+          onPress={() => router.push('/(authorized)/profile/buddy')}>
           <Sparkles />
         </Button>
       </View>
