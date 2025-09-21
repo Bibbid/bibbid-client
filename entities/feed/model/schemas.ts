@@ -25,6 +25,16 @@ export const FeedDetailSchema = v.object({
 
 export type FeedDetail = v.InferOutput<typeof FeedDetailSchema>;
 
+export const TodayUploadedFeedSchema = v.object({
+  feedId: v.number(),
+  color: ColorSchema,
+  image: PresignedUrlSchema,
+  comment: v.string(),
+  createdAt: v.string(),
+});
+
+export type TodayUploadedFeed = v.InferOutput<typeof TodayUploadedFeedSchema>;
+
 export const FeedListItemSchema = v.object({
   feedId: v.number(),
   image: PresignedUrlSchema,
