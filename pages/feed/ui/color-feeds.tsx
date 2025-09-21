@@ -1,4 +1,3 @@
-import getInfiniteColorFeeds from '../model/get-infinite-color-feeds-options';
 import { useSelectedColor } from './color-palette';
 import { FlashList } from '@shopify/flash-list';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -11,6 +10,7 @@ import { ActivityIndicator, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { FeedListItem } from '~/entities/feed';
+import { getInfiniteColorFeedsOptions } from '~/features/feed';
 import { Chip } from '~/shared/ui/chip';
 import { CustomText } from '~/shared/ui/text';
 
@@ -30,7 +30,7 @@ function ColorFeedList({ color }: { color: string }) {
     isLoading,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery(getInfiniteColorFeeds({ color, cursor: 0 }));
+  } = useInfiniteQuery(getInfiniteColorFeedsOptions({ color, cursor: 0 }));
 
   const feeds = useMemo(
     () => feedData?.pages.flatMap((page) => page) ?? [],
