@@ -5,7 +5,9 @@ export const GeneralResponseSchema = <T extends v.GenericSchema>(schema: T) =>
     data: schema,
   });
 
-export const VoidResponseSchema = GeneralResponseSchema(v.object({}));
+export const VoidResponseSchema = GeneralResponseSchema(
+  v.union([v.null(), v.undefined()])
+);
 
 export const CursorResponseSchema = <T extends v.GenericSchema>(schema: T) =>
   v.object({
