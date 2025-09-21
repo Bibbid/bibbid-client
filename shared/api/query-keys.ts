@@ -8,4 +8,8 @@ export const queryKeys = {
   profile: {
     'get-my-profile': ['profile', 'get-my-profile'],
   },
+  feed: {
+    'get-random-feeds': ['feed', 'get-random-feeds'],
+    'get-today-color-feeds': ['feed', 'get-today-color-feeds'],
+  },
 };

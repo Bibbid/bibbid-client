@@ -24,3 +24,13 @@ export const FeedDetailSchema = v.object({
 });
 
 export type FeedDetail = v.InferOutput<typeof FeedDetailSchema>;
+
+export const FeedListItemSchema = v.object({
+  feedId: v.number(),
+  image: PresignedUrlSchema,
+  color: ColorSchema,
+  uploader: UploaderInfoSchema,
+  createdAt: v.string(),
+});
+
+export type FeedListItem = v.InferOutput<typeof FeedListItemSchema>;
