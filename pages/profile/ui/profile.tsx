@@ -2,6 +2,7 @@ import getMyProfileOptions from '../model/get-my-profile-options';
 import ProfileFeeds from './profile-feeds';
 import { SuspenseQueries } from '@suspensive/react-query';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import { Suspense } from 'react';
 import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
@@ -37,6 +38,8 @@ export default function Profile() {
 }
 
 function BuddySection({ myProfile }: { myProfile: MyProfile }) {
+  const router = useRouter();
+
   return (
     <View style={styles.buddyContainer}>
       <View style={styles.buddyWrapper}>
@@ -45,8 +48,12 @@ function BuddySection({ myProfile }: { myProfile: MyProfile }) {
             uri: myProfile.buddyImage?.presignedUrl ?? FALLBACK_IMAGE_URL,
           }}
           style={styles.buddyImage}
+          contentFit="contain"
         />
-        <Button variant="solid-light" style={styles.buddyCustomButton}>
+        <Button
+          variant="solid-light"
+          style={styles.buddyCustomButton}
+          onPress={() => router.push('/(authorized)/profile/buddy')}>
           <Sparkles />
         </Button>
       </View>

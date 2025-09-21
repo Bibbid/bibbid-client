@@ -11,6 +11,7 @@ const GNB_HIDE_PATHS: Href[] = [
   '/(authorized)/home/today-color',
   '/(authorized)/settings/change-name',
   '/(authorized)/home/upload',
+  '/(authorized)/profile/buddy',
 ];
 
 const GNB_HEIGHT = 56;

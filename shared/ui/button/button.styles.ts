@@ -49,6 +49,7 @@ export const buttonStyles = StyleSheet.create((theme) => ({
     },
   },
   text: {
+    fontWeight: theme.fontWeight['semibold'],
     variants: {
       variant: {
         'solid-gray': {
