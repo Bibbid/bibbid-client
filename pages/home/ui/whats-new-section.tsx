@@ -1,6 +1,9 @@
+import getRandomFeedsOptions from '../model/get-random-feeds-options';
+import getTodayColorFeedsOptions from '../model/get-today-color-feeds-options';
+import { SuspenseQuery } from '@suspensive/react-query';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { Dimensions, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
@@ -8,26 +11,13 @@ import Carousel, {
   Pagination,
 } from 'react-native-reanimated-carousel';
 import { StyleSheet } from 'react-native-unistyles';
+import { FeedListItem } from '~/entities/feed';
 import { CustomText } from '~/shared/ui/text';
 
-const MOCK_IMAGES = [
-  {
-    id: 1,
-    src: 'https://picsum.photos/200/300',
-  },
-
-  {
-    id: 2,
-    src: 'https://picsum.photos/200/300',
-  },
-
-  {
-    id: 3,
-    src: 'https://picsum.photos/200/300',
-  },
-];
-
 export default function WhatsNewSection() {
+  // TEMP
+  const hasColor = false;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -36,12 +26,22 @@ export default function WhatsNewSection() {
           Go ahead and try image surfing
         </CustomText>
       </View>
-      <TodayImageCarousel />
+      <Suspense>
+        {hasColor ? (
+          <SuspenseQuery {...getTodayColorFeedsOptions()}>
+            {({ data }) => <TodayImageCarousel data={data} />}
+          </SuspenseQuery>
+        ) : (
+          <SuspenseQuery {...getRandomFeedsOptions()}>
+            {({ data }) => <TodayImageCarousel data={data} />}
+          </SuspenseQuery>
+        )}
+      </Suspense>
     </View>
   );
 }
 
-function TodayImageCarousel() {
+function TodayImageCarousel({ data }: { data: FeedListItem[] }) {
   const ref = useRef<ICarouselInstance>(null);
 
   const progress = useSharedValue<number>(0);
@@ -61,7 +61,7 @@ function TodayImageCarousel() {
         ref={ref}
         width={width}
         height={width}
-        data={MOCK_IMAGES}
+        data={data}
         onProgressChange={progress}
         mode="parallax"
         modeConfig={{
@@ -69,31 +69,42 @@ function TodayImageCarousel() {
           parallaxScrollingOffset: 50,
           parallaxAdjacentItemScale: 0.8,
         }}
-        renderItem={({ item: { src, id }, index }) => (
-          <View key={id} style={styles.slide}>
-            <LinearGradient
-              colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 0.5 }}
-              style={styles.topGradient}
-            />
-            <Image source={{ uri: src }} style={styles.image} />
-            <LinearGradient
-              colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
-              start={{ x: 0, y: 0.5 }}
-              end={{ x: 0, y: 0 }}
-              style={styles.bottomGradient}
-            />
-          </View>
+        renderItem={({ item: { image, feedId } }) => (
+          <ImageSlide id={feedId} src={image.presignedUrl} />
         )}
       />
       <Pagination.Custom
         progress={progress}
-        data={MOCK_IMAGES}
+        data={data}
         containerStyle={styles['pagination-container']}
         activeDotStyle={styles['pagination-active-dot']}
         dotStyle={styles['pagination-dot']}
         onPress={onPressPagination}
+      />
+    </View>
+  );
+}
+
+interface ImageSlideProps {
+  id: number;
+  src: string;
+}
+
+function ImageSlide({ id, src }: ImageSlideProps) {
+  return (
+    <View key={id} style={styles.slide}>
+      <LinearGradient
+        colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 0.5 }}
+        style={styles.topGradient}
+      />
+      <Image source={{ uri: src }} style={styles.image} />
+      <LinearGradient
+        colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 0, y: 0 }}
+        style={styles.bottomGradient}
       />
     </View>
   );
