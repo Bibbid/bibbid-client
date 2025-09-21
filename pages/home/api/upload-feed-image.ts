@@ -4,6 +4,9 @@ import { fetch } from 'expo/fetch';
 import { parseResponse } from '~/shared/api/response-parser';
 import { useAuthStore } from '~/shared/auth';
 
+/**
+ * ISSUE REF: https://github.com/expo/expo/issues/33134
+ */
 export default async function uploadFeedImage(file: File) {
   const formData = new FormData();
 
