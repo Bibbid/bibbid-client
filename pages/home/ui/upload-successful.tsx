@@ -1,9 +1,10 @@
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { View } from 'react-native';
+import { ContinuousConfetti } from 'react-native-fast-confetti';
 import { StyleSheet } from 'react-native-unistyles';
 import { Button, ButtonText } from '~/shared/ui/button';
+import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
 
 const DELAY = 3000;
@@ -40,6 +41,7 @@ export default function UploadSuccessful() {
           </ButtonText>
         </Button>
       </View>
+      <ContinuousConfetti />
     </View>
   );
 }

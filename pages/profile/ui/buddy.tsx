@@ -1,5 +1,4 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import { Image } from 'expo-image';
 import { X } from 'lucide-react-native';
 import { useRef } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
@@ -8,6 +7,7 @@ import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import { CustomBottomSheet } from '~/shared/ui/bottom-sheet';
 import { Button, ButtonText } from '~/shared/ui/button';
+import { Image } from '~/shared/ui/image';
 import { Input } from '~/shared/ui/input';
 import { CustomText } from '~/shared/ui/text';
 

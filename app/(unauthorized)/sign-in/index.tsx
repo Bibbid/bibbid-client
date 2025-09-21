@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import SignIn from '~/pages/sign-up/ui/sign-up';
+import { Image } from '~/shared/ui/image';
 
 export default function SignInScreen() {
   return (

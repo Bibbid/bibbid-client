@@ -2,10 +2,10 @@ import getRandomFeedsOptions from '../model/get-random-feeds-options';
 import getTodayColorFeedsOptions from '../model/get-today-color-feeds-options';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { formatDistanceToNow } from 'date-fns';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
-import { Suspense, useRef } from 'react';
+import { useRef } from 'react';
 import { Dimensions, Pressable, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
@@ -17,6 +17,7 @@ import Dot from '~/assets/icons/dot-solid.svg';
 import { useTodayColor } from '~/entities/color';
 import { FeedListItem } from '~/entities/feed';
 import { Chip } from '~/shared/ui/chip';
+import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
 
 export default function WhatsNewSection() {
@@ -30,17 +31,15 @@ export default function WhatsNewSection() {
           Go ahead and try image surfing!
         </CustomText>
       </View>
-      <Suspense>
-        {hasTodayColor ? (
-          <SuspenseQuery {...getTodayColorFeedsOptions()}>
-            {({ data }) => <TodayImageCarousel data={data} />}
-          </SuspenseQuery>
-        ) : (
-          <SuspenseQuery {...getRandomFeedsOptions()}>
-            {({ data }) => <TodayImageCarousel data={data} />}
-          </SuspenseQuery>
-        )}
-      </Suspense>
+      {hasTodayColor ? (
+        <SuspenseQuery {...getTodayColorFeedsOptions()}>
+          {({ data }) => <TodayImageCarousel data={data} />}
+        </SuspenseQuery>
+      ) : (
+        <SuspenseQuery {...getRandomFeedsOptions()}>
+          {({ data }) => <TodayImageCarousel data={data} />}
+        </SuspenseQuery>
+      )}
     </View>
   );
 }
@@ -92,8 +91,12 @@ interface ImageSlideProps {
 }
 
 function ImageSlide({ data }: ImageSlideProps) {
+  const router = useRouter();
+
   return (
-    <View key={data.feedId} style={styles.slide}>
+    <Pressable
+      style={styles.slide}
+      onPress={() => router.push(`/feed/feed-detail?feedId=${data.feedId}`)}>
       <LinearGradient
         colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
         start={{ x: 0, y: 0 }}
@@ -136,7 +139,7 @@ function ImageSlide({ data }: ImageSlideProps) {
           </CustomText>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

@@ -1,8 +1,8 @@
 import { CustomText } from '../text';
 import { folderStyles } from './folder.styles';
-import { Image } from 'expo-image';
 import { View } from 'react-native';
 import Edge from '~/assets/icons/edge.svg';
+import { Image } from '~/shared/ui/image';
 
 interface FolderProps {
   title: string;
