@@ -62,7 +62,7 @@ export function Modal({
             <Pressable
               style={modalStyles.closeButton}
               onPress={() => onClose?.()}>
-              <XIcon size={20} color={theme.value.color['gray-4']} />
+              <XIcon size={24} color={theme.value.color['gray-4']} />
             </Pressable>
           )}
           {children}
@@ -143,7 +143,7 @@ export function ModalAction({
   ...props
 }: ModalActionProps) {
   return (
-    <Button variant="solid-white" {...props}>
+    <Button variant="solid-white" style={style} {...props}>
       <ButtonText variant="solid-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
@@ -164,7 +164,7 @@ export function ModalCancel({
   ...props
 }: ModalCancelProps) {
   return (
-    <Button variant="outlined-white" {...props}>
+    <Button variant="outlined-white" style={style} {...props}>
       <ButtonText variant="outlined-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
