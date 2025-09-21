@@ -1,12 +1,12 @@
 import getMyTodayColor from '../api/get-my-today-color';
 import { queryOptions } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { queryKeys } from '~/shared/api/query-keys';
+import { formatZonedTime } from '~/shared/lib';
 
 export default function getMyTodayColorOptions() {
   return queryOptions({
     queryKey: queryKeys.color['get-my-today-color'](
-      format(new Date(), 'yyyy-MM-dd')
+      formatZonedTime({ date: new Date() })
     ),
     queryFn: async () => {
       const result = await getMyTodayColor();
