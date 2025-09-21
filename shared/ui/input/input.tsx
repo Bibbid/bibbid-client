@@ -1,5 +1,6 @@
 import { CustomText } from '../text';
 import { inputStyles } from './input.styles';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useState, useEffect } from 'react';
 import { TextInput, View, type TextInputProps } from 'react-native';
 import Animated, {
@@ -11,6 +12,7 @@ import Animated, {
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
 interface InputProps extends TextInputProps {
+  mode?: 'default' | 'bottom-sheet';
   isError?: boolean;
   description?: string;
   showMaxLength?: boolean;
@@ -25,9 +27,13 @@ const INPUT_STATE = {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
+const AnimatedBottomSheetTextInput =
+  Animated.createAnimatedComponent(BottomSheetTextInput);
+
 const AnimatedText = Animated.createAnimatedComponent(CustomText);
 
 export default function Input({
+  mode = 'default',
   placeholder = 'Enter text',
   description,
   showMaxLength = false,
@@ -129,22 +135,41 @@ export default function Input({
   return (
     <View style={inputStyles.container}>
       <Animated.View style={[inputStyles.root, animatedRootStyle]}>
-        <AnimatedTextInput
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          style={[
-            {
-              flex: 1,
-              backgroundColor: 'transparent',
-              fontFamily: 'Montserrat-Regular',
-            },
-            animatedTextInputStyle,
-          ]}
-          placeholder={placeholder}
-          placeholderTextColor={theme.value.color['gray-5']}
-          editable={editable}
-          {...props}
-        />
+        {mode === 'default' ? (
+          <AnimatedTextInput
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            style={[
+              {
+                flex: 1,
+                backgroundColor: 'transparent',
+                fontFamily: 'Montserrat-Regular',
+              },
+              animatedTextInputStyle,
+            ]}
+            placeholder={placeholder}
+            placeholderTextColor={theme.value.color['gray-5']}
+            editable={editable}
+            {...props}
+          />
+        ) : (
+          <AnimatedBottomSheetTextInput
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            style={[
+              {
+                flex: 1,
+                backgroundColor: 'transparent',
+                fontFamily: 'Montserrat-Regular',
+              },
+              animatedTextInputStyle,
+            ]}
+            placeholder={placeholder}
+            placeholderTextColor={theme.value.color['gray-5']}
+            editable={editable}
+            {...props}
+          />
+        )}
       </Animated.View>
       {description && (
         <AnimatedText
