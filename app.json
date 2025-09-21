@@ -95,7 +95,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.babu.bibbid"
@@ -105,7 +107,18 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.babu.bibbid"
-    }
+      "package": "com.babu.bibbid",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "05b5e8b7-195e-4d31-a2f9-b2014525e2ed"
+      }
+    },
+    "owner": "bibbid"
   }
 }
