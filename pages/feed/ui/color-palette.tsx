@@ -12,7 +12,7 @@ const ALL_COLOR = {
   rgbHexCode: '#ffffff',
 };
 
-const useSelectedColor = create<{
+export const useSelectedColor = create<{
   selectedColor: string;
   setSelectedColor: (color: string) => void;
 }>((set) => ({
