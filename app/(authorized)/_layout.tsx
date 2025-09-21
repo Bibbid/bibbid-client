@@ -10,7 +10,10 @@ import { BottomNavigation, BottomNavItem } from '~/shared/ui/navigation';
 const GNB_HIDE_PATHS: Href[] = [
   '/(authorized)/home/today-color',
   '/(authorized)/settings/change-name',
+  '/(authorized)/home/upload',
 ];
+
+const GNB_HEIGHT = 56;
 
 export default function AuthorizedLayout() {
   const isGnbHideRoute = useActiveRoutes(GNB_HIDE_PATHS);
@@ -18,7 +21,7 @@ export default function AuthorizedLayout() {
   return (
     <Authorized>
       <StatusBar barStyle="light-content" />
-      <View style={{ flex: 1, paddingBottom: isGnbHideRoute ? 0 : 70 }}>
+      <View style={{ flex: 1, paddingBottom: isGnbHideRoute ? 0 : GNB_HEIGHT }}>
         <Stack screenOptions={{ headerShown: false }} />
       </View>
       {!isGnbHideRoute && (

@@ -11,12 +11,21 @@ export default function TodayColor() {
 
   const todayColor = mmkv.getString('todayColorRgb');
   const todayColorName = mmkv.getString('todayColorDisplayName');
+  const todayColorShadow = mmkv.getString('todayColorShadow');
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <CustomText style={styles.title}>Ta-da!</CustomText>
-        <View style={[styles.color, { backgroundColor: todayColor }]} />
+        <View
+          style={[
+            styles.color,
+            {
+              backgroundColor: todayColor,
+              boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${todayColorShadow}`,
+            },
+          ]}
+        />
         <View style={styles.descriptionWrapper}>
           <CustomText style={styles.descriptionHeader}>
             Today&apos;s Color

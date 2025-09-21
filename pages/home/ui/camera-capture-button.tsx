@@ -1,15 +1,17 @@
-import UploadModal from './upload-modal';
+import { useCaptureImage } from '../model';
 import { useCameraPermissions } from 'expo-camera';
-import { useState } from 'react';
-import { Pressable, View } from 'react-native';
-import ImagePicker, { type Image } from 'react-native-image-crop-picker';
+import { useRouter } from 'expo-router';
+import { Pressable } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import { StyleSheet } from 'react-native-unistyles';
 import NoPhoto from '~/assets/icons/no-photo.svg';
 
 const HEIGHT = 288;
 
 export default function CameraCaptureButton() {
-  const [image, setImage] = useState<Image>();
+  const router = useRouter();
+
+  const setImage = useCaptureImage((state) => state.setImage);
 
   const [permission, requestPermission] = useCameraPermissions();
 
@@ -25,12 +27,13 @@ export default function CameraCaptureButton() {
     });
 
     setImage(image);
+
+    router.push('/(authorized)/home/upload');
   };
 
   return (
     <Pressable style={styles.container} onPress={handlePress}>
       <NoPhoto />
-      <UploadModal image={image} onDismiss={() => setImage(undefined)} />
     </Pressable>
   );
 }
