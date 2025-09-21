@@ -1,4 +1,5 @@
 import { useCaptureImage } from '../model';
+import { formatDistanceToNow } from 'date-fns';
 import { useCameraPermissions } from 'expo-camera';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
@@ -47,7 +48,9 @@ export default function CameraCaptureArea({ data }: CameraCaptureAreaProps) {
       <View style={styles.imageOverlay}>
         <View style={styles.imageOverlayFooter}>
           <CustomText style={styles.comment}>{data[0].comment}</CustomText>
-          <CustomText style={styles.timestamp}>{data[0].createdAt}</CustomText>
+          <CustomText style={styles.timestamp}>
+            {formatDistanceToNow(new Date(data[0].createdAt))}
+          </CustomText>
         </View>
       </View>
     </View>
@@ -85,6 +88,10 @@ const styles = StyleSheet.create((theme) => ({
   imageOverlayFooter: {
     position: 'absolute',
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     bottom: 0,
     left: 0,
     right: 0,

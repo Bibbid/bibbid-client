@@ -1,6 +1,10 @@
 import * as v from 'valibot';
 import { ColorSchema } from '~/entities/color';
-import { FeedListItemSchema, TodayUploadedFeedSchema } from '~/entities/feed';
+import {
+  FeedDetailSchema,
+  FeedListItemSchema,
+  TodayUploadedFeedSchema,
+} from '~/entities/feed';
 import { GeneralResponseSchema } from '~/shared/api/response-schemas';
 
 export const GetTodayColorResponseSchema = GeneralResponseSchema(
@@ -20,6 +24,10 @@ export const CreateFeedFormSchema = v.pipe(
 );
 
 export type CreateFeedForm = v.InferOutput<typeof CreateFeedFormSchema>;
+
+export const CreateFeedResponseSchema = GeneralResponseSchema(FeedDetailSchema);
+
+export type CreateFeedResponse = v.InferOutput<typeof CreateFeedResponseSchema>;
 
 export const UploadFeedImageResponseSchema = GeneralResponseSchema(
   v.object({

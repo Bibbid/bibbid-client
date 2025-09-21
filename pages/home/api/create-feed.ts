@@ -1,5 +1,5 @@
 import { CreateFeedRequest } from '../model/parameters';
-import { FeedDetailSchema } from '~/entities/feed';
+import { CreateFeedResponseSchema } from '../model/schemas';
 import { parseResponse } from '~/shared/api/response-parser';
 import { api } from '~/shared/auth';
 
@@ -12,5 +12,5 @@ export default async function createFeed(request: CreateFeedRequest) {
     })
     .json();
 
-  return parseResponse(json, FeedDetailSchema);
+  return parseResponse(json, CreateFeedResponseSchema);
 }
