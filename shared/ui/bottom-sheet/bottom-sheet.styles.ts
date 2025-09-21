@@ -5,7 +5,7 @@ export const bottomSheetStyles = StyleSheet.create((theme) => ({
     paddingHorizontal: 16.5,
   },
   background: {
-    backgroundColor: theme.color['gray-2'],
+    backgroundColor: theme.color['gray-1'],
   },
   handle: {},
   handleIndicator: {
