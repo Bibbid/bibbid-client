@@ -54,6 +54,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   content: {
     rowGap: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   descriptionContainer: {
     rowGap: 4,
@@ -70,7 +72,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   footer: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 32,
     left: 0,
     right: 0,
     paddingHorizontal: 20,
