@@ -1,11 +1,12 @@
 import getFeedDetailOptions from '../model/get-feed-detail-options';
+import ColorFeeds from './color-feeds';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { format } from 'date-fns';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MoreHorizontal } from 'lucide-react-native';
 import { Suspense } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { Chip } from '~/shared/ui/chip';
@@ -16,7 +17,7 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
     <Suspense>
       <SuspenseQuery {...getFeedDetailOptions(feedId)}>
         {({ data }) => (
-          <View style={styles.container}>
+          <ScrollView style={styles.container}>
             <View style={styles.imageContainer}>
               <Image
                 source={{ uri: data.image.presignedUrl }}
@@ -66,7 +67,13 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
                 <MoreHorizontal size={24} color="white" />
               </Pressable>
             </View>
-          </View>
+            <View style={styles.otherFeedsContainer}>
+              <CustomText style={styles.otherFeedsTitle}>
+                More {data.color.displayName}
+              </CustomText>
+              <ColorFeeds color={data.color.displayName} />
+            </View>
+          </ScrollView>
         )}
       </SuspenseQuery>
     </Suspense>
@@ -165,5 +172,18 @@ const styles = StyleSheet.create((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  otherFeedsContainer: {
+    flex: 1,
+    paddingVertical: 16,
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 12,
+  },
+  otherFeedsTitle: {
+    paddingHorizontal: 20,
+    color: 'white',
+    fontSize: theme.fontSize['md'],
+    fontWeight: theme.fontWeight['medium'],
   },
 }));

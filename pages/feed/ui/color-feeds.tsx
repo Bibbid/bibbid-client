@@ -14,14 +14,14 @@ import { FeedListItem } from '~/entities/feed';
 import { Chip } from '~/shared/ui/chip';
 import { CustomText } from '~/shared/ui/text';
 
-export default function ColorFeeds() {
+interface ColorFeedsProps {
+  color?: string;
+}
+
+export default function ColorFeeds({ color }: ColorFeedsProps) {
   const { selectedColor } = useSelectedColor();
 
-  return (
-    <View>
-      <ColorFeedList color={selectedColor} />
-    </View>
-  );
+  return <ColorFeedList color={color ?? selectedColor} />;
 }
 
 function ColorFeedList({ color }: { color: string }) {
