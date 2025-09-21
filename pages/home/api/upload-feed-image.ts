@@ -1,22 +1,20 @@
 import { UploadFeedImageResponseSchema } from '../model/schemas';
+import { File } from 'expo-file-system/next';
 import { parseResponse } from '~/shared/api/response-parser';
 import { api } from '~/shared/auth';
 
-export default async function uploadFeedImage(blob: Blob) {
+export default async function uploadFeedImage(file: File) {
   const formData = new FormData();
 
-  formData.append('file', blob);
+  const base64 = file.base64();
 
-  console.log(formData);
+  formData.append('file', base64);
 
-  const json = await api
-    .post('api/v1/files/feeds', {
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .json();
+  const response = await api.post('api/v1/files/feeds', {
+    body: formData,
+  });
+
+  const json = await response.json();
 
   return parseResponse(json, UploadFeedImageResponseSchema);
 }

@@ -2,11 +2,7 @@ import { useCaptureImage } from '../model';
 import { CreateFeedForm, CreateFeedFormSchema } from '../model/schemas';
 import useCreateFeed from '../model/use-create-feed';
 import useUploadFeedImage from '../model/use-upload-feed-image';
-import {
-  BottomSheetModal,
-  BottomSheetTextInput,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { File } from 'expo-file-system/next';
 import { Image as ExpoImage } from 'expo-image';
@@ -94,7 +90,7 @@ export default function UploadSection() {
         return;
       }
 
-      const file = new File(image.path).blob();
+      const file = new File(image.path);
 
       const { data: uploadFeedImageData } = await uploadFeedImage(file);
       const { originalFileid, compressedFileid } = uploadFeedImageData;

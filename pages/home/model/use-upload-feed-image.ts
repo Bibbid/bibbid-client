@@ -1,5 +1,6 @@
 import uploadFeedImage from '../api/upload-feed-image';
 import { useMutation } from '@tanstack/react-query';
+import { File } from 'expo-file-system/next';
 
 export default function useUploadFeedImage({
   onSuccess,
@@ -13,8 +14,8 @@ export default function useUploadFeedImage({
 }) {
   return useMutation({
     mutationKey: ['user:upload-feed-image'],
-    mutationFn: async (blob: Blob) => {
-      const result = await uploadFeedImage(blob);
+    mutationFn: async (file: File) => {
+      const result = await uploadFeedImage(file);
 
       if (!result.success) {
         throw result.error;
