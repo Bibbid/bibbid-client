@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { getMyProfileOptions } from '~/pages/profile';
 import { ChangeName } from '~/pages/settings';
+import { Loading } from '~/shared/ui/loading';
 import {
   BlankNavItem,
   NavBackButton,
@@ -19,7 +20,7 @@ export default function ChangeNameScreen() {
         center={<NavCenterTitle title="Change Name" />}
         right={<BlankNavItem />}
       />
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <SuspenseQuery {...getMyProfileOptions()}>
           {({ data }) => <ChangeName name={data.name} />}
         </SuspenseQuery>

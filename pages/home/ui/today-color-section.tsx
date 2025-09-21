@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { MoreHorizontal, RefreshCcw, Trash2 } from 'lucide-react-native';
 import { overlay } from 'overlay-kit';
-import { Suspense, useRef } from 'react';
+import { useRef } from 'react';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
@@ -27,13 +27,11 @@ import { showToast } from '~/shared/ui/toast';
 
 export default function TodayColorSection() {
   return (
-    <Suspense>
-      <SuspenseQuery {...getTodayMyFeedOptions()}>
-        {({ data }) => (
-          <TodayColor data={data.feed} postedToday={data.postedToday} />
-        )}
-      </SuspenseQuery>
-    </Suspense>
+    <SuspenseQuery {...getTodayMyFeedOptions()}>
+      {({ data }) => (
+        <TodayColor data={data.feed} postedToday={data.postedToday} />
+      )}
+    </SuspenseQuery>
   );
 }
 

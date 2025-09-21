@@ -9,6 +9,7 @@ import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import { getMyTokensOptions } from '~/entities/token';
 import { Profile } from '~/pages/profile';
 import { Button, ButtonText } from '~/shared/ui/button';
+import { Loading } from '~/shared/ui/loading';
 import { TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
 
@@ -19,11 +20,11 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <TopNavigation
-        left={
-          <Button>
-            <ButtonText size="sm">Token</ButtonText>
-            <Suspense>
+      <Suspense fallback={<Loading />}>
+        <TopNavigation
+          left={
+            <Button>
+              <ButtonText size="sm">Token</ButtonText>
               <SuspenseQuery {...getMyTokensOptions()}>
                 {({ data }) => (
                   <CustomText style={styles.token}>
@@ -31,16 +32,16 @@ export default function ProfileScreen() {
                   </CustomText>
                 )}
               </SuspenseQuery>
-            </Suspense>
-          </Button>
-        }
-        right={
-          <Pressable onPress={() => router.push('/(authorized)/settings')}>
-            <Settings color={theme.value.color['gray-5']} />
-          </Pressable>
-        }
-      />
-      <Profile />
+            </Button>
+          }
+          right={
+            <Pressable onPress={() => router.push('/(authorized)/settings')}>
+              <Settings color={theme.value.color['gray-5']} />
+            </Pressable>
+          }
+        />
+        <Profile />
+      </Suspense>
     </SafeAreaView>
   );
 }

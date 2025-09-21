@@ -3,9 +3,9 @@ import { ColorSchema } from '~/entities/color';
 import { PresignedUrlSchema } from '~/shared/model';
 
 export const UploaderInfoSchema = v.object({
-  buddyCharacter: v.nullable(v.string()),
-  buddyColor: v.nullable(v.string()),
-  buddyImage: v.nullable(PresignedUrlSchema),
+  buddyCharacter: v.string(),
+  buddyColor: v.string(),
+  buddyImage: PresignedUrlSchema,
   buddyName: v.string(),
   introduction: v.nullable(v.string()),
   profileImageUrl: v.nullable(v.string()),

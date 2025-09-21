@@ -1,5 +1,7 @@
 import '../translation';
+import ErrorScreen from './error';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { ErrorBoundary } from '@suspensive/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { OverlayProvider } from 'overlay-kit';
@@ -25,15 +27,17 @@ export default function Layout() {
           <OverlayProvider>
             <SafeAreaView edges={['left', 'right']} style={styles.container}>
               <BottomSheetModalProvider>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: styles.container,
-                  }}>
-                  <Stack.Screen name="index" options={{ title: 'Home' }} />
-                </Stack>
-                <Toast />
-                {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
+                <ErrorBoundary fallback={<ErrorScreen />}>
+                  <Stack
+                    screenOptions={{
+                      headerShown: false,
+                      contentStyle: styles.container,
+                    }}>
+                    <Stack.Screen name="index" options={{ title: 'Home' }} />
+                  </Stack>
+                  <Toast />
+                  {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
+                </ErrorBoundary>
               </BottomSheetModalProvider>
             </SafeAreaView>
           </OverlayProvider>

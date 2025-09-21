@@ -1,17 +1,19 @@
+import { MASONRY_CONFIG } from '../config/masonry';
 import { useSelectedColor } from './color-palette';
 import { FlashList } from '@shopify/flash-list';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
 import { useCallback, useMemo } from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { FeedListItem } from '~/entities/feed';
 import { getInfiniteColorFeedsOptions } from '~/features/feed';
 import { Chip } from '~/shared/ui/chip';
+import { Image } from '~/shared/ui/image';
+import { Loading } from '~/shared/ui/loading';
 import { CustomText } from '~/shared/ui/text';
 
 interface ColorFeedsProps {
@@ -52,7 +54,7 @@ function ColorFeedList({ color }: { color: string }) {
         ListFooterComponent={() => (
           <>
             <View style={styles.spacing} />
-            {isLoading && <ActivityIndicator />}
+            {isLoading && <Loading />}
           </>
         )}
         onEndReached={() => {
@@ -81,9 +83,33 @@ function ColorFeedItem({
   const isEvenColumn = index % 2 === 0;
 
   const getHeight = useCallback(() => {
-    return index === total - 2 || index === 1 ? 156 : 206;
-  }, [index, total]);
+    const isOddTotal = total % 2 === 1;
+    const isLastItem = index === total - 1;
+    const isSecondItem = index === 1;
+    const isSecondLastItem = index === total - 2;
 
+    // 홀수 개수인 경우
+    if (isOddTotal) {
+      // 마지막 아이템은 작은 높이
+      if (isLastItem) {
+        return MASONRY_CONFIG.minHeight;
+      }
+      // 두 번째 아이템은 작은 높이
+      if (isSecondItem) {
+        return MASONRY_CONFIG.minHeight;
+      }
+      // 나머지는 기본 높이
+      return MASONRY_CONFIG.maxHeight;
+    }
+
+    // 짝수 개수인 경우
+    // 두 번째 아이템과 마지막에서 두 번째 아이템을 작게
+    if (isSecondItem || isSecondLastItem) {
+      return MASONRY_CONFIG.minHeight;
+    }
+    // 나머지는 기본 높이
+    return MASONRY_CONFIG.maxHeight;
+  }, [index, total]);
   return (
     <Pressable
       onPress={() => router.push(`/feed/feed-detail?feedId=${data.feedId}`)}

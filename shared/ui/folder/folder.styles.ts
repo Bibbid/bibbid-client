@@ -30,7 +30,7 @@ export const folderStyles = StyleSheet.create((theme) => ({
     right: 0,
     height: 150,
     backgroundColor: theme.color['opacity-black-16'],
-    zIndex: 1,
+    zIndex: 10,
   },
   contentImageWrapper: {
     position: 'absolute',
