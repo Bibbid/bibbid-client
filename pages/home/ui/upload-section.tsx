@@ -42,12 +42,17 @@ export default function UploadSection() {
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const { handleSubmit, control, ...rest } = useForm<CreateFeedForm>({
+  const method = useForm<CreateFeedForm>({
     defaultValues: {
       comment: '',
     },
     resolver: valibotResolver(CreateFeedFormSchema),
   });
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid, isSubmitting },
+  } = method;
 
   const comment = useWatch({ control, name: 'comment' });
 
@@ -110,7 +115,7 @@ export default function UploadSection() {
   );
 
   return (
-    <FormProvider handleSubmit={handleSubmit} control={control} {...rest}>
+    <FormProvider {...method}>
       <View style={styles.container}>
         <TopNavigation
           left={<NavBackButton />}
@@ -145,11 +150,16 @@ export default function UploadSection() {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
-          <Button variant="solid-gray" size="xl" onPress={onSubmit}>
+          <Button
+            variant="solid-gray"
+            size="xl"
+            onPress={onSubmit}
+            disabled={!isValid || isSubmitting}>
             <ButtonText
               variant="solid-gray"
               size="md"
-              style={styles.buttonText}>
+              style={styles.buttonText}
+              disabled={!isValid || isSubmitting}>
               Upload photo
             </ButtonText>
           </Button>
@@ -163,6 +173,7 @@ export default function UploadSection() {
       <CustomBottomSheet index={0} ref={bottomSheetRef}>
         <BottomSheetContent
           control={control}
+          initialComment={comment}
           close={() => {
             bottomSheetRef.current?.close();
           }}
@@ -193,13 +204,15 @@ function CommentEditButton({ comment, onPress }: CommentEditButtonProps) {
 }
 
 function BottomSheetContent({
+  initialComment,
   control,
   close,
 }: {
+  initialComment?: string;
   control: Control<CreateFeedForm>;
   close: () => void;
 }) {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState(initialComment ?? '');
 
   const theme = useAnimatedTheme();
 

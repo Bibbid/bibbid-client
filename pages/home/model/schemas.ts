@@ -12,6 +12,7 @@ export const CreateFeedFormSchema = v.pipe(
   v.object({
     comment: v.pipe(
       v.string(),
+      v.minLength(1, 'Comment must be at least 1 character'),
       v.maxLength(20, 'Comment must be 20 characters or less')
     ),
   })

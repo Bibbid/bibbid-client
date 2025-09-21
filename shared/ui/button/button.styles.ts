@@ -41,6 +41,11 @@ export const buttonStyles = StyleSheet.create((theme) => ({
           height: 54,
         },
       },
+      disabled: {
+        true: {
+          opacity: 0.5,
+        },
+      },
     },
   },
   text: {
