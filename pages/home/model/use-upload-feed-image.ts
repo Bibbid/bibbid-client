@@ -7,8 +7,8 @@ export default function useUploadFeedImage({
   onError,
 }: {
   onSuccess?: (data: {
-    originalFileid: number;
-    compressedFileid: number;
+    originalFileId: number;
+    compressedFileId: number;
   }) => void;
   onError?: (error: Error) => void;
 }) {

@@ -93,12 +93,12 @@ export default function UploadSection() {
       const file = new File(image.path);
 
       const { data: uploadFeedImageData } = await uploadFeedImage(file);
-      const { originalFileid, compressedFileid } = uploadFeedImageData;
+      const { originalFileId, compressedFileId } = uploadFeedImageData;
 
       await createFeed({
         ...data,
-        originalFileid,
-        compressedFileid,
+        originalFileId,
+        compressedFileId,
       });
     },
     (error) => {

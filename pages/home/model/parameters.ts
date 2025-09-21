@@ -1,5 +1,5 @@
 export interface CreateFeedRequest {
-  originalFileid: number;
-  compressedFileid: number;
+  originalFileId: number;
+  compressedFileId: number;
   comment: string;
 }

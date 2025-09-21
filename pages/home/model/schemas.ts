@@ -21,8 +21,8 @@ export type CreateFeedForm = v.InferOutput<typeof CreateFeedFormSchema>;
 
 export const UploadFeedImageResponseSchema = GeneralResponseSchema(
   v.object({
-    originalFileid: v.number(),
-    compressedFileid: v.number(),
+    compressedFileId: v.number(),
+    originalFileId: v.number(),
   })
 );
 
