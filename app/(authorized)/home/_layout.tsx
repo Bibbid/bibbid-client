@@ -9,6 +9,7 @@ export default function Layout() {
         screenOptions={{ contentStyle: styles.content, headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="today-color" />
+        <Stack.Screen name="upload" />
       </Stack>
     </SafeAreaView>
   );
@@ -16,6 +17,7 @@ export default function Layout() {
 
 const styles = StyleSheet.create((theme) => ({
   container: {
+    position: 'relative',
     flex: 1,
     backgroundColor: theme.color['gray-1'],
   },

@@ -1,4 +1,5 @@
 import '../translation';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { OverlayProvider } from 'overlay-kit';
@@ -7,7 +8,6 @@ import { DevToolsBubble } from 'react-native-react-query-devtools';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
-import { BottomSheetOverlayProvider } from '~/shared/ui/bottom-sheet';
 import { Toast } from '~/shared/ui/toast';
 
 const queryClient = new QueryClient();
@@ -21,10 +21,10 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={styles.container}>
       <QueryClientProvider client={queryClient}>
-        <BottomSheetOverlayProvider>
-          <AuthLoaded>
-            <OverlayProvider>
-              <SafeAreaView edges={['left', 'right']} style={styles.container}>
+        <AuthLoaded>
+          <OverlayProvider>
+            <SafeAreaView edges={['left', 'right']} style={styles.container}>
+              <BottomSheetModalProvider>
                 <Stack
                   screenOptions={{
                     headerShown: false,
@@ -34,10 +34,10 @@ export default function Layout() {
                 </Stack>
                 <Toast />
                 {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-              </SafeAreaView>
-            </OverlayProvider>
-          </AuthLoaded>
-        </BottomSheetOverlayProvider>
+              </BottomSheetModalProvider>
+            </SafeAreaView>
+          </OverlayProvider>
+        </AuthLoaded>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );

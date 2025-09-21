@@ -27,8 +27,6 @@ const MOCK_IMAGES = [
   },
 ];
 
-const HORIZONTAL_PADDING = 20;
-
 export default function WhatsNewSection() {
   return (
     <View style={styles.container}>
@@ -48,14 +46,10 @@ function TodayImageCarousel() {
 
   const progress = useSharedValue<number>(0);
 
-  const width = Dimensions.get('window').width - HORIZONTAL_PADDING * 2;
+  const width = Dimensions.get('window').width;
 
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
-      /**
-       * Calculate the difference between the current index and the target index
-       * to ensure that the carousel scrolls to the nearest index
-       */
       count: index - progress.value,
       animated: true,
     });
@@ -75,7 +69,7 @@ function TodayImageCarousel() {
           parallaxScrollingOffset: 50,
           parallaxAdjacentItemScale: 0.8,
         }}
-        renderItem={({ item: { src, id } }) => (
+        renderItem={({ item: { src, id }, index }) => (
           <View key={id} style={styles.slide}>
             <LinearGradient
               colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0)']}
@@ -109,13 +103,14 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    paddingHorizontal: 20,
     rowGap: 20,
+    paddingBottom: 20,
   },
   header: {
     display: 'flex',
     flexDirection: 'column',
     rowGap: 4,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: theme.fontSize['2xl'],
@@ -143,7 +138,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   'pagination-container': {
     position: 'absolute',
-    bottom: -380,
+    bottom: 0,
     columnGap: 8,
   },
   'pagination-dot': {
@@ -162,7 +157,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   topGradient: {
     position: 'absolute',
-    zIndex: 10,
+    zIndex: 1,
     top: 0,
     left: 0,
     right: 0,

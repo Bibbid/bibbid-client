@@ -5,12 +5,17 @@ import { parseResponse } from '~/shared/api/response-parser';
 import { GeneralResponseSchema } from '~/shared/api/response-schemas';
 
 async function reissueToken({ refreshToken }: { refreshToken: string }) {
-  const json = await api
-    .post('api/v1/auth/reissue', {
-      json: {
-        refreshToken,
+  const json = await publicApi
+    .extend({
+      hooks: {
+        beforeRequest: [
+          (request) => {
+            request.headers.set('Authorization', `Bearer ${refreshToken}`);
+          },
+        ],
       },
     })
+    .post('api/v1/auth/reissue')
     .json();
 
   return parseResponse(json, GeneralResponseSchema(TokenResponseSchema));
@@ -28,6 +33,8 @@ export const api = publicApi.extend({
         } else if (refreshToken) {
           request.headers.set('Authorization', `Bearer ${refreshToken}`);
         }
+
+        console.log('request.headers', request.headers);
       },
     ],
     afterResponse: [

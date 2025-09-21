@@ -24,7 +24,7 @@ export const masonryGridStyles = StyleSheet.create((theme) => ({
   },
   topGradient: {
     position: 'absolute',
-    zIndex: 10,
+    zIndex: 1,
     top: 0,
     left: 0,
     right: 0,

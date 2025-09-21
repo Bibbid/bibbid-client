@@ -56,6 +56,7 @@ export function Button({
   variant = 'solid-gray',
   size = 'md',
   style,
+  disabled = false,
   ...props
 }: ButtonProps) {
   const pressProgress = useSharedValue(0);
@@ -79,7 +80,11 @@ export function Button({
     };
   });
 
-  buttonStyles.useVariants({ variant, size });
+  buttonStyles.useVariants({
+    variant,
+    size,
+    disabled: disabled ? 'true' : undefined,
+  });
 
   return (
     <AnimatedPressable
@@ -87,6 +92,7 @@ export function Button({
       onPressOut={handlePressOut}
       onPress={onPress}
       style={[buttonStyles.button, animatedStyle, style]}
+      disabled={disabled}
       {...props}
     />
   );

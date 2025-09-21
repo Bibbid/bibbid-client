@@ -49,7 +49,7 @@ export const radioStyles = StyleSheet.create((theme) => ({
     width: 10,
     height: 10,
     borderRadius: 9999,
-    zIndex: 10,
+    zIndex: 1,
     backgroundColor: 'transparent',
     variants: {
       active: {

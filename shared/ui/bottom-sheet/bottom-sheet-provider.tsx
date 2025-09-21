@@ -3,7 +3,10 @@ import {
   bottomSheetOverlay,
   BottomSheetOverlayOptions,
 } from './bottom-sheet-overlay';
-import BottomSheet from '@gorhom/bottom-sheet';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
 import {
   type PropsWithChildren,
   type ReactNode,
@@ -14,13 +17,15 @@ import {
 
 interface BottomSheetOverlayProviderProps extends PropsWithChildren {
   defaultSnapPoints?: string[];
+  backdrop?: boolean;
 }
 
 export default function BottomSheetOverlayProvider({
   children,
   defaultSnapPoints = ['50%'],
+  backdrop = true,
 }: BottomSheetOverlayProviderProps) {
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [content, setContent] = useState<ReactNode>(null);
   const [options, setOptions] = useState<BottomSheetOverlayOptions>({
     snapPoints: defaultSnapPoints,
@@ -38,23 +43,17 @@ export default function BottomSheetOverlayProvider({
     return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    if (content) {
-      bottomSheetRef.current?.snapToIndex(0);
-    } else {
-      bottomSheetRef.current?.close();
-    }
-  }, [content]);
-
   return (
-    <>
+    <BottomSheetModalProvider>
       {children}
       <CustomBottomSheet
         ref={bottomSheetRef}
         snapPoints={options.snapPoints}
-        onClose={() => bottomSheetOverlay.close()}>
+        onClose={() => {
+          bottomSheetOverlay.close();
+        }}>
         {content}
       </CustomBottomSheet>
-    </>
+    </BottomSheetModalProvider>
   );
 }
