@@ -29,6 +29,9 @@ export default function useCreateFeed({
       queryClient.invalidateQueries({
         queryKey: queryKeys.feed['get-today-my-feed'],
       });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.color['get-collected-color'],
+      });
     },
     onError: (error) => {
       onError?.(error);
