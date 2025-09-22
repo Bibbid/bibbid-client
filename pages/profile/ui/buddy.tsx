@@ -47,8 +47,9 @@ export default function Buddy({
       buddyColor: initialBuddyColor,
     },
     resolver: valibotResolver(UpdateBuddyFormSchema),
+    mode: 'onChange',
   });
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, resetField } = methods;
 
   const buddyName = useWatch({ control, name: 'buddyName' });
   const buddyColor = useWatch({ control, name: 'buddyColor' });
@@ -141,11 +142,14 @@ export default function Buddy({
             </ButtonText>
           </Button>
         </View>
-        <CustomBottomSheet ref={bottomSheetRef} index={0}>
+        <CustomBottomSheet
+          ref={bottomSheetRef}
+          index={0}
+          enablePanDownToClose={false}>
           <BuddyNameBottomSheetContent
             control={control}
             close={() => bottomSheetRef.current?.close()}
-            initialBuddyName={initialBuddyName}
+            reset={() => resetField('buddyName')}
           />
         </CustomBottomSheet>
       </View>
@@ -153,41 +157,46 @@ export default function Buddy({
   );
 }
 
+interface BuddyNameBottomSheetContentProps {
+  control: Control<UpdateBuddyForm>;
+  close: () => void;
+  reset: () => void;
+}
+
 function BuddyNameBottomSheetContent({
   control,
   close,
-  initialBuddyName,
-}: {
-  control: Control<UpdateBuddyForm>;
-  close: () => void;
-  initialBuddyName: string;
-}) {
+  reset,
+}: BuddyNameBottomSheetContentProps) {
   const { bottom } = useSafeAreaInsets();
 
   const theme = useAnimatedTheme();
 
-  const [buddyName, setBuddyName] = useState(initialBuddyName);
+  const handleForceClose = () => {
+    reset();
+    close();
+  };
 
   return (
     <BottomSheetView style={styles.bottomSheetContainer}>
       <View style={[styles.bottomSheetWrapper, { paddingBottom: bottom }]}>
-        <View style={styles.bottomSheetHeader}>
-          <View style={styles.bottomSheetBlank} />
-          <CustomText style={styles.bottomSheetTitle}>Name</CustomText>
-          <Pressable onPress={() => close()}>
-            <X size={24} color={theme.value.color['gray-7']} />
-          </Pressable>
-        </View>
         <Controller
           control={control}
           name="buddyName"
           render={({ field, fieldState }) => (
             <>
+              <View style={styles.bottomSheetHeader}>
+                <View style={styles.bottomSheetBlank} />
+                <CustomText style={styles.bottomSheetTitle}>Name</CustomText>
+                <Pressable onPress={() => handleForceClose()}>
+                  <X size={24} color={theme.value.color['gray-7']} />
+                </Pressable>
+              </View>
               <Input
                 mode="bottom-sheet"
                 placeholder="Enter your buddy name"
-                value={buddyName}
-                onChangeText={setBuddyName}
+                value={field.value}
+                onChangeText={field.onChange}
                 showMaxLength
                 maxLength={MAX_BUDDY_NAME_LENGTH}
                 isError={!!fieldState.error}
@@ -200,10 +209,9 @@ function BuddyNameBottomSheetContent({
                 size="xl"
                 variant="solid-white"
                 onPress={() => {
-                  field.onChange(buddyName);
                   close();
                 }}
-                disabled={buddyName.length === 0 || !!fieldState.error}>
+                disabled={field.value.length === 0 || !!fieldState.error}>
                 <ButtonText variant="solid-white">Add</ButtonText>
               </Button>
             </>
