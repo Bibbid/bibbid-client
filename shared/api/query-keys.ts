@@ -13,6 +13,12 @@ export const queryKeys = {
   },
   profile: {
     'get-my-profile': ['profile', 'get-my-profile'],
+    'get-buddy-image': (buddyCharacter: string, buddyColor: string) => [
+      'profile',
+      'get-buddy-image',
+      buddyCharacter,
+      buddyColor,
+    ],
   },
   feed: {
     'get-today-my-feed': ['feed', 'get-today-my-feed'],
