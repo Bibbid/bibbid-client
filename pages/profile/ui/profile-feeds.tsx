@@ -11,76 +11,20 @@ import { CustomText } from '~/shared/ui/text';
 
 interface ProfileFeedsProps {
   colors: Color[];
+  feeds: ColorFeed[];
   count: number;
 }
 
-const MOCK_DATA: ColorFeed[] = [
-  {
-    color: 'Red',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-      { objectKey: '2', presignedUrl: 'https://picsum.photos/200/300' },
-      { objectKey: '3', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Orange',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Yellow',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Green',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Blue',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Purple',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-  {
-    color: 'Pink',
-    feedCount: 10,
-    latestFeedImages: [
-      { objectKey: '1', presignedUrl: 'https://picsum.photos/200/300' },
-    ],
-    latestComment: 'Comment',
-  },
-];
-
-export default function ProfileFeeds({ colors, count }: ProfileFeedsProps) {
+export default function ProfileFeeds({
+  colors,
+  count,
+  feeds,
+}: ProfileFeedsProps) {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>My Posts</CustomText>
       <MyColorPalette colors={colors} count={count} />
-      <ColorFeeds colorFeeds={MOCK_DATA} />
+      <ColorFeeds colorFeeds={feeds} />
     </View>
   );
 }

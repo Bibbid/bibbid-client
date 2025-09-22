@@ -1,7 +1,10 @@
+import { SuspenseQuery } from '@suspensive/react-query';
+import { Suspense } from 'react';
 import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
-import { Buddy } from '~/pages/profile';
+import { Buddy, getMyProfileOptions } from '~/pages/profile';
+import { Loading } from '~/shared/ui/loading';
 import {
   NavBackButton,
   NavCenterTitle,
@@ -21,7 +24,17 @@ export default function BuddyScreen() {
           </Pressable>
         }
       />
-      <Buddy />
+      <Suspense fallback={<Loading />}>
+        <SuspenseQuery {...getMyProfileOptions()}>
+          {({ data: { buddyName, buddyColor, buddyCharacter } }) => (
+            <Buddy
+              buddyCharacter={buddyCharacter}
+              buddyName={buddyName}
+              buddyColor={buddyColor}
+            />
+          )}
+        </SuspenseQuery>
+      </Suspense>
     </SafeAreaView>
   );
 }
