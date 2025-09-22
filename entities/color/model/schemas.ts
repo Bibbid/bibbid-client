@@ -22,3 +22,11 @@ export const GetMyTodayColorResponseSchema = GeneralResponseSchema(
 export type GetMyTodayColorResponse = v.InferOutput<
   typeof GetMyTodayColorResponseSchema
 >;
+
+export const GetCollectedColorResponseSchema = GeneralResponseSchema(
+  v.array(ColorSchema)
+);
+
+export type GetCollectedColorResponse = v.InferOutput<
+  typeof GetCollectedColorResponseSchema
+>;

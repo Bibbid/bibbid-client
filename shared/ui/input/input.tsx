@@ -144,6 +144,7 @@ export default function Input({
                 flex: 1,
                 backgroundColor: 'transparent',
                 fontFamily: 'Montserrat-Regular',
+                lineHeight: 1,
               },
               animatedTextInputStyle,
             ]}
@@ -161,6 +162,7 @@ export default function Input({
                 flex: 1,
                 backgroundColor: 'transparent',
                 fontFamily: 'Montserrat-Regular',
+                lineHeight: 1,
               },
               animatedTextInputStyle,
             ]}

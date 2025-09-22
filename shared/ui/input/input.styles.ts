@@ -28,8 +28,7 @@ export const inputStyles = StyleSheet.create((theme) => ({
   count: {
     position: 'absolute',
     right: 14,
-    top: '50%',
-    transform: [{ translateY: '-50%' }],
+    top: 14,
     fontSize: theme.fontSize['xs'],
     color: theme.color['gray-6'],
   },

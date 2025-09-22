@@ -1,4 +1,4 @@
-import { SuspenseQuery } from '@suspensive/react-query';
+import { PrefetchQuery, SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Settings } from 'lucide-react-native';
 import { Suspense } from 'react';
@@ -6,6 +6,7 @@ import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+import { getCollectedColorOptions } from '~/entities/color';
 import { getMyTokensOptions } from '~/entities/token';
 import { Profile } from '~/pages/profile';
 import { Button, ButtonText } from '~/shared/ui/button';
@@ -21,6 +22,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <Suspense fallback={<Loading />}>
+        <PrefetchQuery {...getCollectedColorOptions()} />
         <TopNavigation
           left={
             <Button>

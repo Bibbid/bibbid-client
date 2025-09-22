@@ -43,7 +43,9 @@ export default function Folder({
             ]}>
             <Image source={{ uri: image }} style={folderStyles.contentImage} />
             <View style={folderStyles.contentImageFooter}>
-              <CustomText style={folderStyles.contentImageFooterText}>
+              <CustomText
+                style={folderStyles.contentImageFooterText}
+                numberOfLines={1}>
                 {idx === 0 ? comment : ''}
               </CustomText>
             </View>

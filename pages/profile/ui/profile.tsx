@@ -26,6 +26,7 @@ export default function Profile() {
             <ProfileFeeds
               colors={colors}
               count={myProfile.collectedColorCount}
+              feeds={myProfile.colorFeeds}
             />
           </ScrollView>
         );

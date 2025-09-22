@@ -226,7 +226,7 @@ function BottomSheetContent({
       <Controller
         control={control}
         name="comment"
-        render={({ field, formState: { errors } }) => (
+        render={({ field, fieldState }) => (
           <>
             <Input
               mode="bottom-sheet"
@@ -235,8 +235,8 @@ function BottomSheetContent({
               onChangeText={setComment}
               showMaxLength
               maxLength={20}
-              isError={!!errors.comment}
-              description={errors.comment?.message}
+              isError={!!fieldState.error}
+              description={fieldState.error?.message}
             />
             <Button
               variant="solid-white"

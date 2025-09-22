@@ -18,6 +18,7 @@ export default function CustomBottomSheet({
   handleStyle,
   handleIndicatorStyle,
   backdropComponent,
+  enablePanDownToClose = true,
   ...props
 }: CustomBottomSheetProps) {
   const renderBackdrop = useCallback(
@@ -37,7 +38,6 @@ export default function CustomBottomSheet({
     <BottomSheetModal
       ref={ref}
       index={-1}
-      {...props}
       style={[bottomSheetStyles.container, style]}
       backgroundStyle={[bottomSheetStyles.background, backgroundStyle]}
       handleStyle={[bottomSheetStyles.handle, handleStyle]}
@@ -45,10 +45,11 @@ export default function CustomBottomSheet({
         bottomSheetStyles.handleIndicator,
         handleIndicatorStyle,
       ]}
-      enablePanDownToClose
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"
       backdropComponent={backdropComponent || renderBackdrop}
+      enablePanDownToClose={enablePanDownToClose}
+      {...props}
     />
   );
 }
