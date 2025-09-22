@@ -9,6 +9,7 @@ export const queryKeys = {
       'get-my-today-color',
       today,
     ],
+    'get-collected-color': ['color', 'get-collected-color'],
   },
   profile: {
     'get-my-profile': ['profile', 'get-my-profile'],

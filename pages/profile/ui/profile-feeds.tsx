@@ -1,8 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
+import { SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { Color } from '~/entities/color';
+import { Color, getCollectedColorOptions } from '~/entities/color';
 import type { ColorFeed } from '~/entities/profile';
 import { hexToRgba } from '~/shared/lib';
 import { Folder } from '~/shared/ui/folder';
@@ -96,24 +97,33 @@ function MyColorPalette({ colors, count }: MyColorPaletteProps) {
         <CustomText style={styles.colorPaletteTitle}>Palette</CustomText>
         <CustomText style={styles.colorPaletteSubtitle}>{count}</CustomText>
       </View>
-      <View style={styles.colorPalette}>
-        {colors.map(({ displayName, rgbHexCode, shadowHexCode }) => {
-          const shadow = hexToRgba({ hex: shadowHexCode, alpha: 0.2 });
+      <SuspenseQuery {...getCollectedColorOptions()}>
+        {({ data }) => (
+          <View style={styles.colorPalette}>
+            {colors.map(({ displayName, rgbHexCode, shadowHexCode }) => {
+              const shadow = hexToRgba({ hex: shadowHexCode, alpha: 0.2 });
 
-          return (
-            <View
-              key={displayName}
-              style={[
-                styles.color,
-                {
-                  backgroundColor: rgbHexCode,
-                  boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${shadow}`,
-                },
-              ]}
-            />
-          );
-        })}
-      </View>
+              return (
+                <View
+                  key={displayName}
+                  style={[
+                    styles.color,
+                    {
+                      backgroundColor: rgbHexCode,
+                      boxShadow: `inset 0 -6px 6px 0 rgba(255, 255, 255, 0.16), inset 4px 4px 6px 0 ${shadow}`,
+                      opacity: data.some(
+                        (color) => color.displayName === displayName
+                      )
+                        ? 1
+                        : 0.2,
+                    },
+                  ]}
+                />
+              );
+            })}
+          </View>
+        )}
+      </SuspenseQuery>
     </View>
   );
 }
