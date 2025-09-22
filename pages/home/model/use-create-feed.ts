@@ -26,9 +26,16 @@ export default function useCreateFeed({
     },
     onSuccess: (data) => {
       onSuccess?.(data);
+
+      // 오늘 업로드한 피드 데이터 초기화
       queryClient.invalidateQueries({
         queryKey: queryKeys.feed['get-today-my-feed'],
       });
+      // 내 프로필 데이터 초기화
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.profile['get-my-profile'],
+      });
+      // 수집한 색상 데이터 초기화
       queryClient.invalidateQueries({
         queryKey: queryKeys.color['get-collected-color'],
       });
