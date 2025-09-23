@@ -41,7 +41,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   topNavigation: {
     backgroundColor: 'transparent',
-    zIndex: 1,
+    zIndex: 2,
   },
   overlay: {
     position: 'absolute',
