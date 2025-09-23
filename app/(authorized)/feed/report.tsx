@@ -23,15 +23,13 @@ export default function ReportScreen() {
         center={<NavCenterTitle title="Report" />}
         right={<BlankNavItem />}
       />
-      <ScrollView style={styles.scrollView}>
-        {feedId && (
-          <Suspense fallback={<Loading />}>
-            <SuspenseQuery {...getFeedDetailOptions(Number(feedId))}>
-              {({ data }) => <FeedReport data={data} />}
-            </SuspenseQuery>
-          </Suspense>
-        )}
-      </ScrollView>
+      {feedId && (
+        <Suspense fallback={<Loading />}>
+          <SuspenseQuery {...getFeedDetailOptions(Number(feedId))}>
+            {({ data }) => <FeedReport data={data} />}
+          </SuspenseQuery>
+        </Suspense>
+      )}
     </View>
   );
 }
@@ -48,8 +46,5 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: theme.fontSize['2xl'],
     fontWeight: theme.fontWeight['semibold'],
     paddingHorizontal: 8,
-  },
-  scrollView: {
-    flex: 1,
   },
 }));
