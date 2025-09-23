@@ -58,6 +58,8 @@
     "react-native-image-crop-picker": "^0.51.0",
     "react-native-mmkv": "^3.3.1",
     "react-native-nitro-modules": "0.29.6",
+    "react-native-purchases": "^9.5.0",
+    "react-native-purchases-ui": "^9.5.0",
     "react-native-react-query-devtools": "^1.5.1",
     "react-native-reanimated": "~3.17.5",
     "react-native-reanimated-carousel": "^4.0.3",
