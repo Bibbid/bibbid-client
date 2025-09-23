@@ -1,15 +1,16 @@
 import { FlashList } from '@shopify/flash-list';
-import { SuspenseInfiniteQuery, SuspenseQuery } from '@suspensive/react-query';
+import { SuspenseQuery } from '@suspensive/react-query';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { Suspense } from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { FeedListItem } from '~/entities/feed';
 import {
   FeedInfo,
   getInfiniteMyColorFeedsOptions,
   getMyFeedCountsOptions,
 } from '~/features/feed';
+import { ProfileModal } from '~/features/user';
 import { Loading } from '~/shared/ui/loading';
 import { CustomText } from '~/shared/ui/text';
 
@@ -69,6 +70,18 @@ function ProfileColorFeedsContent({
               createdAt={item.createdAt}
               name={item.uploader.buddyName}
               description={item.uploader.introduction ?? ''}
+              onOptionPress={() =>
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileModal
+                    visible={isOpen}
+                    onClose={close}
+                    feedId={item.feedId}
+                    profileImage={item.uploader.buddyImage}
+                    name={item.uploader.buddyName}
+                    createdAt={item.createdAt}
+                  />
+                ))
+              }
             />
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}

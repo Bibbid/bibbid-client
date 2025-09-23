@@ -17,6 +17,7 @@ interface FeedInfoProps {
   createdAt: string;
   name: string;
   description: string;
+  onOptionPress: () => void;
 }
 
 export default function FeedInfo({
@@ -26,6 +27,7 @@ export default function FeedInfo({
   createdAt,
   name,
   description,
+  onOptionPress,
 }: FeedInfoProps) {
   return (
     <View style={styles.container}>
@@ -70,7 +72,7 @@ export default function FeedInfo({
             {description}
           </CustomText>
         </View>
-        <Pressable style={styles.uploaderButton}>
+        <Pressable style={styles.uploaderButton} onPress={onOptionPress}>
           <MoreHorizontal size={24} color="white" />
         </Pressable>
       </View>

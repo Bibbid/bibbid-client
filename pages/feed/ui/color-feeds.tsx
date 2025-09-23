@@ -5,12 +5,14 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
+import { overlay } from 'overlay-kit';
 import { useCallback, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { FeedListItem } from '~/entities/feed';
 import { getInfiniteColorFeedsOptions } from '~/features/feed';
+import { ProfileModal } from '~/features/user';
 import { Chip } from '~/shared/ui/chip';
 import { Image } from '~/shared/ui/image';
 import { Loading } from '~/shared/ui/loading';
@@ -144,7 +146,19 @@ function ColorFeedItem({
           <CustomText style={styles.imageOverlayHeaderText}>
             {data.uploader.buddyName}
           </CustomText>
-          <Pressable>
+          <Pressable
+            onPress={() =>
+              overlay.open(({ isOpen, close }) => (
+                <ProfileModal
+                  visible={isOpen}
+                  onClose={close}
+                  feedId={data.feedId}
+                  profileImage={data.uploader.buddyImage}
+                  name={data.uploader.buddyName}
+                  createdAt={data.createdAt}
+                />
+              ))
+            }>
             <MoreHorizontal size={16} color="white" />
           </Pressable>
         </View>

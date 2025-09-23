@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { ColorFeeds, ColorPalette } from '~/pages/feed';
@@ -5,6 +6,8 @@ import { TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
 
 export default function Feed() {
+  const { color } = useLocalSearchParams<{ color?: string }>();
+
   return (
     <View style={styles.container}>
       <View>
@@ -14,7 +17,7 @@ export default function Feed() {
         <ColorPalette />
       </View>
       <ScrollView style={{ flex: 1 }}>
-        <ColorFeeds />
+        <ColorFeeds color={color} />
       </ScrollView>
     </View>
   );

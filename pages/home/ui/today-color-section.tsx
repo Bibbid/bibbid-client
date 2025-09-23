@@ -47,7 +47,7 @@ function TodayColor({
   const { mutateAsync: deleteFeed } = useDeleteFeed({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.feed['get-today-my-feed'],
+        queryKey: queryKeys.feed['get-feed-detail'](data[0].feedId),
       });
       bottomSheetRef.current?.close();
     },

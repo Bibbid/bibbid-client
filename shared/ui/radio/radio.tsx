@@ -33,6 +33,7 @@ export function RadioButtonGroup({
   selected,
   onSelect,
   children,
+  style,
 }: RadioButtonGroupProps) {
   const [innerSelected, setInnerSelected] = useState<string>();
 
@@ -42,7 +43,7 @@ export function RadioButtonGroup({
         selected: selected ?? innerSelected,
         onSelect: onSelect ?? setInnerSelected,
       }}>
-      <View>{children}</View>
+      <View style={style}>{children}</View>
     </RadioContext.Provider>
   );
 }
