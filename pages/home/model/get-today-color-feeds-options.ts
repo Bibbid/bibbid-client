@@ -4,7 +4,7 @@ import { queryKeys } from '~/shared/api/query-keys';
 
 export default function getTodayColorFeedsOptions() {
   return queryOptions({
-    queryKey: queryKeys.feed['get-today-color-feeds'],
+    queryKey: queryKeys.home['get-today-color-feeds'],
     queryFn: async () => {
       const result = await getTodayColorFeeds();
 

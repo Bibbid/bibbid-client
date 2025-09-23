@@ -4,7 +4,7 @@ import { queryKeys } from '~/shared/api/query-keys';
 
 export default function getTodayMyFeedOptions() {
   return queryOptions({
-    queryKey: queryKeys.feed['get-today-my-feed'],
+    queryKey: queryKeys.home['get-today-my-feed'],
     queryFn: async () => {
       const result = await getTodayMyFeed();
 

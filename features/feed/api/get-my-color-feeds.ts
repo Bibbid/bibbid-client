@@ -1,5 +1,5 @@
 import type { GetFeedsRequest } from '../model/parameters';
-import { GetColorFeedsResponseSchema } from '../model/schemas';
+import { GetMyColorFeedsResponseSchema } from '../model/schemas';
 import { parseResponse } from '~/shared/api/response-parser';
 import { api } from '~/shared/auth';
 
@@ -20,5 +20,5 @@ export default async function getColorFeeds({
     })
     .json();
 
-  return parseResponse(json, GetColorFeedsResponseSchema);
+  return parseResponse(json, GetMyColorFeedsResponseSchema);
 }

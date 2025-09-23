@@ -29,7 +29,7 @@ export default function useCreateFeed({
 
       // 오늘 업로드한 피드 데이터 초기화
       queryClient.invalidateQueries({
-        queryKey: queryKeys.feed['get-today-my-feed'],
+        queryKey: queryKeys.home['get-today-my-feed'],
       });
       // 내 프로필 데이터 초기화
       queryClient.invalidateQueries({

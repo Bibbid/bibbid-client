@@ -10,7 +10,7 @@ export default function getInfiniteMyColorFeedsOptions({
   sort,
 }: GetFeedsRequest) {
   return infiniteQueryOptions({
-    queryKey: queryKeys.feed['get-infinite-my-color-feeds'](color),
+    queryKey: queryKeys.profile['get-infinite-my-color-feeds'](color),
     queryFn: async ({ pageParam }) => {
       const result = await getMyColorFeeds({
         color,

@@ -1,6 +1,9 @@
 import * as v from 'valibot';
-import { FeedListItemSchema } from '~/entities/feed';
-import { CursorResponseSchema } from '~/shared/api/response-schemas';
+import { FeedListItemSchema, MyFeedListItemSchema } from '~/entities/feed';
+import {
+  CursorResponseSchema,
+  GeneralResponseSchema,
+} from '~/shared/api/response-schemas';
 
 export const GetColorFeedsResponseSchema =
   CursorResponseSchema(FeedListItemSchema);
@@ -8,3 +11,19 @@ export const GetColorFeedsResponseSchema =
 export type GetColorFeedsResponse = v.InferOutput<
   typeof GetColorFeedsResponseSchema
 >;
+
+export const GetMyColorFeedsResponseSchema =
+  CursorResponseSchema(MyFeedListItemSchema);
+
+export type GetMyColorFeedsResponse = v.InferOutput<
+  typeof GetMyColorFeedsResponseSchema
+>;
+
+export const GetMyFeedCountsResponseSchema = GeneralResponseSchema(
+  v.array(
+    v.object({
+      color: v.string(),
+      count: v.number(),
+    })
+  )
+);

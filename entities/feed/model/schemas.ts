@@ -35,15 +35,18 @@ export const TodayUploadedFeedSchema = v.object({
 
 export type TodayUploadedFeed = v.InferOutput<typeof TodayUploadedFeedSchema>;
 
-export const FeedListItemSchema = v.object({
+export const MyFeedListItemSchema = v.object({
   feedId: v.number(),
   image: PresignedUrlSchema,
   color: ColorSchema,
-  uploader: v.object({
-    userUuid: v.string(),
-    buddyName: v.string(),
-  }),
+  uploader: UploaderInfoSchema,
   createdAt: v.string(),
+});
+
+export type MyFeedListItem = v.InferOutput<typeof MyFeedListItemSchema>;
+
+export const FeedListItemSchema = v.object({
+  ...MyFeedListItemSchema.entries,
   isMine: v.boolean(),
 });
 
