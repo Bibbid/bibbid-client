@@ -1,7 +1,7 @@
 import { SuspenseQuery } from '@suspensive/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { Suspense } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedReport } from '~/pages/feed';
 import getFeedDetailOptions from '~/pages/feed/model/get-feed-detail-options';
@@ -23,13 +23,15 @@ export default function ReportScreen() {
         center={<NavCenterTitle title="Report" />}
         right={<BlankNavItem />}
       />
-      {feedId && (
-        <Suspense fallback={<Loading />}>
-          <SuspenseQuery {...getFeedDetailOptions(Number(feedId))}>
-            {({ data }) => <FeedReport data={data} />}
-          </SuspenseQuery>
-        </Suspense>
-      )}
+      <ScrollView style={styles.scrollView}>
+        {feedId && (
+          <Suspense fallback={<Loading />}>
+            <SuspenseQuery {...getFeedDetailOptions(Number(feedId))}>
+              {({ data }) => <FeedReport data={data} />}
+            </SuspenseQuery>
+          </Suspense>
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -46,5 +48,8 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: theme.fontSize['2xl'],
     fontWeight: theme.fontWeight['semibold'],
     paddingHorizontal: 8,
+  },
+  scrollView: {
+    flex: 1,
   },
 }));

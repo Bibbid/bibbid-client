@@ -44,14 +44,14 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-      <Suspense fallback={<Loading />}>
-        <ScrollView style={styles.content}>
+      <ScrollView style={styles.content}>
+        <Suspense fallback={<Loading />}>
           <TodayColorSection />
           <View style={styles.gap} />
           <WhatsNewSection />
           <View style={styles.gap} />
-        </ScrollView>
-      </Suspense>
+        </Suspense>
+      </ScrollView>
     </View>
   );
 }

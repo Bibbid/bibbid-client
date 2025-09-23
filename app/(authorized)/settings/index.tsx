@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
-import { Pressable } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
@@ -24,7 +24,9 @@ export default function SettingsScreen() {
         center={<CustomText style={styles.title}>Setting</CustomText>}
         right={<BlankNavItem />}
       />
-      <SettingShortcuts />
+      <ScrollView style={styles.scrollView}>
+        <SettingShortcuts />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -38,10 +40,7 @@ const styles = StyleSheet.create((theme) => ({
     fontWeight: theme.fontWeight['medium'],
     fontSize: theme.fontSize['md'],
   },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: 40,
-    paddingHorizontal: 20,
+  scrollView: {
+    flex: 1,
   },
 }));

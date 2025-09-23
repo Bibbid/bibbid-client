@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
 import { Suspense } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedDetail } from '~/pages/feed';
 import { Loading } from '~/shared/ui/loading';
@@ -26,9 +26,11 @@ export default function FeedDetailScreen() {
           </Pressable>
         }
       />
-      <Suspense fallback={<Loading />}>
-        <FeedDetail feedId={Number(feedId)} />
-      </Suspense>
+      <ScrollView style={styles.scrollView}>
+        <Suspense fallback={<Loading />}>
+          <FeedDetail feedId={Number(feedId)} />
+        </Suspense>
+      </ScrollView>
     </View>
   );
 }
@@ -44,5 +46,8 @@ const styles = StyleSheet.create((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scrollView: {
+    flex: 1,
   },
 }));
