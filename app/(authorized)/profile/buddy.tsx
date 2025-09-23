@@ -1,6 +1,6 @@
 import { SuspenseQuery } from '@suspensive/react-query';
 import { Suspense } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { Buddy, getMyProfileOptions } from '~/pages/profile';
@@ -24,17 +24,19 @@ export default function BuddyScreen() {
           </Pressable>
         }
       />
-      <Suspense fallback={<Loading />}>
-        <SuspenseQuery {...getMyProfileOptions()}>
-          {({ data: { buddyName, buddyColor, buddyCharacter } }) => (
-            <Buddy
-              buddyCharacter={buddyCharacter}
-              buddyName={buddyName}
-              buddyColor={buddyColor}
-            />
-          )}
-        </SuspenseQuery>
-      </Suspense>
+      <ScrollView style={styles.scrollView}>
+        <Suspense fallback={<Loading />}>
+          <SuspenseQuery {...getMyProfileOptions()}>
+            {({ data: { buddyName, buddyColor, buddyCharacter } }) => (
+              <Buddy
+                buddyCharacter={buddyCharacter}
+                buddyName={buddyName}
+                buddyColor={buddyColor}
+              />
+            )}
+          </SuspenseQuery>
+        </Suspense>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -52,5 +54,8 @@ const styles = StyleSheet.create((theme) => ({
     color: 'white',
     fontSize: theme.fontSize['xs'],
     fontWeight: theme.fontWeight['semibold'],
+  },
+  scrollView: {
+    flex: 1,
   },
 }));

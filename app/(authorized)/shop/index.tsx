@@ -1,3 +1,4 @@
+import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { Shop } from '~/pages/shop';
@@ -7,13 +8,18 @@ export default function ShopScreen() {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <TopNavigation left={<NavBackButton />} />
-      <Shop />
+      <ScrollView style={styles.scrollView}>
+        <Shop />
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
   container: {
+    flex: 1,
+  },
+  scrollView: {
     flex: 1,
   },
 }));
