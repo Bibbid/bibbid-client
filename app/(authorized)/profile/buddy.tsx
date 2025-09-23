@@ -24,19 +24,18 @@ export default function BuddyScreen() {
           </Pressable>
         }
       />
-      <ScrollView style={styles.scrollView}>
-        <Suspense fallback={<Loading />}>
-          <SuspenseQuery {...getMyProfileOptions()}>
-            {({ data: { buddyName, buddyColor, buddyCharacter } }) => (
-              <Buddy
-                buddyCharacter={buddyCharacter}
-                buddyName={buddyName}
-                buddyColor={buddyColor}
-              />
-            )}
-          </SuspenseQuery>
-        </Suspense>
-      </ScrollView>
+
+      <Suspense fallback={<Loading />}>
+        <SuspenseQuery {...getMyProfileOptions()}>
+          {({ data: { buddyName, buddyColor, buddyCharacter } }) => (
+            <Buddy
+              buddyCharacter={buddyCharacter}
+              buddyName={buddyName}
+              buddyColor={buddyColor}
+            />
+          )}
+        </SuspenseQuery>
+      </Suspense>
     </SafeAreaView>
   );
 }
@@ -54,8 +53,5 @@ const styles = StyleSheet.create((theme) => ({
     color: 'white',
     fontSize: theme.fontSize['xs'],
     fontWeight: theme.fontWeight['semibold'],
-  },
-  scrollView: {
-    flex: 1,
   },
 }));
