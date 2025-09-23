@@ -78,7 +78,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Bibbid to access your camera"
+          "cameraPermission": "Allow ${appName} to access your camera"
         }
       ]
     ],
