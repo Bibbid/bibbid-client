@@ -62,7 +62,7 @@ export function Modal({
             <Pressable
               style={modalStyles.closeButton}
               onPress={() => onClose?.()}>
-              <XIcon size={24} color={theme.value.color['gray-4']} />
+              <XIcon size={24} color={theme.value.color['gray-7']} />
             </Pressable>
           )}
           {children}

@@ -5,6 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
+import { overlay } from 'overlay-kit';
 import { useRef } from 'react';
 import { Dimensions, Pressable, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
@@ -16,6 +17,7 @@ import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { useTodayColor } from '~/entities/color';
 import { FeedListItem } from '~/entities/feed';
+import { ProfileModal } from '~/features/user';
 import { Chip } from '~/shared/ui/chip';
 import { Image } from '~/shared/ui/image';
 import { CustomText } from '~/shared/ui/text';
@@ -120,7 +122,18 @@ function ImageSlide({ data }: ImageSlideProps) {
             <CustomText style={styles.imageOverlayHeaderText} numberOfLines={1}>
               {data.uploader.buddyName}
             </CustomText>
-            <Pressable>
+            <Pressable
+              onPress={() =>
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileModal
+                    visible={isOpen}
+                    onClose={close}
+                    profileImage={data.uploader.buddyImage}
+                    name={data.uploader.buddyName}
+                    createdAt={data.createdAt}
+                  />
+                ))
+              }>
               <MoreHorizontal size={16} color="white" />
             </Pressable>
           </View>
