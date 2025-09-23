@@ -4,11 +4,13 @@ import { VoidResponseSchema } from '~/shared/api/response-schemas';
 import { api } from '~/shared/auth';
 
 export default async function reportUser(request: ReportUserRequest) {
-  const json = await api.post('reports/user', {
-    json: {
-      ...request,
-    },
-  });
+  const json = await api
+    .post('reports/user', {
+      json: {
+        ...request,
+      },
+    })
+    .json();
 
   return parseResponse(json, VoidResponseSchema);
 }

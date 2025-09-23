@@ -4,11 +4,13 @@ import { VoidResponseSchema } from '~/shared/api/response-schemas';
 import { api } from '~/shared/auth';
 
 export default async function reportFeed(request: ReportFeedRequest) {
-  const json = await api.post('reports/feed', {
-    json: {
-      ...request,
-    },
-  });
+  const json = await api
+    .post('reports/feed', {
+      json: {
+        ...request,
+      },
+    })
+    .json();
 
   return parseResponse(json, VoidResponseSchema);
 }

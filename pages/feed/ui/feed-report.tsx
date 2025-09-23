@@ -28,35 +28,37 @@ export default function FeedReport({ data }: FeedReportProps) {
 
   const router = useRouter();
 
-  const { mutateAsync: reportFeed } = useReportFeed({
-    onSuccess: () => {
-      showToast({
-        text1: 'Feed reported successfully',
-        type: 'success',
-      });
-      router.replace(`/(authorized)/feed?color=${data.color.displayName}`);
-    },
-    onError: (error) => {
-      showToast({
-        text1: error.message,
-        type: 'error',
-      });
-    },
-  });
-  const { mutateAsync: reportUser } = useReportUser({
-    onSuccess: () => {
-      showToast({
-        text1: 'User reported successfully',
-        type: 'success',
-      });
-    },
-    onError: (error) => {
-      showToast({
-        text1: error.message,
-        type: 'error',
-      });
-    },
-  });
+  const { mutateAsync: reportFeed, isPending: isReportFeedPending } =
+    useReportFeed({
+      onSuccess: () => {
+        showToast({
+          text1: 'Feed reported successfully',
+          type: 'success',
+        });
+        router.replace(`/(authorized)/feed?color=${data.color.displayName}`);
+      },
+      onError: (error) => {
+        showToast({
+          text1: error.message,
+          type: 'error',
+        });
+      },
+    });
+  const { mutateAsync: reportUser, isPending: isReportUserPending } =
+    useReportUser({
+      onSuccess: () => {
+        showToast({
+          text1: 'User reported successfully',
+          type: 'success',
+        });
+      },
+      onError: (error) => {
+        showToast({
+          text1: error.message,
+          type: 'error',
+        });
+      },
+    });
 
   const onSubmit = () => {
     if (reportType === 'feed') {
@@ -120,7 +122,11 @@ export default function FeedReport({ data }: FeedReportProps) {
         <Button
           size="xl"
           style={styles.reportFooterButton}
-          disabled={reportReason === 'other' && reportOtherReason.length === 0}
+          disabled={
+            (reportReason === 'other' && reportOtherReason.length === 0) ||
+            isReportFeedPending ||
+            isReportUserPending
+          }
           onPress={onSubmit}>
           <ButtonText size="md">Report</ButtonText>
         </Button>
