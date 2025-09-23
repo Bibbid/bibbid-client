@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useRouter } from 'expo-router';
 import { Siren } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
@@ -11,6 +12,7 @@ import { CustomText } from '~/shared/ui/text';
 interface ProfileModalProps {
   visible: boolean;
   onClose: () => void;
+  feedId: number;
   profileImage: PresignedUrl;
   name: string;
   createdAt: string;
@@ -19,18 +21,26 @@ interface ProfileModalProps {
 export default function ProfileModal({
   visible,
   onClose,
+  feedId,
   profileImage,
   name,
   createdAt,
 }: ProfileModalProps) {
   const theme = useAnimatedTheme();
 
+  const router = useRouter();
+
   return (
     <Modal visible={visible} onClose={onClose}>
       <View style={styles.container}>
         <ModalHeader style={styles.header}>
           <ModalTitle style={styles.title}>Profile</ModalTitle>
-          <Pressable style={styles.reportButton}>
+          <Pressable
+            style={styles.reportButton}
+            onPress={() => {
+              router.push(`/(authorized)/feed/report?feedId=${feedId}`);
+              onClose();
+            }}>
             <Siren size={24} color={theme.value.color['gray-7']} />
           </Pressable>
         </ModalHeader>

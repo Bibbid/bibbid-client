@@ -25,6 +25,7 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
                 <ProfileModal
                   visible={isOpen}
                   onClose={close}
+                  feedId={data.feedId}
                   profileImage={data.uploader.buddyImage}
                   name={data.uploader.buddyName}
                   createdAt={data.createdAt}

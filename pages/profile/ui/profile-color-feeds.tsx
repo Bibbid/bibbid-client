@@ -75,6 +75,7 @@ function ProfileColorFeedsContent({
                   <ProfileModal
                     visible={isOpen}
                     onClose={close}
+                    feedId={item.feedId}
                     profileImage={item.uploader.buddyImage}
                     name={item.uploader.buddyName}
                     createdAt={item.createdAt}
