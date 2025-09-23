@@ -78,7 +78,7 @@ function ProfileColorFeedsContent({
                     feedId={item.feedId}
                     profileImage={item.uploader.buddyImage}
                     name={item.uploader.buddyName}
-                    createdAt={item.createdAt}
+                    createdAt={item.uploader.createdAt}
                   />
                 ))
               }

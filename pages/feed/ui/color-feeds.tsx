@@ -155,7 +155,7 @@ function ColorFeedItem({
                   feedId={data.feedId}
                   profileImage={data.uploader.buddyImage}
                   name={data.uploader.buddyName}
-                  createdAt={data.createdAt}
+                  createdAt={data.uploader.createdAt}
                 />
               ))
             }>
