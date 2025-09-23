@@ -10,6 +10,7 @@ export const UploaderInfoSchema = v.object({
   introduction: v.nullable(v.string()),
   profileImageUrl: v.nullable(v.string()),
   userUuid: v.string(),
+  createdAt: v.string(),
 });
 
 export type UploaderInfo = v.InferOutput<typeof UploaderInfoSchema>;

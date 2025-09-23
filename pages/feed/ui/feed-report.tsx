@@ -97,7 +97,7 @@ export default function FeedReport({ data }: FeedReportProps) {
             {`${data.uploader.buddyName}${reportType === 'feed' ? "'s Post" : ''}`}
           </CustomText>
           <CustomText style={styles.reportContentDescription}>
-            {`${reportType === 'feed' ? 'Uploaded ' : 'Since '} ${format(data.createdAt, 'yyyy-MM-dd')}`}
+            {`${reportType === 'feed' ? 'Uploaded ' : 'Since '} ${format(reportType === 'feed' ? data.createdAt : data.uploader.createdAt, 'yyyy-MM-dd')}`}
           </CustomText>
         </View>
       </View>
@@ -123,6 +123,7 @@ export default function FeedReport({ data }: FeedReportProps) {
           size="xl"
           style={styles.reportFooterButton}
           disabled={
+            reportReason.length === 0 ||
             (reportReason === 'other' && reportOtherReason.length === 0) ||
             isReportFeedPending ||
             isReportUserPending
