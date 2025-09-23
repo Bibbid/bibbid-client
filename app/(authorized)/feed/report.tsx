@@ -1,7 +1,7 @@
 import { SuspenseQuery } from '@suspensive/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { Suspense } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedReport } from '~/pages/feed';
 import getFeedDetailOptions from '~/pages/feed/model/get-feed-detail-options';
