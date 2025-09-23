@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { ColorFeeds, ColorPalette } from '~/pages/feed';
 import { TopNavigation } from '~/shared/ui/navigation';
@@ -16,7 +16,9 @@ export default function Feed() {
         />
         <ColorPalette />
       </View>
-      <ColorFeeds color={color} />
+      <ScrollView style={styles.scrollView}>
+        <ColorFeeds color={color} />
+      </ScrollView>
     </View>
   );
 }
@@ -33,5 +35,8 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: theme.fontSize['2xl'],
     fontWeight: theme.fontWeight['semibold'],
     paddingHorizontal: 8,
+  },
+  scrollView: {
+    flex: 1,
   },
 }));
