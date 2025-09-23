@@ -7,12 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import { getCollectedColorOptions } from '~/entities/color';
-import { getMyTokensOptions } from '~/entities/token';
 import { Profile } from '~/pages/profile';
-import { Button, ButtonText } from '~/shared/ui/button';
+import { TokenStatusButton } from '~/pages/shop';
 import { Loading } from '~/shared/ui/loading';
 import { TopNavigation } from '~/shared/ui/navigation';
-import { CustomText } from '~/shared/ui/text';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -24,18 +22,7 @@ export default function ProfileScreen() {
       <Suspense fallback={<Loading />}>
         <PrefetchQuery {...getCollectedColorOptions()} />
         <TopNavigation
-          left={
-            <Button>
-              <ButtonText size="sm">Token</ButtonText>
-              <SuspenseQuery {...getMyTokensOptions()}>
-                {({ data }) => (
-                  <CustomText style={styles.token}>
-                    {data.tokenCount}p
-                  </CustomText>
-                )}
-              </SuspenseQuery>
-            </Button>
-          }
+          left={<TokenStatusButton />}
           right={
             <Pressable onPress={() => router.push('/(authorized)/settings')}>
               <Settings color={theme.value.color['gray-5']} />
@@ -51,10 +38,5 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-  },
-  token: {
-    color: 'white',
-    fontWeight: theme.fontWeight['semibold'],
-    paddingLeft: 4,
   },
 }));
