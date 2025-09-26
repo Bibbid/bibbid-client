@@ -13,6 +13,8 @@ export default function ErrorScreen() {
   const router = useRouter();
 
   const handleGoHome = () => {
+    console.log('handleGoHome');
+
     if (isSignedIn) {
       router.push('/(authorized)/home');
     } else {
