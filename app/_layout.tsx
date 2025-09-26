@@ -14,7 +14,13 @@ import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
 import { Toast } from '~/shared/ui/toast';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      networkMode: 'offlineFirst',
+    },
+  },
+});
 
 SplashScreen.setOptions({
   duration: 1000,
