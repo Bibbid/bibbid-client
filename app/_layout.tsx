@@ -52,9 +52,9 @@ export default function Layout() {
                     }}>
                     <Stack.Screen name="index" options={{ title: 'Home' }} />
                   </Stack>
-                  <Toast />
-                  {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
                 </ErrorBoundary>
+                <Toast />
+                {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
               </BottomSheetModalProvider>
             </SafeAreaView>
           </OverlayProvider>
