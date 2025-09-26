@@ -2,7 +2,8 @@ import getMyProfileOptions from '../model/get-my-profile-options';
 import ProfileFeeds from './profile-feeds';
 import { SuspenseQueries } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
 import Sparkles from '~/assets/icons/sparkles.svg';
 import { getColorsOptions } from '~/entities/color';
@@ -21,14 +22,14 @@ export default function Profile() {
         const { data: colors } = colorsData;
 
         return (
-          <ScrollView style={styles.container}>
+          <KeyboardAwareScrollView style={styles.container}>
             <BuddySection myProfile={myProfile} />
             <ProfileFeeds
               colors={colors}
               count={myProfile.collectedColorCount}
               feeds={myProfile.colorFeeds}
             />
-          </ScrollView>
+          </KeyboardAwareScrollView>
         );
       }}
     </SuspenseQueries>

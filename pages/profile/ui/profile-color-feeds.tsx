@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
@@ -11,6 +10,7 @@ import {
   getMyFeedCountsOptions,
 } from '~/features/feed';
 import { ProfileModal } from '~/features/user';
+import { FlashList } from '~/shared/ui/flash-list';
 import { Loading } from '~/shared/ui/loading';
 import { CustomText } from '~/shared/ui/text';
 

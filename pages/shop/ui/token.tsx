@@ -1,5 +1,6 @@
 import TokenStatusButton from './token-status-button';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { Image } from '~/shared/ui/image';
@@ -10,7 +11,7 @@ export default function Token() {
   const { top } = useSafeAreaInsets();
 
   return (
-    <ScrollView style={[styles.container, { paddingTop: top }]}>
+    <KeyboardAwareScrollView style={[styles.container, { paddingTop: top }]}>
       <TopNavigation
         left={<NavBackButton />}
         right={<TokenStatusButton />}
@@ -30,7 +31,7 @@ export default function Token() {
           </CustomText>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 

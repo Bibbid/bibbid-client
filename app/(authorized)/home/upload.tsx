@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { UploadSection } from '~/pages/home';
@@ -6,9 +6,9 @@ import { UploadSection } from '~/pages/home';
 export default function UploadScreen() {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <KeyboardAwareScrollView style={styles.scrollView}>
         <UploadSection />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

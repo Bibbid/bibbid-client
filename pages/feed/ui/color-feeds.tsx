@@ -1,6 +1,5 @@
 import { MASONRY_CONFIG } from '../config/masonry';
 import { useSelectedColor } from './color-palette';
-import { FlashList } from '@shopify/flash-list';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -14,6 +13,7 @@ import { FeedListItem } from '~/entities/feed';
 import { getInfiniteColorFeedsOptions } from '~/features/feed';
 import { ProfileModal } from '~/features/user';
 import { Chip } from '~/shared/ui/chip';
+import { FlashList } from '~/shared/ui/flash-list';
 import { Image } from '~/shared/ui/image';
 import { Loading } from '~/shared/ui/loading';
 import { CustomText } from '~/shared/ui/text';
