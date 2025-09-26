@@ -1,7 +1,8 @@
 import { SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Suspense } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
 import { getMyTokensOptions } from '~/entities/token';
 import { Button, ButtonText } from '~/shared/ui/button';
@@ -11,7 +12,7 @@ export default function Shop() {
   const router = useRouter();
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.header}>
         <CustomText style={styles.title}>Shop</CustomText>
         <CustomText style={styles.description}>
@@ -43,7 +44,7 @@ export default function Shop() {
           <CustomText style={styles.itemTitle}>Items</CustomText>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 

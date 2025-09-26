@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { Shop } from '~/pages/shop';
@@ -8,9 +8,9 @@ export default function ShopScreen() {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <TopNavigation left={<NavBackButton />} />
-      <ScrollView style={styles.scrollView}>
+      <KeyboardAwareScrollView style={styles.scrollView}>
         <Shop />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

@@ -19,6 +19,9 @@ interface BaseMasonryGridItemProps {
   src: string;
 }
 
+/**
+ * @deprecated shared MasonryGrid is deprecated. Use `pages/feed/ui/color-feeds.tsx` instead.
+ */
 export function MasonryGrid<TItem extends BaseMasonryGridItemProps>({
   data,
   renderItem,

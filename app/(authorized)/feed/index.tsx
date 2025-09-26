@@ -1,5 +1,6 @@
 import { useLocalSearchParams } from 'expo-router';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
 import { ColorFeeds, ColorPalette } from '~/pages/feed';
 import { TopNavigation } from '~/shared/ui/navigation';
@@ -16,9 +17,9 @@ export default function Feed() {
         />
         <ColorPalette />
       </View>
-      <ScrollView style={styles.scrollView}>
+      <KeyboardAwareScrollView style={styles.scrollView}>
         <ColorFeeds color={color} />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

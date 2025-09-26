@@ -5,7 +5,7 @@ import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { Check, X } from 'lucide-react-native';
-import { Suspense, useRef, useState } from 'react';
+import { Suspense, useRef } from 'react';
 import {
   Control,
   Controller,
@@ -14,7 +14,8 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
@@ -89,7 +90,7 @@ export default function Buddy({
   return (
     <FormProvider {...methods}>
       <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
+        <KeyboardAwareScrollView style={styles.scrollView}>
           <View style={styles.buddyContainer}>
             <Image
               source={require('~/assets/images/background.png')}
@@ -130,7 +131,7 @@ export default function Buddy({
             <CustomText style={styles.label}>Color</CustomText>
             <ColorSelector />
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <Button
             size="xl"

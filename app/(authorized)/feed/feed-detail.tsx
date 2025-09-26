@@ -1,7 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
 import { Suspense } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedDetail } from '~/pages/feed';
 import { Loading } from '~/shared/ui/loading';
@@ -26,11 +27,11 @@ export default function FeedDetailScreen() {
           </Pressable>
         }
       />
-      <ScrollView style={styles.scrollView}>
+      <KeyboardAwareScrollView style={styles.scrollView}>
         <Suspense fallback={<Loading />}>
           <FeedDetail feedId={Number(feedId)} />
         </Suspense>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

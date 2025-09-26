@@ -2,7 +2,8 @@ import getFeedDetailOptions from '../model/get-feed-detail-options';
 import ColorFeeds from './color-feeds';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { overlay } from 'overlay-kit';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
 import { FeedInfo } from '~/features/feed';
 import { ProfileModal } from '~/features/user';
@@ -12,7 +13,7 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
   return (
     <SuspenseQuery {...getFeedDetailOptions(feedId)}>
       {({ data }) => (
-        <ScrollView style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container}>
           <FeedInfo
             image={data.image}
             color={data.color}
@@ -39,7 +40,7 @@ export default function FeedDetail({ feedId }: { feedId: number }) {
             </CustomText>
             <ColorFeeds color={data.color.displayName} />
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       )}
     </SuspenseQuery>
   );

@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Pressable, View } from 'react-native';
@@ -6,6 +5,7 @@ import { StyleSheet } from 'react-native-unistyles';
 import { Color, getCollectedColorOptions } from '~/entities/color';
 import type { ColorFeed } from '~/entities/profile';
 import { hexToRgba } from '~/shared/lib';
+import { FlashList } from '~/shared/ui/flash-list';
 import { Folder } from '~/shared/ui/folder';
 import { CustomText } from '~/shared/ui/text';
 

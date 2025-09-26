@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
-import { ScrollView, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
@@ -44,14 +45,14 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-      <ScrollView style={styles.content}>
+      <KeyboardAwareScrollView style={styles.content}>
         <Suspense fallback={<Loading />}>
           <TodayColorSection />
           <View style={styles.gap} />
           <WhatsNewSection />
           <View style={styles.gap} />
         </Suspense>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
