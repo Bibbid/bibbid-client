@@ -1,7 +1,5 @@
 import '../translation';
-import ErrorScreen from './error';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { ErrorBoundary } from '@suspensive/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -14,7 +12,13 @@ import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
 import { Toast } from '~/shared/ui/toast';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      networkMode: 'offlineFirst',
+    },
+  },
+});
 
 SplashScreen.setOptions({
   duration: 1000,
@@ -44,17 +48,17 @@ export default function Layout() {
           <OverlayProvider>
             <SafeAreaView edges={['left', 'right']} style={styles.container}>
               <BottomSheetModalProvider>
-                <ErrorBoundary fallback={<ErrorScreen />}>
-                  <Stack
-                    screenOptions={{
-                      headerShown: false,
-                      contentStyle: styles.container,
-                    }}>
-                    <Stack.Screen name="index" options={{ title: 'Home' }} />
-                  </Stack>
-                  <Toast />
-                  {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-                </ErrorBoundary>
+                <Stack
+                  screenOptions={{
+                    headerShown: false,
+                    contentStyle: styles.container,
+                  }}>
+                  <Stack.Screen name="index" options={{ title: 'Home' }} />
+                  <Stack.Screen name="(authorized)" />
+                  <Stack.Screen name="(unauthorized)" />
+                </Stack>
+                <Toast />
+                {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
               </BottomSheetModalProvider>
             </SafeAreaView>
           </OverlayProvider>
