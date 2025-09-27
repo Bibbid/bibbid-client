@@ -14,9 +14,11 @@ export const GetColorsResponseSchema = GeneralResponseSchema(
 );
 
 export const GetMyTodayColorResponseSchema = GeneralResponseSchema(
-  v.object({
-    todayColor: ColorSchema,
-  })
+  v.nullable(
+    v.object({
+      todayColor: ColorSchema,
+    })
+  )
 );
 
 export type GetMyTodayColorResponse = v.InferOutput<

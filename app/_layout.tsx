@@ -4,12 +4,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { OverlayProvider } from 'overlay-kit';
-import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { DevToolsBubble } from 'react-native-react-query-devtools';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
+import { useHideSplashScreen, useRevenueCat } from '~/shared/lib';
 import { Toast } from '~/shared/ui/toast';
 
 const queryClient = new QueryClient({
@@ -33,13 +34,9 @@ SplashScreen.preventAutoHideAsync();
  * - https://github.com/expo/expo/issues/33673
  */
 export default function Layout() {
-  useEffect(() => {
-    const hideSplash = async () => {
-      await SplashScreen.hideAsync();
-    };
+  useHideSplashScreen();
 
-    hideSplash();
-  }, []);
+  useRevenueCat();
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -47,19 +44,22 @@ export default function Layout() {
         <AuthLoaded>
           <OverlayProvider>
             <SafeAreaView edges={['left', 'right']} style={styles.container}>
-              <BottomSheetModalProvider>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: styles.container,
-                  }}>
-                  <Stack.Screen name="index" options={{ title: 'Home' }} />
-                  <Stack.Screen name="(authorized)" />
-                  <Stack.Screen name="(unauthorized)" />
-                </Stack>
-                <Toast />
-                {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-              </BottomSheetModalProvider>
+              <KeyboardProvider>
+                <BottomSheetModalProvider>
+                  <Stack
+                    screenOptions={{
+                      headerShown: false,
+                      contentStyle: styles.container,
+                      animation: 'none',
+                    }}>
+                    <Stack.Screen name="index" options={{ title: 'Home' }} />
+                    <Stack.Screen name="(authorized)" />
+                    <Stack.Screen name="(unauthorized)" />
+                  </Stack>
+                  <Toast />
+                  {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
+                </BottomSheetModalProvider>
+              </KeyboardProvider>
             </SafeAreaView>
           </OverlayProvider>
         </AuthLoaded>

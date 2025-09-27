@@ -2,79 +2,56 @@ import { Button, ButtonText } from '../button';
 import { CustomText } from '../text';
 import { modalStyles } from './modal.styles';
 import { XIcon } from 'lucide-react-native';
-import { useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import {
   Pressable,
   PressableProps,
-  Modal as RNModal,
   type TextProps,
   View,
   type ViewProps,
-  type ModalProps as RNModalProps,
   TextStyle,
 } from 'react-native';
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Modal from 'react-native-modal';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 
-interface ModalProps extends RNModalProps {
+interface CustomModalProps extends PropsWithChildren {
   visible: boolean;
   showCloseButton?: boolean;
   onAction?: () => void;
   onClose?: () => void;
 }
 
-export function Modal({
+function CustomModal({
   visible,
   onAction,
   onClose,
   children,
   showCloseButton = true,
-  ...props
-}: ModalProps) {
+}: CustomModalProps) {
   const theme = useAnimatedTheme();
 
-  const animationProgress = useSharedValue(0);
-
-  const animatedContainerStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: interpolateColor(
-        animationProgress.value,
-        [0, 1],
-        ['transparent', theme.value.color['opacity-black-80']]
-      ),
-    };
-  });
-
-  useEffect(() => {
-    animationProgress.value = withTiming(visible ? 1 : 0, { duration: 200 });
-  }, [visible, animationProgress]);
-
   return (
-    <RNModal visible={visible} onRequestClose={onClose} transparent {...props}>
-      <Animated.View style={[modalStyles.container, animatedContainerStyle]}>
-        <View style={modalStyles.content}>
-          {showCloseButton && (
-            <Pressable
-              style={modalStyles.closeButton}
-              onPress={() => onClose?.()}>
-              <XIcon size={24} color={theme.value.color['gray-7']} />
-            </Pressable>
-          )}
-          {children}
-        </View>
-      </Animated.View>
-    </RNModal>
+    <Modal
+      isVisible={visible}
+      onBackdropPress={onClose}
+      style={modalStyles.container}>
+      <View style={modalStyles.content}>
+        {showCloseButton && (
+          <Pressable
+            style={modalStyles.closeButton}
+            onPress={() => onClose?.()}>
+            <XIcon size={24} color={theme.value.color['gray-7']} />
+          </Pressable>
+        )}
+        {children}
+      </View>
+    </Modal>
   );
 }
 
 interface ModalHeaderProps extends ViewProps {}
 
-export function ModalHeader({ children, style, ...props }: ModalHeaderProps) {
+function ModalHeader({ children, style, ...props }: ModalHeaderProps) {
   return (
     <View style={[modalStyles.header, style]} {...props}>
       {children}
@@ -84,7 +61,7 @@ export function ModalHeader({ children, style, ...props }: ModalHeaderProps) {
 
 interface ModalTitleProps extends TextProps {}
 
-export function ModalTitle({ children, style, ...props }: ModalTitleProps) {
+function ModalTitle({ children, style, ...props }: ModalTitleProps) {
   return (
     <CustomText style={[modalStyles.title, style]} {...props}>
       {children}
@@ -94,7 +71,7 @@ export function ModalTitle({ children, style, ...props }: ModalTitleProps) {
 
 interface ModalDescriptionProps extends TextProps {}
 
-export function ModalDescription({
+function ModalDescription({
   children,
   style,
   ...props
@@ -108,11 +85,7 @@ export function ModalDescription({
 
 interface ModalSubTitleProps extends TextProps {}
 
-export function ModalSubTitle({
-  children,
-  style,
-  ...props
-}: ModalSubTitleProps) {
+function ModalSubTitle({ children, style, ...props }: ModalSubTitleProps) {
   return (
     <CustomText style={[modalStyles.subTitle, style]} {...props}>
       {children}
@@ -122,7 +95,7 @@ export function ModalSubTitle({
 
 interface ModalFooterProps extends ViewProps {}
 
-export function ModalFooter({ children, style, ...props }: ModalFooterProps) {
+function ModalFooter({ children, style, ...props }: ModalFooterProps) {
   return (
     <View style={[modalStyles.footer, style]} {...props}>
       {children}
@@ -135,7 +108,7 @@ interface ModalActionProps extends PressableProps {
   textStyle?: TextStyle;
 }
 
-export function ModalAction({
+function ModalAction({
   children,
   style,
   text,
@@ -143,7 +116,7 @@ export function ModalAction({
   ...props
 }: ModalActionProps) {
   return (
-    <Button variant="solid-white" style={style} {...props}>
+    <Button size="xl" variant="solid-white" style={style} {...props}>
       <ButtonText variant="solid-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
@@ -156,7 +129,7 @@ interface ModalCancelProps extends PressableProps {
   textStyle?: TextStyle;
 }
 
-export function ModalCancel({
+function ModalCancel({
   children,
   style,
   text,
@@ -164,10 +137,21 @@ export function ModalCancel({
   ...props
 }: ModalCancelProps) {
   return (
-    <Button variant="outlined-white" style={style} {...props}>
+    <Button size="xl" variant="outlined-white" style={style} {...props}>
       <ButtonText variant="outlined-white" size="md" style={textStyle}>
         {text}
       </ButtonText>
     </Button>
   );
 }
+
+export {
+  CustomModal as Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalSubTitle,
+  ModalFooter,
+  ModalAction,
+  ModalCancel,
+};
