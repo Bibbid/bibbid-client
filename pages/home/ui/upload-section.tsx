@@ -4,6 +4,7 @@ import useCreateFeed from '../model/use-create-feed';
 import useUploadFeedImage from '../model/use-upload-feed-image';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { valibotResolver } from '@hookform/resolvers/valibot';
+import { useCameraPermissions } from 'expo-camera';
 import { File } from 'expo-file-system/next';
 import { useRouter } from 'expo-router';
 import { Pen, X } from 'lucide-react-native';
@@ -16,6 +17,7 @@ import {
   useWatch,
 } from 'react-hook-form';
 import { Pressable, View } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import { StyleSheet } from 'react-native-unistyles';
 import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import Dot from '~/assets/icons/dot-solid.svg';
@@ -37,7 +39,10 @@ import { showToast } from '~/shared/ui/toast';
 export default function UploadSection() {
   const router = useRouter();
 
+  const [permission, requestPermission] = useCameraPermissions();
+
   const image = useCaptureImage((state) => state.image);
+  const setImage = useCaptureImage((state) => state.setImage);
   const resetImage = useCaptureImage((state) => state.resetImage);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -55,6 +60,20 @@ export default function UploadSection() {
   } = method;
 
   const comment = useWatch({ control, name: 'comment' });
+
+  const handleRetake = async () => {
+    if (!permission || !permission.granted) {
+      requestPermission();
+    }
+
+    const image = await ImagePicker.openCamera({
+      cropping: false,
+      compressImageQuality: 1,
+      mediaType: 'photo',
+    });
+
+    setImage(image);
+  };
 
   const { mutateAsync: createFeed } = useCreateFeed({
     onSuccess: () => {
@@ -125,45 +144,47 @@ export default function UploadSection() {
               Edits are not allowed after upload
             </CustomText>
           </View>
-          <View style={styles.imageWrapper}>
-            <View style={styles.imageOverlay}>
-              <View style={styles.imageOverlayHeader}>
-                <Chip
-                  type="tinted"
-                  label={displayName}
-                  customColor={rgbHexCode}
-                  leftIcon={Dot}
+          <View style={styles.contentWrapper}>
+            <View style={styles.imageWrapper}>
+              <View style={styles.imageOverlay}>
+                <View style={styles.imageOverlayHeader}>
+                  <Chip
+                    type="tinted"
+                    label={displayName}
+                    customColor={rgbHexCode}
+                    leftIcon={Dot}
+                  />
+                </View>
+                <CommentEditButton
+                  comment={comment}
+                  onPress={() => {
+                    bottomSheetRef.current?.present();
+                  }}
                 />
               </View>
-              <CommentEditButton
-                comment={comment}
-                onPress={() => {
-                  bottomSheetRef.current?.present();
-                }}
-              />
+              <CustomImage source={{ uri: image?.path }} style={styles.image} />
             </View>
-            <CustomImage source={{ uri: image?.path }} style={styles.image} />
+            <View style={styles.buttonWrapper}>
+              <Button
+                variant="solid-gray"
+                size="xl"
+                onPress={onSubmit}
+                disabled={!isValid || isSubmitting}>
+                <ButtonText
+                  variant="solid-gray"
+                  size="md"
+                  style={styles.buttonText}
+                  disabled={!isValid || isSubmitting}>
+                  Upload photo
+                </ButtonText>
+              </Button>
+              <Button variant="ghost" size="xl" onPress={handleRetake}>
+                <ButtonText variant="ghost" size="md" style={styles.buttonText}>
+                  Retake new photo
+                </ButtonText>
+              </Button>
+            </View>
           </View>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            variant="solid-gray"
-            size="xl"
-            onPress={onSubmit}
-            disabled={!isValid || isSubmitting}>
-            <ButtonText
-              variant="solid-gray"
-              size="md"
-              style={styles.buttonText}
-              disabled={!isValid || isSubmitting}>
-              Upload photo
-            </ButtonText>
-          </Button>
-          <Button variant="ghost" size="xl">
-            <ButtonText variant="ghost" size="md" style={styles.buttonText}>
-              Retake new photo
-            </ButtonText>
-          </Button>
         </View>
       </View>
       <CustomBottomSheet index={0} ref={bottomSheetRef}>
@@ -259,8 +280,15 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.color['gray-1'],
   },
   content: {
+    flex: 1,
     paddingHorizontal: 20,
     rowGap: 24,
+  },
+  contentWrapper: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   imageWrapper: {
     position: 'relative',
@@ -317,11 +345,8 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: theme.fontSize['md'],
   },
   buttonWrapper: {
-    position: 'absolute',
     width: '100%',
-    paddingHorizontal: 20,
-    bottom: 32,
-    rowGap: 8,
+    marginBottom: 32,
   },
   buttonText: {
     color: 'white',
