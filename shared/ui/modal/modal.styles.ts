@@ -5,7 +5,6 @@ export const modalStyles = StyleSheet.create((theme) => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.color['opacity-black-80'],
   },
   content: {
     position: 'relative',
