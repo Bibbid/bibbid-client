@@ -4,7 +4,7 @@ import { queryKeys } from '~/shared/api/query-keys';
 
 export default function getMyTokensOptions() {
   return queryOptions({
-    queryKey: queryKeys.token['get-my-tokens'],
+    queryKey: queryKeys.shop['get-my-tokens'],
     queryFn: async () => {
       const result = await getMyTokens();
 
