@@ -74,9 +74,7 @@ export default function UploadSection() {
   });
 
   const { mutateAsync: uploadFeedImage } = useUploadFeedImage({
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    onSuccess: () => {},
     onError: (error) => {
       showToast({
         text1: error.message,
