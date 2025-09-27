@@ -50,6 +50,7 @@ export default function Layout() {
                     screenOptions={{
                       headerShown: false,
                       contentStyle: styles.container,
+                      animation: 'none',
                     }}>
                     <Stack.Screen name="index" options={{ title: 'Home' }} />
                     <Stack.Screen name="(authorized)" />
