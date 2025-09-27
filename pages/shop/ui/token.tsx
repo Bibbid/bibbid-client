@@ -1,9 +1,16 @@
+import getOfferingsOptions from '../model/get-offerings-options';
 import TokenStatusButton from './token-status-button';
+import { ErrorBoundary } from '@suspensive/react';
+import { SuspenseQuery } from '@suspensive/react-query';
+import { Suspense } from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
+import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
+import AlertTriangle from '~/assets/icons/alert-triangle.svg';
 import { Image } from '~/shared/ui/image';
+import { Loading } from '~/shared/ui/loading';
 import { NavBackButton, TopNavigation } from '~/shared/ui/navigation';
 import { CustomText } from '~/shared/ui/text';
 
@@ -17,21 +24,57 @@ export default function Token() {
         right={<TokenStatusButton />}
         style={styles.topNavigation}
       />
-      <View style={styles.overlay}>
-        <Image
-          style={styles.overlayBackground}
-          source={require('~/assets/images/overlay-background.png')}
-        />
-        <View style={styles.overlayContent}>
-          <CustomText style={styles.overlayContentText}>
-            {`Get Token for\nCustomize`}
-          </CustomText>
-          <CustomText style={styles.overlayContentDescription}>
-            BBD is how you meet yourself
-          </CustomText>
+      <View style={styles.header}>
+        <View style={styles.overlay}>
+          <Image
+            style={styles.overlayBackground}
+            source={require('~/assets/images/overlay-background.png')}
+          />
+          <View style={styles.overlayContent}>
+            <CustomText style={styles.overlayContentText}>
+              {`Get Token for\nCustomize`}
+            </CustomText>
+            <CustomText style={styles.overlayContentDescription}>
+              BBD is how you meet yourself
+            </CustomText>
+          </View>
         </View>
       </View>
+      <Offerings />
     </KeyboardAwareScrollView>
+  );
+}
+
+function Offerings() {
+  return (
+    <ErrorBoundary fallback={<OfferingError />}>
+      <Suspense fallback={<Loading />}>
+        <SuspenseQuery {...getOfferingsOptions()}>
+          {({ data }) => (
+            <View>
+              <CustomText>{JSON.stringify(data.all)}</CustomText>
+            </View>
+          )}
+        </SuspenseQuery>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+// function OfferingItem({ offering }: { offering: PurchasesOffering }) {
+//   return <View>{offering.identifier}</View>;
+// }
+
+function OfferingError() {
+  const theme = useAnimatedTheme();
+
+  return (
+    <View style={styles.error}>
+      <AlertTriangle color={theme.value.color['gray-11']} />
+      <CustomText style={styles.errorTitle}>
+        Failed to load offerings
+      </CustomText>
+    </View>
   );
 }
 
@@ -44,12 +87,17 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: 'transparent',
     zIndex: 2,
   },
+  header: {
+    position: 'relative',
+    width: '100%',
+    height: 360,
+  },
   overlay: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    height: 360,
+    bottom: 0,
   },
   overlayBackground: {
     width: '100%',
@@ -76,5 +124,18 @@ const styles = StyleSheet.create((theme) => ({
   overlayContentDescription: {
     color: theme.color['gray-9'],
     fontSize: theme.fontSize['md'],
+  },
+  error: {
+    flex: 1,
+    marginTop: 48,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: 8,
+  },
+  errorTitle: {
+    color: theme.color['gray-7'],
+    fontSize: theme.fontSize['lg'],
+    fontWeight: theme.fontWeight['semibold'],
   },
 }));

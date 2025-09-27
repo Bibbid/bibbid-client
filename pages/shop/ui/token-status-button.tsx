@@ -2,7 +2,7 @@ import { SuspenseQuery } from '@suspensive/react-query';
 import { useRouter } from 'expo-router';
 import { Suspense } from 'react';
 import { StyleSheet } from 'react-native-unistyles';
-import { getMyTokensOptions } from '~/entities/token';
+import { getMyTokensOptions } from '~/entities/shop';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { CustomText } from '~/shared/ui/text';
 
