@@ -1,6 +1,8 @@
 export const queryKeys = {
-  token: {
-    'get-my-tokens': ['token', 'get-my-tokens'],
+  shop: {
+    'get-my-tokens': ['shop', 'get-my-tokens'],
+    'get-offerings': ['shop', 'get-offerings'],
+    'get-item-list': ['shop', 'get-item-list'],
   },
   color: {
     'get-colors': ['color', 'get-colors'],
