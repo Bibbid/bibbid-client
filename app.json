@@ -83,7 +83,6 @@
       ]
     ],
     "experiments": {
-      "turboModule": true,
       "typedRoutes": true,
       "tsconfigPaths": true
     },
