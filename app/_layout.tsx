@@ -31,7 +31,7 @@ SplashScreen.setOptions({
 
 SplashScreen.preventAutoHideAsync();
 
-await configure({
+configure({
   sinks: { console: getConsoleSink() },
   loggers: [
     {
