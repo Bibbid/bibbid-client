@@ -19,6 +19,8 @@ interface GeneralModalProps {
   subTitle?: string;
   description?: string;
   actionText?: string;
+  showCancelButton?: boolean;
+  disableActionButton?: boolean;
   onClose: () => void;
   onAction: () => void;
 }
@@ -30,6 +32,8 @@ export default function GeneralModal({
   subTitle,
   description,
   actionText,
+  showCancelButton = true,
+  disableActionButton = false,
   onClose,
   onAction,
 }: GeneralModalProps) {
@@ -41,22 +45,25 @@ export default function GeneralModal({
       <View style={generalModalStyles.content}>
         {image && <Image source={image} style={generalModalStyles.image} />}
         <View style={generalModalStyles.descriptionWrapper}>
-          <ModalSubTitle>{subTitle}</ModalSubTitle>
-          <ModalDescription>{description}</ModalDescription>
+          {subTitle && <ModalSubTitle>{subTitle}</ModalSubTitle>}
+          {description && <ModalDescription>{description}</ModalDescription>}
         </View>
       </View>
       <ModalFooter style={generalModalStyles.footer}>
-        <ModalCancel
-          text="Cancel"
-          onPress={onClose}
-          style={generalModalStyles.button}
-          textStyle={generalModalStyles.cancelButtonText}
-        />
+        {showCancelButton && (
+          <ModalCancel
+            text="Cancel"
+            onPress={onClose}
+            style={generalModalStyles.button}
+            textStyle={generalModalStyles.cancelButtonText}
+          />
+        )}
         <ModalAction
           text={actionText}
           onPress={onAction}
           style={generalModalStyles.button}
           textStyle={generalModalStyles.actionButtonText}
+          disabled={disableActionButton}
         />
       </ModalFooter>
     </Modal>
