@@ -39,7 +39,6 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    rowGap: 16,
   },
   title: {
     color: 'white',

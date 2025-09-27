@@ -2,8 +2,9 @@ import { REPORT_REASONS } from '../model/report-reson';
 import { format } from 'date-fns';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import type { FeedDetail } from '~/entities/feed';
 import { useReportFeed, useReportUser } from '~/features/report';
@@ -25,6 +26,8 @@ export default function FeedReport({ data }: FeedReportProps) {
   const [reportType, setReportType] = useState<ReportType>('feed');
   const [reportReason, setReportReason] = useState<string>('');
   const [reportOtherReason, setReportOtherReason] = useState<string>('');
+
+  const { bottom } = useSafeAreaInsets();
 
   const router = useRouter();
 
@@ -75,50 +78,54 @@ export default function FeedReport({ data }: FeedReportProps) {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={styles.container}>
-      <TabButtonGroup
-        selected={reportType}
-        onSelect={(value) => setReportType(value as ReportType)}>
-        <TabButton value="feed" label="Feed" />
-        <TabButton value="user" label="User" />
-      </TabButtonGroup>
-      <View style={styles.reportContent}>
-        <Image
-          style={styles.reportContentImage}
-          source={
-            reportType === 'feed'
-              ? data.image.presignedUrl
-              : data.uploader.buddyImage.presignedUrl
-          }
-          contentFit="cover"
-        />
-        <View style={styles.reportTextContainer}>
-          <CustomText style={styles.reportContentTitle}>
-            {`${data.uploader.buddyName}${reportType === 'feed' ? "'s Post" : ''}`}
-          </CustomText>
-          <CustomText style={styles.reportContentDescription}>
-            {`${reportType === 'feed' ? 'Uploaded ' : 'Since '} ${format(reportType === 'feed' ? data.createdAt : data.uploader.createdAt, 'yyyy-MM-dd')}`}
-          </CustomText>
-        </View>
-      </View>
-      <RadioButtonGroup
-        selected={reportReason}
-        onSelect={setReportReason}
-        style={styles.reportReasons}>
-        {REPORT_REASONS.map((reason) => (
-          <View key={reason.key} style={styles.reportReason}>
-            <RadioButton value={reason.key} label={reason.name} />
-            {reason.key === 'other' && reportReason === 'other' && (
-              <Input
-                placeholder="Please describe the reason"
-                value={reportOtherReason}
-                onChangeText={setReportOtherReason}
-              />
-            )}
+    <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <TabButtonGroup
+          selected={reportType}
+          onSelect={(value) => setReportType(value as ReportType)}>
+          <TabButton value="feed" label="Feed" />
+          <TabButton value="user" label="User" />
+        </TabButtonGroup>
+        <View style={styles.gap} />
+        <View style={styles.reportContent}>
+          <Image
+            style={styles.reportContentImage}
+            source={
+              reportType === 'feed'
+                ? data.image.presignedUrl
+                : data.uploader.buddyImage.presignedUrl
+            }
+            contentFit="cover"
+          />
+          <View style={styles.reportTextContainer}>
+            <CustomText style={styles.reportContentTitle}>
+              {`${data.uploader.buddyName}${reportType === 'feed' ? "'s Post" : ''}`}
+            </CustomText>
+            <CustomText style={styles.reportContentDescription}>
+              {`${reportType === 'feed' ? 'Uploaded ' : 'Since '} ${format(reportType === 'feed' ? data.createdAt : data.uploader.createdAt, 'yyyy-MM-dd')}`}
+            </CustomText>
           </View>
-        ))}
-      </RadioButtonGroup>
-      <View style={styles.reportFooter}>
+        </View>
+        <View style={styles.gap} />
+        <RadioButtonGroup
+          selected={reportReason}
+          onSelect={setReportReason}
+          style={styles.reportReasons}>
+          {REPORT_REASONS.map((reason) => (
+            <View key={reason.key} style={styles.reportReason}>
+              <RadioButton value={reason.key} label={reason.name} />
+              {reason.key === 'other' && reportReason === 'other' && (
+                <Input
+                  placeholder="Please describe the reason"
+                  value={reportOtherReason}
+                  onChangeText={setReportOtherReason}
+                />
+              )}
+            </View>
+          ))}
+        </RadioButtonGroup>
+      </ScrollView>
+      <View style={[styles.reportFooter, { marginBottom: bottom + 20 }]}>
         <Button
           size="xl"
           style={styles.reportFooterButton}
@@ -132,7 +139,7 @@ export default function FeedReport({ data }: FeedReportProps) {
           <ButtonText size="md">Report</ButtonText>
         </Button>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -142,9 +149,17 @@ const styles = StyleSheet.create((theme) => ({
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
     paddingTop: 20,
     paddingHorizontal: 20,
     rowGap: 16,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  gap: {
+    width: '100%',
+    height: 16,
   },
   reportContent: {
     display: 'flex',
@@ -185,10 +200,7 @@ const styles = StyleSheet.create((theme) => ({
     rowGap: 8,
   },
   reportFooter: {
-    position: 'absolute',
-    bottom: 32,
-    left: 20,
-    right: 20,
+    width: '100%',
     backgroundColor: theme.color['gray-2'],
   },
   reportFooterButton: {

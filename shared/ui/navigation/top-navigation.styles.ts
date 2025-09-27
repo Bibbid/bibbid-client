@@ -10,6 +10,7 @@ export const topNavigationStyles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    zIndex: 1,
   },
   center: {
     flex: 1,
