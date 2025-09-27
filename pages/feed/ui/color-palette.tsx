@@ -1,3 +1,4 @@
+import { FlashList } from '@shopify/flash-list';
 import { SuspenseQuery } from '@suspensive/react-query';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
@@ -5,7 +6,6 @@ import { create } from 'zustand';
 import Dot from '~/assets/icons/dot-solid.svg';
 import { getColorsOptions } from '~/entities/color';
 import { Chip } from '~/shared/ui/chip';
-import { FlashList } from '~/shared/ui/flash-list';
 
 const ALL_COLOR = {
   displayName: 'All',
