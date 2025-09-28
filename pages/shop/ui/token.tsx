@@ -40,7 +40,8 @@ export default function Token() {
           </View>
         </View>
       </View>
-      <Offerings />
+      {/* TODO: Temporary disabled for submit */}
+      {/* <Offerings /> */}
     </KeyboardAwareScrollView>
   );
 }

@@ -11,7 +11,7 @@ import { DevToolsBubble } from 'react-native-react-query-devtools';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
-import { useHideSplashScreen, useRevenueCat } from '~/shared/lib';
+import { useHideSplashScreen } from '~/shared/lib';
 import { Toast } from '~/shared/ui/toast';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -49,8 +49,6 @@ configure({
  */
 export default function Layout() {
   useHideSplashScreen();
-
-  useRevenueCat();
 
   return (
     <GestureHandlerRootView style={styles.container}>

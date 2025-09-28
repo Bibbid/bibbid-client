@@ -22,6 +22,9 @@ const GNB_HEIGHT = 56;
 export default function AuthorizedLayout() {
   const isGnbHideRoute = useActiveRoutes(GNB_HIDE_PATHS);
 
+  // TODO: Temporary disabled for submit
+  // useRevenueCat();
+
   return (
     <ErrorBoundary fallback={<ErrorScreen />}>
       <Authorized>
