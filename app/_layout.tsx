@@ -11,7 +11,7 @@ import { DevToolsBubble } from 'react-native-react-query-devtools';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
-import { useHideSplashScreen, useRevenueCat } from '~/shared/lib';
+import { useHideSplashScreen } from '~/shared/lib';
 import { Toast } from '~/shared/ui/toast';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -50,33 +50,30 @@ configure({
 export default function Layout() {
   useHideSplashScreen();
 
-  useRevenueCat();
-
   return (
     <GestureHandlerRootView style={styles.container}>
       <QueryClientProvider client={queryClient}>
-        <AuthLoaded>
-          <OverlayProvider>
-            <SafeAreaView edges={['left', 'right']} style={styles.container}>
-              <KeyboardProvider>
-                <BottomSheetModalProvider>
+        <KeyboardProvider>
+          <AuthLoaded>
+            <OverlayProvider>
+              <BottomSheetModalProvider>
+                <SafeAreaView
+                  edges={['left', 'right']}
+                  style={styles.container}>
                   <Stack
                     screenOptions={{
                       headerShown: false,
                       contentStyle: styles.container,
                       animation: 'none',
-                    }}>
-                    <Stack.Screen name="index" options={{ title: 'Home' }} />
-                    <Stack.Screen name="(authorized)" />
-                    <Stack.Screen name="(unauthorized)" />
-                  </Stack>
+                    }}
+                  />
                   <Toast />
                   {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-                </BottomSheetModalProvider>
-              </KeyboardProvider>
-            </SafeAreaView>
-          </OverlayProvider>
-        </AuthLoaded>
+                </SafeAreaView>
+              </BottomSheetModalProvider>
+            </OverlayProvider>
+          </AuthLoaded>
+        </KeyboardProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
