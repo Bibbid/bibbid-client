@@ -53,28 +53,27 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={styles.container}>
       <QueryClientProvider client={queryClient}>
-        <AuthLoaded>
-          <OverlayProvider>
-            <SafeAreaView edges={['left', 'right']} style={styles.container}>
-              <KeyboardProvider>
-                <BottomSheetModalProvider>
+        <KeyboardProvider>
+          <AuthLoaded>
+            <OverlayProvider>
+              <BottomSheetModalProvider>
+                <SafeAreaView
+                  edges={['left', 'right']}
+                  style={styles.container}>
                   <Stack
                     screenOptions={{
                       headerShown: false,
                       contentStyle: styles.container,
                       animation: 'none',
-                    }}>
-                    <Stack.Screen name="index" options={{ title: 'Home' }} />
-                    <Stack.Screen name="(authorized)" />
-                    <Stack.Screen name="(unauthorized)" />
-                  </Stack>
+                    }}
+                  />
                   <Toast />
                   {__DEV__ && <DevToolsBubble queryClient={queryClient} />}
-                </BottomSheetModalProvider>
-              </KeyboardProvider>
-            </SafeAreaView>
-          </OverlayProvider>
-        </AuthLoaded>
+                </SafeAreaView>
+              </BottomSheetModalProvider>
+            </OverlayProvider>
+          </AuthLoaded>
+        </KeyboardProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
