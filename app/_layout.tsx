@@ -1,5 +1,6 @@
 import '../translation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { configure, getConsoleSink } from '@logtape/logtape';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -12,6 +13,8 @@ import { StyleSheet } from 'react-native-unistyles';
 import { AuthLoaded } from '~/shared/auth';
 import { useHideSplashScreen, useRevenueCat } from '~/shared/lib';
 import { Toast } from '~/shared/ui/toast';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +30,17 @@ SplashScreen.setOptions({
 });
 
 SplashScreen.preventAutoHideAsync();
+
+configure({
+  sinks: { console: getConsoleSink() },
+  loggers: [
+    {
+      category: 'bibbid',
+      lowestLevel: 'debug',
+      sinks: isDev ? ['console'] : [],
+    },
+  ],
+});
 
 /**
  * Font loading issues on Android

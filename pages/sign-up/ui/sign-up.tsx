@@ -1,3 +1,4 @@
+import { getLogger } from '@logtape/logtape';
 import { makeRedirectUri } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import { useEffect } from 'react';
@@ -8,8 +9,9 @@ import { useAuthStore } from '~/shared/auth';
 import { Button, ButtonText } from '~/shared/ui/button';
 import { CustomText } from '~/shared/ui/text';
 
+const logger = getLogger('bibbid');
+
 interface LoginResult {
-  //   error: ErrorApiResponse | null;
   type: 'success' | 'failure' | 'cancel';
   url: string | null;
 }
@@ -65,29 +67,29 @@ export default function SignIn() {
       const { accessToken, refreshToken } = extractParamsWithRegex(url);
 
       if (accessToken && refreshToken) {
-        console.log('[INFO] sign in success', accessToken, refreshToken);
+        logger.info({ accessToken, refreshToken });
 
         signIn({ accessToken, refreshToken });
       } else {
         const error = extractErrorWithRegex(url);
-        console.log('[ERROR]', error);
+        logger.error({ error });
       }
     }
   };
 
   return (
-    <View style={signUpstyles.container}>
-      <View style={signUpstyles.content}>
+    <View style={signUpStyles.container}>
+      <View style={signUpStyles.content}>
         <Logo height={28} width={53} />
         <View>
-          <CustomText style={signUpstyles.text}>One color a day</CustomText>
-          <CustomText style={signUpstyles.text}>
+          <CustomText style={signUpStyles.text}>One color a day</CustomText>
+          <CustomText style={signUpStyles.text}>
             BBD is how you meet yourself
           </CustomText>
         </View>
       </View>
-      <View style={signUpstyles.footer}>
-        <CustomText style={signUpstyles.loginDescription}>
+      <View style={signUpStyles.footer}>
+        <CustomText style={signUpStyles.loginDescription}>
           Let&apos;s get started
         </CustomText>
         <LoginButton type="google" onPress={() => handleGoogleLogin()} />
@@ -104,15 +106,15 @@ function LoginButton({
   onPress: () => void;
 }) {
   return (
-    <Button size="xl" onPress={onPress} style={signUpstyles.loginButton}>
-      <ButtonText size="lg" style={signUpstyles.loginButtonText}>
+    <Button size="xl" onPress={onPress} style={signUpStyles.loginButton}>
+      <ButtonText size="lg" style={signUpStyles.loginButtonText}>
         Google Login
       </ButtonText>
     </Button>
   );
 }
 
-const signUpstyles = StyleSheet.create((theme) => ({
+const signUpStyles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     position: 'relative',

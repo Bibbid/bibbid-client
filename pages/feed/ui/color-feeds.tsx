@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { MoreHorizontal } from 'lucide-react-native';
 import { overlay } from 'overlay-kit';
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import Dot from '~/assets/icons/dot-solid.svg';
@@ -22,7 +22,7 @@ interface ColorFeedsProps {
   color?: string;
 }
 
-export default function ColorFeeds({ color }: ColorFeedsProps) {
+function ColorFeeds({ color }: ColorFeedsProps) {
   const { selectedColor } = useSelectedColor();
 
   return <ColorFeedList color={color ?? selectedColor} />;
@@ -41,16 +41,22 @@ function ColorFeedList({ color }: { color: string }) {
     [feedData]
   );
 
+  const renderItem = useCallback(
+    ({ item, index }: { item: FeedListItem; index: number }) => (
+      <ColorFeedItem data={item} index={index} total={feeds.length} />
+    ),
+    [feeds.length]
+  );
+
   return (
     feeds && (
       <FlashList
         masonry
         data={feeds}
-        renderItem={({ item, index }) => (
-          <ColorFeedItem data={item} index={index} total={feeds.length} />
-        )}
+        renderItem={renderItem}
         numColumns={2}
         optimizeItemArrangement={false}
+        keyExtractor={(item, index) => `${item.feedId}-${index}`}
         contentContainerStyle={styles.container}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListFooterComponent={() => (
@@ -244,3 +250,5 @@ const styles = StyleSheet.create((theme) => ({
     padding: 8,
   },
 }));
+
+export default memo(ColorFeeds);

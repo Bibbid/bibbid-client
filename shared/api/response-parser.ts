@@ -1,33 +1,26 @@
 import { failure, success } from './create-result';
 import { ErrorResponse, ErrorResponseSchema } from './response-schemas';
 import { Result } from './result-type';
+import { getLogger } from '@logtape/logtape';
 import * as v from 'valibot';
+
+const logger = getLogger('bibbid');
 
 export const parseResponse: <T extends v.GenericSchema>(
   json: unknown,
   schema: T
 ) => Result<v.InferOutput<T>, ErrorResponse> = (json, schema) => {
-  const isDev = process.env.NODE_ENV === 'development';
-
-  if (isDev) {
-    console.log('--- JSON ---');
-    console.log(json);
-    console.log('------------');
-  }
+  logger.debug({ json });
 
   const parsed = v.safeParse(schema, json);
 
-  console.log('[INFO] safe parse result ', parsed);
+  logger.info({ parsed });
 
   if (!parsed.success) {
     const error = v.safeParse(ErrorResponseSchema, json);
 
     if (!error.success) {
-      if (isDev) {
-        console.log('--- PARSE ERROR ---');
-        console.log(error);
-        console.log('------------');
-      }
+      logger.error({ error });
 
       return failure({
         code: '500',

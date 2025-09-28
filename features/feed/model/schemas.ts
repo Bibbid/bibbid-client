@@ -4,6 +4,7 @@ import {
   CursorResponseSchema,
   GeneralResponseSchema,
 } from '~/shared/api/response-schemas';
+import { PresignedUrlSchema } from '~/shared/model';
 
 export const GetColorFeedsResponseSchema =
   CursorResponseSchema(FeedListItemSchema);
@@ -27,3 +28,13 @@ export const GetMyFeedCountsResponseSchema = GeneralResponseSchema(
     })
   )
 );
+
+export const DownloadHighQualityImageResponseSchema = GeneralResponseSchema(
+  v.object({
+    highQualityImage: PresignedUrlSchema,
+  })
+);
+
+export type DownloadHighQualityImageResponse = v.InferOutput<
+  typeof DownloadHighQualityImageResponseSchema
+>;

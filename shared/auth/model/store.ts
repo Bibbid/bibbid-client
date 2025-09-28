@@ -1,6 +1,9 @@
 import { Authorization } from './schemas';
+import { getLogger } from '@logtape/logtape';
 import * as SecureStore from 'expo-secure-store';
 import { create } from 'zustand';
+
+const logger = getLogger('bibbid');
 
 interface AuthState extends Authorization {
   signIn: ({
@@ -36,9 +39,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const refreshToken = await SecureStore.getItemAsync('refreshToken');
 
       if (accessToken && refreshToken) {
-        console.log('[INFO] device auth info is found');
-        console.log('[INFO] accessToken', accessToken);
-        console.log('[INFO] refreshToken', refreshToken);
+        logger.info({ accessToken, refreshToken });
 
         set({
           ...get(),
@@ -47,10 +48,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           isSignedIn: true,
         });
       } else {
-        console.warn('[INFO] device auth info is not found');
+        logger.warn('device auth info is not found');
       }
     } catch {
-      console.warn('[INFO] find device auth info is failed');
+      logger.warn('find device auth info is failed');
 
       await SecureStore.deleteItemAsync('accessToken');
       await SecureStore.deleteItemAsync('refreshToken');
