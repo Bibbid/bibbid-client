@@ -5,7 +5,7 @@ import { Image } from '~/shared/ui/image';
 
 export default function SignInScreen() {
   return (
-    <SafeAreaView edges={['top', 'bottom']} style={{ flex: 1 }}>
+    <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
       <Image
         source={require('~/assets/images/background.png')}
         style={styles.image}

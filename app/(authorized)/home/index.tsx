@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { StatusBar, View } from 'react-native';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native-unistyles';
@@ -35,7 +35,6 @@ export default function HomeScreen() {
             ],
           },
         ]}>
-        <StatusBar barStyle="light-content" />
         <View style={[styles.header, { paddingTop: top }]}>
           <TopNavigation
             left={<Logo />}

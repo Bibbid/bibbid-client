@@ -1,7 +1,8 @@
 import ErrorScreen from '../error';
 import { ErrorBoundary } from '@suspensive/react';
 import { Href, Stack } from 'expo-router';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
 import Feed from '~/assets/icons/bulb.svg';
 import Home from '~/assets/icons/home.svg';
 import Profile from '~/assets/icons/user-circle.svg';
@@ -28,7 +29,7 @@ export default function AuthorizedLayout() {
   return (
     <ErrorBoundary fallback={<ErrorScreen />}>
       <Authorized>
-        <StatusBar barStyle="light-content" />
+        <StatusBar style="light" />
         <View
           style={{ flex: 1, paddingBottom: isGnbHideRoute ? 0 : GNB_HEIGHT }}>
           <Stack screenOptions={{ headerShown: false }} />
